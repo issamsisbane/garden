@@ -28,4 +28,4 @@ jobs:
           git config --global user.email "github-actions@github.com"
           git add .
           git diff-index --quiet HEAD || git commit -m "Sync notes from garden"
-          git push test-github-actions
+          git push origin test-github-actions
