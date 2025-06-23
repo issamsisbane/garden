@@ -22,7 +22,7 @@ jobs:
 
       - name: Copy New Notes
         run: |
-          rsync -av --ignore-existing garden/content/blog/ portfolio/src/content/blog/en/
+          rsync -av --ignore-existing content/blog/ portfolio/src/content/blog/en/
           cd portfolio
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
