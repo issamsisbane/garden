@@ -1,0 +1,1 @@
+It's a way to facilitate automatic scanning and comparing with the latests versions. It allows to automatically update our images in a [[Kubernetes]] cluster for example.

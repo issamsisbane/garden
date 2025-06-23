@@ -1,0 +1,1 @@
+The process of comparing the latest code in Git with the live state to figure out what is different. Argo CD automatically refreshes every 3 minutes.

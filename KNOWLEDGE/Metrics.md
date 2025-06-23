@@ -1,0 +1,1 @@
+A metric is a number to assess the performance or the status of a process.

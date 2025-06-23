@@ -1,0 +1,1 @@
+https://gethomepage.dev/main/installation/k8s/#deployment

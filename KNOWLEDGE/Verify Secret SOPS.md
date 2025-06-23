@@ -1,0 +1,1 @@
+This idea is to create a precommit Git hook  to verify that all the secrets are [[SOPS]] encryted.

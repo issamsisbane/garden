@@ -1,0 +1,1 @@
+This is a cli tool to manage [[GIT]] repo with a cool ui to use.

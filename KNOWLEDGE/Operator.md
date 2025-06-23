@@ -1,0 +1,1 @@
+An operator is something that enable [[Custom Resource Definition]] in a Kubernetes Cluster.
