@@ -29,9 +29,11 @@ jobs:
             grep -oP '!\[\[[^\]]+\]\]' "$file" | while read -r match; do
               image=$(echo "$match" | sed -E 's/!\[\[|\]\]//g')
               if [[ ! -f "./assets/$image" ]]; then
-                  echo "Image not found: $image in $file"
+                  pwd
+                  ls | grep $image
+                  echo "Image not found: $image in ./assets/$image"
               else
-                  echo "Image found: $image in $file"
+                  echo "Image found: $image in ./assets/$image"
                   cp "./assets/$image" "./portfolio/public/$image"
               fi
             done
