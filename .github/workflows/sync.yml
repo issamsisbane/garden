@@ -30,11 +30,11 @@ jobs:
           find ./content -type f \( -name "*.md" -o -name "*.markdown" \) | while read -r file; do
             grep -oP '!\[\[[^\]]+\]\]' "$file" | while read -r match; do
               image=$(echo "$match" | sed -E 's/!\[\[|\]\]//g')
-              if [[ ! -f "./assets/$image" ]]; then
+              if [[ ! -f "./ASSETS/$image" ]]; then
                   echo "Image not found: $image in ./assets/$image"
               else
                   echo "Image found: $image in ./assets/$image"
-                  cp "./assets/$image" "./portfolio/public/$image"
+                  cp "./ASSETS/$image" "./portfolio/public/$image"
               fi
             done
           done
