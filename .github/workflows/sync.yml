@@ -15,8 +15,8 @@ jobs:
       PORTFOLIO_BLOG_DIR: "./portfolio/src/content/blog"
       CONTENT_DIR: "./content"
       ASSETS_DIR: "./ASSETS"
-      PROJECTS_DIR: "./content/projects"
-      BLOG_DIR: "./content/blog"
+      PROJECTS_DIR: "./content/projects/"
+      BLOG_DIR: "./content/blog/"
 
       GITHUB_ACTION_USERNAME: "github-actions"
       GITHUB_ACTION_EMAIL: "github-actions@github.com"
@@ -44,8 +44,7 @@ jobs:
                   echo "Image not found: $image in $ASSETS_DIR/$image"
               else
                   echo "Image found: $image in ASSETS_DIR/$image"
-                  folder=$(echo "$file" | sed "s|$CONTENT_DIR/||g" | sed 's|/en\|/fr||g' | xargs dirname)
-                  echo "$folder"
+                  folder=$(echo "$file" | sed "s|$CONTENT_DIR/||g" | sed -E 's/\/(en|fr)//g' | xargs dirname)
                   if [[ ! -d "$folder" ]]; then
                     mkdir -p "$PORTFOLIO_ASSETS_DIR/$folder"
                     echo "Created directory: $PORTFOLIO_ASSETS_DIR/$folder"
