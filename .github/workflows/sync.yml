@@ -23,6 +23,8 @@ jobs:
       GITHUB_ACTION_BRANCH: "test-github-actions"
       GITHUB_ACTION_REPO: "issamsisbane/portfolio"
       GITHUB_ACTION_COMMIT_MESSAGE: "Sync notes from garden"
+
+      GH_TOKEN: ${{ github.token }}
     steps:
       - name: Checkout Garden Repository
         uses: actions/checkout@v3
