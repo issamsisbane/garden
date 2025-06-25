@@ -25,6 +25,8 @@ jobs:
       ## Copy Assets from Garden
       - name: Copy assets from garden
         run: |
+          pwd
+          ls
           find ./content -type f \( -name "*.md" -o -name "*.markdown" \) | while read -r file; do
             grep -oP '!\[\[[^\]]+\]\]' "$file" | while read -r match; do
               image=$(echo "$match" | sed -E 's/!\[\[|\]\]//g')
