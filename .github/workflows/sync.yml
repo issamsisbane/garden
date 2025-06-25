@@ -20,10 +20,35 @@ jobs:
           path: portfolio
           ref: test-github-actions
 
-      - name: Copy New Notes
+      ## Translate Notes
+
+      ## Copy Assets from Garden
+      - name: Copy assets from garden
+        run: |
+          find ./content -type f \( -name "*.md" -o -name "*.markdown" \) | while read -r file; do
+          grep -oP '!\[\[[^\]]+\]\]' "$file" | while read -r match; do
+              image=$(echo "$match" | sed -E 's/!\[\[|\]\]//g')
+              if [[ ! -f "./assets/$image" ]]; then
+                  echo "Image not found: $image in $file"
+              else
+                  echo "Image found: $image in $file"
+                  cp "./assets/$image" "./portfolio/public/$image"
+              fi
+          done
+
+      ## Get Assets from Notes
+      - name: Copy new notes
         run: |
           rsync -av --ignore-existing content/blog/ portfolio/src/content/blog/en/
           cd portfolio
+          find . -type f \( -name "*.md" -o -name "*.markdown" \) | while read -r file; do
+              sed -i -E "s|!\[\[(.*?)\]\]|![]($new_prefix\1)|g" "$file"
+          done
+      
+      ## Copy Notes and Assets From Garden
+      - name: Commit
+        run: |
+          pwd
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git add .
