@@ -29,8 +29,6 @@ jobs:
             grep -oP '!\[\[[^\]]+\]\]' "$file" | while read -r match; do
               image=$(echo "$match" | sed -E 's/!\[\[|\]\]//g')
               if [[ ! -f "./assets/$image" ]]; then
-                  pwd
-                  ls | grep $image
                   echo "Image not found: $image in ./assets/$image"
               else
                   echo "Image found: $image in ./assets/$image"
