@@ -8,6 +8,21 @@ on:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    env:
+      PORTFOLIO_DIR: "./portfolio"
+      PORTFOLIO_ASSETS_DIR: "./portfolio/public"
+      PORTFOLIO_PROJECTS_DIR: "./portfolio/src/content/projects"
+      PORTFOLIO_BLOG_DIR: "./portfolio/src/content/blog"
+      CONTENT_DIR: "./content"
+      ASSETS_DIR: "./ASSETS"
+      PROJECTS_DIR: "./content/projects"
+      BLOG_DIR: "./content/blog"
+
+      GITHUB_ACTION_USERNAME: "github-actions"
+      GITHUB_ACTION_EMAIL: "github-actions@github.com"
+      GITHUB_ACTION_BRANCH: "test-github-actions"
+      GITHUB_ACTION_REPO: "issamsisbane/portfolio"
+      GITHUB_ACTION_COMMIT_MESSAGE: "Sync notes from garden"
     steps:
       - name: Checkout Garden Repository
         uses: actions/checkout@v3
@@ -15,52 +30,44 @@ jobs:
       - name: Checkout Portfolio Repository
         uses: actions/checkout@v3
         with:
-          repository: issamsisbane/portfolio  # Remplacez par votre nom d'utilisateur et le nom du dépôt portfolio
+          repository: ${{ env.GITHUB_ACTION_REPO }} 
           token: ${{ secrets.PORTFOLIO_SECRET_TOKEN }}
           path: portfolio
           ref: test-github-actions
 
-      ## Translate Notes
-
-      ## Copy Assets from Garden
-      - name: Copy assets from garden
+      - name: Copy assets from garden to portfolio
         run: |
-          pwd
-          ls
-          directory=./content
-          find ./content -type f \( -name "*.md" -o -name "*.markdown" \) | while read -r file; do
+          find $CONTENT_DIR -type f \( -name "*.md" -o -name "*.markdown" \) | while read -r file; do
             grep -oP '!\[\[[^\]]+\]\]' "$file" | while read -r match; do
               image=$(echo "$match" | sed -E 's/!\[\[|\]\]//g')
-              if [[ ! -f "./ASSETS/$image" ]]; then
-                  echo "Image not found: $image in ./assets/$image"
+              if [[ ! -f "$ASSETS_DIR/$image" ]]; then
+                  echo "Image not found: $image in $ASSETS_DIR/$image"
               else
-                  echo "Image found: $image in ./assets/$image"
-                  folder=$(echo "$file" | sed "s|$directory/||g")
-                  echo "$folder"
-                  if [[ ! -d "$(dirname $folder)" ]]; then
-                    mkdir -p "./portfolio/public/$(dirname "$folder")"
+                  echo "Image found: $image in ASSETS_DIR/$image"
+                  folder=$(echo "$file" | sed "s|$directory/||g" | xargs dirname)
+                  if [[ ! -d "$folder" ]]; then
+                    mkdir -p "$PORTFOLIO_ASSETS_DIR/$folder"
+                    echo "Created directory: $PORTFOLIO_ASSETS_DIR/$folder"
                   fi
-                  cp "./ASSETS/$image" "./portfolio/public/$(dirname "$folder")/$image"
+                  sed -i -E "s|!\[\[(.*?)\]\]|![]($PORTFOLIO_ASSETS_DIR/$folder\1)|g" "$file"
+                  cp "$ASSETS_DIR/$image" "$PORTFOLIO_ASSETS_DIR/$folder/$image"
               fi
             done
           done
 
-      ## Get Assets from Notes
-      - name: Copy new notes
+      - name: Copy blog posts and projects notes
         run: |
-          rsync -av content/blog/ portfolio/src/content/blog/en/
-          cd portfolio
-          find . -type f \( -name "*.md" -o -name "*.markdown" \) | while read -r file; do
-              sed -i -E "s|!\[\[(.*?)\]\]|![]($new_prefix\1)|g" "$file"
-          done
+          rsync -av $BLOG_DIR $PORTFOLIO_BLOG_DIR
+          rsync -av $PROJECTS_DIR $PORTFOLIO_PROJECTS_DIR 
+          cd $PORTFOLIO_DIR
       
-      ## Copy Notes and Assets From Garden
-      - name: Commit
+      - name: Commit and Push changes to portfolio repository
         run: |
+          current_datetime=$(date '+%Y-%m-%d - %H:%M:%S')
           cd portfolio
           git status
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
+          git config --global user.name $GITHUB_ACTION_USERNAME 
+          git config --global user.email  $GITHUB_ACTION_EMAIL
           git add .
-          git diff-index --quiet HEAD || git commit -m "Sync notes from garden"
-          git push origin test-github-actions
+          git diff-index --quiet HEAD || git commit -m "$GITHUB_ACTION_COMMIT_MESSAGE $current_datetime"
+          git push origin $GITHUB_ACTION_BRANCH 
