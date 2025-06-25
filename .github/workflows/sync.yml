@@ -63,7 +63,7 @@ jobs:
       
       - name: Commit and Push changes to portfolio repository
         run: |
-          current_datetime=$(date '+%Y-%m-%d-%H:%M:%S')
+          current_datetime=$(date '+%Y-%m-%d-%H-%M-%S')
           branch_name="sync-notes-$current_datetime"
 
           cd portfolio
