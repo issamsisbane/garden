@@ -24,7 +24,7 @@ jobs:
       GITHUB_ACTION_REPO: "issamsisbane/portfolio"
       GITHUB_ACTION_COMMIT_MESSAGE: "Sync notes from garden"
 
-      GH_TOKEN: ${{ github.token }}
+      GH_TOKEN: ${{ secrets.PORTFOLIO_SECRET_TOKEN }}
     steps:
       - name: Checkout Garden Repository
         uses: actions/checkout@v3
