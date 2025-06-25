@@ -44,7 +44,8 @@ jobs:
                   echo "Image not found: $image in $ASSETS_DIR/$image"
               else
                   echo "Image found: $image in ASSETS_DIR/$image"
-                  folder=$(echo "$file" | sed "s|$directory/||g" | xargs dirname)
+                  folder=$(echo "$file" | sed "s|$CONTENT_DIR/||g" | sed 's|/en\|/fr||g' | xargs dirname)
+                  echo "$folder"
                   if [[ ! -d "$folder" ]]; then
                     mkdir -p "$PORTFOLIO_ASSETS_DIR/$folder"
                     echo "Created directory: $PORTFOLIO_ASSETS_DIR/$folder"
@@ -69,5 +70,5 @@ jobs:
           git config --global user.name $GITHUB_ACTION_USERNAME 
           git config --global user.email  $GITHUB_ACTION_EMAIL
           git add .
-          git diff-index --quiet HEAD || git commit -m "$GITHUB_ACTION_COMMIT_MESSAGE $current_datetime"
+          git diff-index --quiet HEAD || git commit -m "$GITHUB_ACTION_COMMIT_MESSAGE - $current_datetime"
           git push origin $GITHUB_ACTION_BRANCH 
