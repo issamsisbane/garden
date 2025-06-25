@@ -26,7 +26,7 @@ jobs:
       - name: Copy assets from garden
         run: |
           find ./content -type f \( -name "*.md" -o -name "*.markdown" \) | while read -r file; do
-          grep -oP '!\[\[[^\]]+\]\]' "$file" | while read -r match; do
+            grep -oP '!\[\[[^\]]+\]\]' "$file" | while read -r match; do
               image=$(echo "$match" | sed -E 's/!\[\[|\]\]//g')
               if [[ ! -f "./assets/$image" ]]; then
                   echo "Image not found: $image in $file"
@@ -34,6 +34,7 @@ jobs:
                   echo "Image found: $image in $file"
                   cp "./assets/$image" "./portfolio/public/$image"
               fi
+            done
           done
 
       ## Get Assets from Notes
