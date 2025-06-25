@@ -40,7 +40,7 @@ jobs:
       ## Get Assets from Notes
       - name: Copy new notes
         run: |
-          rsync -av --ignore-existing content/blog/ portfolio/src/content/blog/en/
+          rsync -av content/blog/ portfolio/src/content/blog/en/
           cd portfolio
           find . -type f \( -name "*.md" -o -name "*.markdown" \) | while read -r file; do
               sed -i -E "s|!\[\[(.*?)\]\]|![]($new_prefix\1)|g" "$file"
@@ -51,8 +51,8 @@ jobs:
         run: |
           cd portfolio
           git status
-# git config --global user.name "github-actions"
-# git config --global user.email "github-actions@github.com"
-# git add .
-# git diff-index --quiet HEAD || git commit -m "Sync notes from garden"
-# git push origin test-github-actions
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add .
+          git diff-index --quiet HEAD || git commit -m "Sync notes from garden"
+          git push origin test-github-actions
