@@ -27,6 +27,7 @@ jobs:
         run: |
           pwd
           ls
+          directory=./content
           find ./content -type f \( -name "*.md" -o -name "*.markdown" \) | while read -r file; do
             grep -oP '!\[\[[^\]]+\]\]' "$file" | while read -r match; do
               image=$(echo "$match" | sed -E 's/!\[\[|\]\]//g')
@@ -34,7 +35,12 @@ jobs:
                   echo "Image not found: $image in ./assets/$image"
               else
                   echo "Image found: $image in ./assets/$image"
-                  cp "./ASSETS/$image" "./portfolio/public/$image"
+                  folder=$(echo "$file" | sed "s|$directory/||g")
+                  echo "$folder"
+                  if [[ ! -d "$(dirname $folder)" ]]; then
+                    mkdir -p "./portfolio/public/$(dirname "$folder")"
+                  fi
+                  cp "./ASSETS/$image" "./portfolio/public/$(dirname "$folder")/$image"
               fi
             done
           done
