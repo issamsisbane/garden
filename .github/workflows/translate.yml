@@ -1,0 +1,65 @@
+name: Traduction conditionnelle multi-dossiers
+
+on:
+  push:
+    paths:
+      - 'contents/**'
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: pip install google-genai
+
+    - name: Trouver fichiers à traduire (fr ↔ en)
+      id: find_files
+      run: |
+        # Trouver tous les fichiers markdown modifiés dans contents/
+        files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^contents/' || true)
+
+        to_translate=""
+
+        for f in $files; do
+          # On s'intéresse uniquement aux fichiers dans fr ou en
+          if [[ "$f" =~ /fr/ ]]; then
+            # Correspondance en en
+            en_file="${f/\/fr\//\/en\/}"
+            if [ ! -f "$en_file" ]; then
+              to_translate="$to_translate $f"
+            fi
+          elif [[ "$f" =~ /en/ ]]; then
+            # Correspondance en fr
+            fr_file="${f/\/en\//\/fr\/}"
+            if [ ! -f "$fr_file" ]; then
+              to_translate="$to_translate $f"
+            fi
+          fi
+        done
+
+        echo "::set-output name=files::$to_translate"
+
+    - name: Traduire fichiers modifiés
+      env:
+        GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+      run: |
+        for file in ${{ steps.find_files.outputs.files }}; do
+          echo "Traduction: $file"
+          python3 .github/scripts/translate.py "$file"
+        done
+        
+    - name: Commit & push fichiers traduits
+      run: |
+        git config user.name "github-actions"
+        git config user.email "github-actions@github.com"
+        git add contents/**/fr/** contents/**/en/**
+        git diff --cached --quiet || (git commit -m "Traductions automatiques via Gemini" && git push)
