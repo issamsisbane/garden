@@ -24,21 +24,17 @@ jobs:
     - name: Trouver fichiers à traduire (fr ↔ en)
       id: find_files
       run: |
-        # Trouver tous les fichiers markdown modifiés dans contents/
-        files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^contents/' || true)
+        files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^content/' || true)
 
         to_translate=""
 
         for f in $files; do
-          # On s'intéresse uniquement aux fichiers dans fr ou en
           if [[ "$f" =~ /fr/ ]]; then
-            # Correspondance en en
             en_file="${f/\/fr\//\/en\/}"
             if [ ! -f "$en_file" ]; then
               to_translate="$to_translate $f"
             fi
           elif [[ "$f" =~ /en/ ]]; then
-            # Correspondance en fr
             fr_file="${f/\/en\//\/fr\/}"
             if [ ! -f "$fr_file" ]; then
               to_translate="$to_translate $f"
@@ -46,7 +42,7 @@ jobs:
           fi
         done
 
-        echo "::set-output name=files::$to_translate"
+        echo "files=$to_translate" >> $GITHUB_OUTPUT 
 
     - name: Traduire fichiers modifiés
       env:
