@@ -26,20 +26,16 @@ jobs:
     - name: Install dependencies
       run: pip install google-genai
 
-    - name: Trouver fichiers sans traduction
+    - name: Trouver fichiers sans traduction et les traduire
       id: find_missing
-      run: |
-        mapfile -t missing_files < <(bash .github/scripts/find_missing.sh)
-        echo "Fichiers sans traduction trouvés: ${#missing_files[@]}"
-        echo "files=${missing_files[*]}" >> $GITHUB_OUTPUT
-
-    - name: Traduire fichiers modifiés
       env:
         GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
       run: |
-        echo $GITHUB_OUTPUT
-        echo "Fichiers à traduire: ${{ steps.find_files.outputs.files }}"
-        for file in ${{ steps.find_files.outputs.files }}; do
+        mapfile -t missing_files < <(bash .github/scripts/find_missing.sh)
+        echo "Fichiers sans traduction trouvés: ${#missing_files[@]}"
+
+        echo "Fichiers à traduire: ${{ missing_files[*] }}"
+        for file in ${{ missing_files[*] }}; do
           echo "Traduction: $file"
           python3 .github/scripts/translate.py "$file"
         done
