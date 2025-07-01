@@ -47,12 +47,16 @@ jobs:
           fi
         done
 
-        echo "files=$to_translate" >> $GITHUB_OUTPUT 
+        echo "files=$to_translate" >> $GITHUB_OUTPUT
+
+        echo "Fichiers à traduire: $to_translate"
 
     - name: Traduire fichiers modifiés
       env:
         GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
       run: |
+        echo $GITHUB_OUTPUT
+        echo "Fichiers à traduire: ${{ steps.find_files.outputs.files }}"
         for file in ${{ steps.find_files.outputs.files }}; do
           echo "Traduction: $file"
           python3 .github/scripts/translate.py "$file"
