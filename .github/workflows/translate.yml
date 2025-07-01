@@ -3,7 +3,7 @@ name: Traduction conditionnelle multi-dossiers
 on:
   push:
     paths:
-      - 'contents/**'
+      - 'content/**'
 
 jobs:
   translate:
