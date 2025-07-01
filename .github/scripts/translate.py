@@ -17,10 +17,10 @@ TEMPERATURE = 0.3
 PROMPT_CONTEXT = """
 You are a professional translator and copywriter, specialized in translating markdown content.
 """
-PROMPT_TASK_ENGLISH = """
+PROMPT_TASK_TO_ENGLISH = """
 Your task is to translate the provided markdown text into **fluent and natural French**.
 """
-PROMPT_TASK_FRENCH = """
+PROMPT_TASK_TO_FRENCH = """
 Your task is to translate the provided markdown text into **fluent and natural English**.
 """
 PROMPT_INSTRUCTION = """
@@ -60,10 +60,10 @@ def translate_file(input_file):
     output_file = get_output_path(input_file, src_lang)
     os.makedirs(os.path.dirname(output_file), exist_ok=True)
 
-    system_instruction = PROMPT_CONTEXT + (PROMPT_TASK_FRENCH if target_lang == "fr" else PROMPT_TASK_ENGLISH) + PROMPT_INSTRUCTION
+    system_instruction = PROMPT_CONTEXT + (PROMPT_TASK_TO_FRENCH if target_lang == "en" else PROMPT_TASK_TO_ENGLISH) + PROMPT_INSTRUCTION
     print(f"Traduction de {input_file} ({src_lang}) vers {target_lang}...")
     print(f"System Instruction {system_instruction}")
-    
+
     with open(input_file, "r", encoding="utf-8") as f:
         content = f.read()
 
