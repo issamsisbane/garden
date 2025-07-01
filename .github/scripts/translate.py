@@ -14,12 +14,16 @@ MODEL_NAME = "gemini-2.0-flash-lite"
 MAX_INPUT_TOKENS = 4000
 TEMPERATURE = 0.3
 
-SYSTEM_INSTRUCTION = """
+PROMPT_CONTEXT = """
 You are a professional translator and copywriter, specialized in translating markdown content.
-
-Your task is to translate the provided markdown text into **fluent and natural French** if the input is English,
-or into **fluent and natural English** if the input is French.
-
+"""
+PROMPT_TASK_ENGLISH = """
+Your task is to translate the provided markdown text into **fluent and natural French**.
+"""
+PROMPT_TASK_FRENCH = """
+Your task is to translate the provided markdown text into **fluent and natural English**.
+"""
+PROMPT_INSTRUCTION = """
 - You may lightly rephrase for clarity and style, but do **not omit or summarize** any content.
 - All **titles, subtitles, and headings** should be translated as well.
 - **Preserve all markdown formatting**, including:
@@ -56,6 +60,8 @@ def translate_file(input_file):
     output_file = get_output_path(input_file, src_lang)
     os.makedirs(os.path.dirname(output_file), exist_ok=True)
 
+    system_instruction = PROMPT_CONTEXT + (PROMPT_TASK_FRENCH if target_lang == "fr" else PROMPT_TASK_ENGLISH) + PROMPT_INSTRUCTION
+
     with open(input_file, "r", encoding="utf-8") as f:
         content = f.read()
 
@@ -85,7 +91,7 @@ def translate_file(input_file):
                 contents=[chunk],
                 config=types.GenerateContentConfig(
                     temperature=TEMPERATURE,
-                    system_instruction=SYSTEM_INSTRUCTION
+                    system_instruction=system_instruction
                 ),
             )
             translated_chunks.append(response.text)
