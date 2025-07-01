@@ -26,30 +26,11 @@ jobs:
     - name: Install dependencies
       run: pip install google-genai
 
-    - name: Trouver fichiers à traduire (fr ↔ en)
-      id: find_files
+    - name: Trouver fichiers sans traduction
+      id: find_missing
       run: |
-        files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^content/' || true)
-
-        to_translate=""
-
-        for f in $files; do
-          if [[ "$f" =~ /fr/ ]]; then
-            en_file="${f/\/fr\//\/en\/}"
-            if [ ! -f "$en_file" ]; then
-              to_translate="$to_translate $f"
-            fi
-          elif [[ "$f" =~ /en/ ]]; then
-            fr_file="${f/\/en\//\/fr\/}"
-            if [ ! -f "$fr_file" ]; then
-              to_translate="$to_translate $f"
-            fi
-          fi
-        done
-
-        echo "files=$to_translate" >> $GITHUB_OUTPUT
-
-        echo "Fichiers à traduire: $to_translate"
+        mapfile -t missing_files < <(bash .github/scripts/find_missing.sh)
+        echo "files=${missing_files[*]}" >> $GITHUB_OUTPUT
 
     - name: Traduire fichiers modifiés
       env:
