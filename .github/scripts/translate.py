@@ -61,7 +61,9 @@ def translate_file(input_file):
     os.makedirs(os.path.dirname(output_file), exist_ok=True)
 
     system_instruction = PROMPT_CONTEXT + (PROMPT_TASK_FRENCH if target_lang == "fr" else PROMPT_TASK_ENGLISH) + PROMPT_INSTRUCTION
-
+    print(f"Traduction de {input_file} ({src_lang}) vers {target_lang}...")
+    print(f"System Instruction {system_instruction}")
+    
     with open(input_file, "r", encoding="utf-8") as f:
         content = f.read()
 
