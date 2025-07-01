@@ -34,8 +34,8 @@ jobs:
         mapfile -t missing_files < <(bash .github/scripts/find_missing.sh)
         echo "Fichiers sans traduction trouvés: ${#missing_files[@]}"
 
-        echo "Fichiers à traduire: ${{ missing_files[*] }}"
-        for file in ${{ missing_files[*] }}; do
+        echo "Fichiers à traduire: ${missing_files[*]}"
+        for file in ${missing_files[*]}; do
           echo "Traduction: $file"
           python3 .github/scripts/translate.py "$file"
         done
