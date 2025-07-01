@@ -30,6 +30,7 @@ jobs:
       id: find_missing
       run: |
         mapfile -t missing_files < <(bash .github/scripts/find_missing.sh)
+        echo "Fichiers sans traduction trouvés: ${#missing_files[@]}"
         echo "files=${missing_files[*]}" >> $GITHUB_OUTPUT
 
     - name: Traduire fichiers modifiés
