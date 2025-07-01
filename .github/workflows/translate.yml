@@ -62,5 +62,5 @@ jobs:
       run: |
         git config user.name "github-actions"
         git config user.email "github-actions@github.com"
-        git add contents/**/fr/** contents/**/en/**
+        git add content/**/fr/** contents/**/en/**
         git diff --cached --quiet || (git commit -m "Traductions automatiques via Gemini" && git push)
