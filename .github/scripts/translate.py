@@ -8,7 +8,7 @@ api_key = os.getenv("GOOGLE_API_KEY")
 if not api_key:
     raise RuntimeError("La variable d'environnement GOOGLE_API_KEY n'est pas définie.")
 
-client = genai.Client(api_key)
+client = genai.Client()
 
 MODEL_NAME = "gemini-2.0-flash-lite"
 MAX_INPUT_TOKENS = 4000
