@@ -1,4 +1,3 @@
-```markdown
 ---
 title: "TEST"
 description: "TEST"
@@ -12,4 +11,3 @@ Bonjour, ceci est un test à partir d'un fichier, oui !
 un test
 
 ![[After_Kubernetes.drawio.png]]
-```
