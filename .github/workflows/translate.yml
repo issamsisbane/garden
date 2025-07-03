@@ -64,5 +64,4 @@ jobs:
           --title "Translation update - $current_datetime" \
           --body "This PR contains the latest translations for the content files." \
           --base main \
-          --head "$branch_name" \
-          --label "translation"
+          --head "$branch_name"
