@@ -34,7 +34,7 @@ PROMPT_INSTRUCTION = """
 - If the input structure is inconsistent, **normalize it**, ensuring titles appear on a single line.
 - Your output must be in **markdown format only**, with no extra explanations or comments.
 - You will change the frontmatter properties of the notes to match the language of the translation but only the following properties : title, description and lang.
-
+- Don't add markdown tags, content is already in markdown. No ``````markdown```` at the beginning and no `````` at the end of the file.
 Only return the translated markdown content.
 """
 
