@@ -1,16 +1,19 @@
-name: Traduction conditionnelle multi-dossiers
+name: Automatic Translation
 
 on:
   push:
     branches:
-      - test-translation  # Branche à surveiller pour les modifications
-    # paths:
-    #   - 'content/**'
+      - dev
+    paths:
+      - 'content/**'
 
 jobs:
   translate:
     runs-on: ubuntu-latest
-
+    env:
+      GITHUB_ACTION_USERNAME: "github-actions"
+      GITHUB_ACTION_EMAIL: "github-actions@github.com"
+      GITHUB_ACTION_COMMIT_MESSAGE: "Automatic translation update"
     steps:
     - name: Checkout repo
       uses: actions/checkout@v3
@@ -26,23 +29,38 @@ jobs:
     - name: Install dependencies
       run: pip install google-genai
 
-    - name: Trouver fichiers sans traduction et les traduire
+    - name: Find files missing translations equivalent 
       id: find_missing
       env:
         GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
       run: |
         mapfile -t missing_files < <(bash .github/scripts/find_missing.sh)
-        echo "Fichiers sans traduction trouvés: ${#missing_files[@]}"
+        echo "Files without translation found: ${#missing_files[@]}"
 
-        echo "Fichiers à traduire: ${missing_files[*]}"
+        echo "Files to translate: ${missing_files[*]}"
         for file in ${missing_files[*]}; do
-          echo "Traduction: $file"
+          echo "Translating: $file"
           python3 .github/scripts/translate.py "$file"
         done
-        
-    - name: Commit & push fichiers traduits
+
+    - name: Commit & push translated files
       run: |
-        git config user.name "github-actions"
-        git config user.email "github-actions@github.com"
+        current_datetime=$(date '+%Y-%m-%d-%H-%M-%S')
+        branch_name="translation-$(date +%Y%m%d%H%M%S)"
+        
+        git config user.name "$GITHUB_ACTION_USERNAME"
+        git config user.email "$GITHUB_ACTION_EMAIL"
+
+        git checkout -b "$branch_name"
+
         git add content/**/fr/** content/**/en/**
-        git diff --cached --quiet || (git commit -m "Traductions automatiques via Gemini" && git push)
+        git diff --cached --quiet || git commit -m "${GITHUB_ACTION_COMMIT_MESSAGE} - $current_datetime" 
+        git push origin "$branch_name"
+
+        gh pr create \
+          --repo issamsisbane/garden \
+          --title "Translation update - $current_datetime" \
+          --body "This PR contains the latest translations for the content files." \
+          --base main \
+          --head "$branch_name" \
+          --label "translation"

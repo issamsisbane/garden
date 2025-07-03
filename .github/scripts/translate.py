@@ -6,9 +6,8 @@ from google.genai import types
 
 api_key = os.getenv("GOOGLE_API_KEY")
 if not api_key:
-    raise RuntimeError("La variable d'environnement GOOGLE_API_KEY n'est pas définie.")
+    raise RuntimeError("The environment variable GOOGLE_API_KEY is not set.")
 
-client = genai.Client()
 
 MODEL_NAME = "gemini-2.0-flash-lite"
 MAX_INPUT_TOKENS = 4000
@@ -45,23 +44,23 @@ def detect_language_from_path(path):
     elif "/en/" in path:
         return "en"
     else:
-        raise ValueError("Impossible de détecter la langue depuis le chemin")
+        raise ValueError("Unable to detect langage from path")
 
 def get_output_path(input_path, src_lang):
-    # Remplace fr/ par en/ ou inversement selon la source
     if src_lang == "fr":
         return input_path.replace("/fr/", "/en/")
     else:
         return input_path.replace("/en/", "/fr/")
 
 def translate_file(input_file):
+    client = genai.Client()
     src_lang = detect_language_from_path(input_file)
     target_lang = "fr" if src_lang == "en" else "en"
     output_file = get_output_path(input_file, src_lang)
     os.makedirs(os.path.dirname(output_file), exist_ok=True)
 
     system_instruction = PROMPT_CONTEXT + (PROMPT_TASK_TO_FRENCH if target_lang == "en" else PROMPT_TASK_TO_ENGLISH) + PROMPT_INSTRUCTION
-    print(f"Traduction de {input_file} ({src_lang}) vers {target_lang}...")
+    print(f"Translation of {input_file} ({src_lang}) to {target_lang}...")
     print(f"System Instruction {system_instruction}")
 
     with open(input_file, "r", encoding="utf-8") as f:
@@ -98,12 +97,12 @@ def translate_file(input_file):
             )
             translated_chunks.append(response.text)
         except Exception as e:
-            translated_chunks.append(f"<!-- ERREUR: {e} -->\n\n{chunk}")
+            translated_chunks.append(f"<!-- Error: {e} -->\n\n{chunk}")
 
     with open(output_file, "w", encoding="utf-8") as f:
         f.write("\n\n".join(translated_chunks))
 
-    print(f"✅ Traduction de {input_file} vers {target_lang} enregistrée dans {output_file}")
+    print(f"Translation of {input_file} to {target_lang} saved in {output_file}")
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
