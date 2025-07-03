@@ -7,7 +7,7 @@ pubDate: "Apr 24 2024"
 
 # CEST UN TEST
 
-                  sed -i -E "s|!\[\[(.*?)\]\]|![]($PORTFOLIO_ASSETS_DIR/$filename_no_ext/\1)|g" "$file"filename_no_ext
+bonjour ceci est un test depuis un ficher 
 
 un teste
 ![[AMI_image_id_copy.png]]

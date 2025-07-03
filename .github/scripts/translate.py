@@ -99,6 +99,7 @@ def translate_file(input_file):
         except Exception as e:
             translated_chunks.append(f"<!-- Error: {e} -->\n\n{chunk}")
     
+    print(f"Translated {len(translated_chunks)} chunks from {input_file} to {target_lang}.")
     print(translated_chunks[0])
     print(translated_chunks[-1])
 
