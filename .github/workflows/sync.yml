@@ -1,0 +1,92 @@
+name: Sync Notes to Portfolio
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    env:
+      PORTFOLIO_DIR: "./portfolio"
+      PORTFOLIO_ASSETS_DIR: "./portfolio/public"
+      PORTFOLIO_PROJECTS_DIR: "./portfolio/src/content/projects"
+      PORTFOLIO_BLOG_DIR: "./portfolio/src/content/blog"
+      CONTENT_DIR: "./content"
+      ASSETS_DIR: "./ASSETS"
+      PROJECTS_DIR: "./content/projects/"
+      BLOG_DIR: "./content/blog/"
+
+      GITHUB_ACTION_USERNAME: "github-actions"
+      GITHUB_ACTION_EMAIL: "github-actions@github.com"
+      GITHUB_ACTION_REPO: "issamsisbane/portfolio"
+      GITHUB_ACTION_COMMIT_MESSAGE: "Sync notes from garden"
+
+      GH_TOKEN: ${{ secrets.PORTFOLIO_SECRET_TOKEN }}
+    steps:
+      - name: Checkout Garden Repository
+        uses: actions/checkout@v3
+
+      - name: Checkout Portfolio Repository
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ env.GITHUB_ACTION_REPO }} 
+          token: ${{ secrets.PORTFOLIO_SECRET_TOKEN }}
+          path: portfolio
+          ref: main
+
+      - name: Copy assets from garden to portfolio
+        run: |
+          find $CONTENT_DIR -type f \( -name "*.md" -o -name "*.markdown" \) | while read -r file; do
+            grep -oP '!\[\[[^\]]+\]\]' "$file" | while read -r match; do
+              image=$(echo "$match" | sed -E 's/!\[\[|\]\]//g')
+              if [[ ! -f "$ASSETS_DIR/$image" ]]; then
+                  echo "Image not found: $image in $ASSETS_DIR/$image"
+              else
+                  echo "Image found: $image in ASSETS_DIR/$image"
+                  folder=$(echo "$file" | sed "s|$CONTENT_DIR/||g" | sed -E 's/\/(en|fr)//g' | xargs dirname)
+                  if [[ ! -d "$folder" ]]; then
+                    mkdir -p "$PORTFOLIO_ASSETS_DIR/$folder"
+                    echo "Created directory: $PORTFOLIO_ASSETS_DIR/$folder"
+                  fi
+                  sed -i -E "s|!\[\[(.*?)\]\]|![]($PORTFOLIO_ASSETS_DIR/$folder\1)|g" "$file"
+                  cp "$ASSETS_DIR/$image" "$PORTFOLIO_ASSETS_DIR/$folder/$image"
+              fi
+            done
+          done
+
+      - name: Copy blog posts and projects notes
+        run: |
+          rsync -av $BLOG_DIR $PORTFOLIO_BLOG_DIR
+          rsync -av $PROJECTS_DIR $PORTFOLIO_PROJECTS_DIR 
+          cd $PORTFOLIO_DIR
+      
+      - name: Commit and Push changes to portfolio repository
+        run: |
+          current_datetime=$(date '+%Y-%m-%d-%H-%M-%S')
+          branch_name="sync-notes-$current_datetime"
+
+          cd portfolio
+
+          git config --global user.name $GITHUB_ACTION_USERNAME 
+          git config --global user.email $GITHUB_ACTION_EMAIL
+
+          git checkout -b "$branch_name"
+
+          git add .
+
+          if git diff-index --quiet HEAD; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
+          git commit -m "$GITHUB_ACTION_COMMIT_MESSAGE - $current_datetime"
+          git push origin "$branch_name"
+
+          gh pr create \
+            --repo issamsisbane/portfolio \
+            --title "Sync notes $current_datetime" \
+            --body "Automated sync of notes from garden repo." \
+            --base main \
+            --head "$branch_name"

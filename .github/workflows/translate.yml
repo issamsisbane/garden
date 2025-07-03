@@ -1,0 +1,73 @@
+name: Automatic Translation
+
+on:
+  push:
+    branches:
+      - dev
+    paths:
+      - 'content/**'
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_ACTION_USERNAME: "github-actions"
+      GITHUB_ACTION_EMAIL: "github-actions@github.com"
+      GITHUB_ACTION_COMMIT_MESSAGE: "Automatic translation update"
+
+      GH_TOKEN: ${{ github.token }}
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        ref: dev 
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: pip install google-genai
+
+    - name: Find files missing translations equivalent 
+      id: find_missing
+      env:
+        GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+      run: |
+        mapfile -t missing_files < <(bash .github/scripts/find_missing.sh)
+        echo "Files without translation found: ${#missing_files[@]}"
+
+        echo "Files to translate: ${missing_files[*]}"
+        for file in ${missing_files[*]}; do
+          echo "Translating: $file"
+          python3 .github/scripts/translate.py "$file"
+        done
+
+    - name: Commit & push translated files
+      run: |
+        current_datetime=$(date '+%Y-%m-%d-%H-%M-%S')
+        branch_name="translation-$(date +%Y%m%d%H%M%S)"
+        
+        git config user.name "$GITHUB_ACTION_USERNAME"
+        git config user.email "$GITHUB_ACTION_EMAIL"
+
+        git checkout -b "$branch_name"
+
+        git add .
+
+        if git diff-index --quiet HEAD; then
+          echo "No changes to commit."
+          exit 0
+        fi
+
+        git commit -m "${GITHUB_ACTION_COMMIT_MESSAGE} - $current_datetime" 
+        git push origin "$branch_name"
+
+        gh pr create \
+          --repo issamsisbane/garden \
+          --title "Translation update - $current_datetime" \
+          --body "This PR contains the latest translations for the content files." \
+          --base main \
+          --head "$branch_name"
