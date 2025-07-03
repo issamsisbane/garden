@@ -40,18 +40,20 @@ jobs:
         run: |
           find $CONTENT_DIR -type f \( -name "*.md" -o -name "*.markdown" \) | while read -r file; do
             grep -oP '!\[\[[^\]]+\]\]' "$file" | while read -r match; do
+              filename=$(basename "$file")
+              filename_no_ext="${filename%.*}"
               image=$(echo "$match" | sed -E 's/!\[\[|\]\]//g')
               if [[ ! -f "$ASSETS_DIR/$image" ]]; then
                   echo "Image not found: $image in $ASSETS_DIR/$image"
               else
                   echo "Image found: $image in ASSETS_DIR/$image"
-                  folder=$(echo "$file" | sed "s|$CONTENT_DIR/||g" | sed -E 's/\/(en|fr)//g' | xargs dirname)
-                  if [[ ! -d "$folder" ]]; then
-                    mkdir -p "$PORTFOLIO_ASSETS_DIR/$folder"
-                    echo "Created directory: $PORTFOLIO_ASSETS_DIR/$folder"
+
+                  if [[ ! -d "$PORTFOLIO_ASSETS_DIR/$filename_no_ext" ]]; then
+                    mkdir -p "$PORTFOLIO_ASSETS_DIR/$filename_no_ext"
+                    echo "Created directory: $PORTFOLIO_ASSETS_DIR/$filename_no_ext"
                   fi
-                  sed -i -E "s|!\[\[(.*?)\]\]|![]($PORTFOLIO_ASSETS_DIR/$folder\1)|g" "$file"
-                  cp "$ASSETS_DIR/$image" "$PORTFOLIO_ASSETS_DIR/$folder/$image"
+                  sed -i -E "s|!\[\[(.*?)\]\]|![]($PORTFOLIO_ASSETS_DIR/$filename_no_ext/\1)|g" "$file"
+                  cp "$ASSETS_DIR/$image" "$PORTFOLIO_ASSETS_DIR/$filename_no_ext/$image"
               fi
             done
           done
