@@ -74,12 +74,12 @@ jobs:
 
           git checkout -b "$branch_name"
 
+          git add .
+
           if git diff-index --quiet HEAD; then
             echo "No changes to commit."
             exit 0
           fi
-
-          git add .
 
           git commit -m "$GITHUB_ACTION_COMMIT_MESSAGE - $current_datetime"
           git push origin "$branch_name"
