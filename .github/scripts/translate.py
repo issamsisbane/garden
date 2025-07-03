@@ -99,11 +99,8 @@ def translate_file(input_file):
         except Exception as e:
             translated_chunks.append(f"<!-- Error: {e} -->\n\n{chunk}")
     
-    if translated_chunks and translated_chunks[0].strip() == "```markdown":
-        translated_chunks = translated_chunks[1:]
-
-    if translated_chunks and translated_chunks[-1].strip() == "```":
-        translated_chunks = translated_chunks[:-1]
+    print(translated_chunks[0])
+    print(translated_chunks[-1])
 
     with open(output_file, "w", encoding="utf-8") as f:
         f.write("\n\n".join(translated_chunks))
