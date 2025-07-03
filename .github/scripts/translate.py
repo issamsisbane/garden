@@ -33,7 +33,7 @@ PROMPT_INSTRUCTION = """
     - Lists and indentation
 - If the input structure is inconsistent, **normalize it**, ensuring titles appear on a single line.
 - Your output must be in **markdown format only**, with no extra explanations or comments.
-- You will change the frontmatter properties of the notes to match the language of the translation but only the files : title, description and lang.
+- You will change the frontmatter properties of the notes to match the language of the translation but only the following properties : title, description and lang.
 
 Only return the translated markdown content.
 """
