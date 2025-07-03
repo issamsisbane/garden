@@ -9,6 +9,6 @@ pubDate: "Apr 24 2024"
 
 bonjour ceci est un test depuis un fichier !
 
-un test
+un teste
 ![[AMI_image_id_copy.png]]
 ![[AMI_image_id_copy_2.png]]
