@@ -33,8 +33,7 @@ PROMPT_INSTRUCTION = """
     - Lists and indentation
 - If the input structure is inconsistent, **normalize it**, ensuring titles appear on a single line.
 - Your output must be in **markdown format only**, with no extra explanations or comments.
-- You will change the frontmatter properties of the notes to match the language of the translation but only the following properties : title, description and lang.
-
+- You will change the frontmatter properties of the notes to match the language of the translation but only the following properties : title, description and lang. DO NOT change the others properties. DO NOT change the pubDate proerty.
 Only return the translated markdown content.
 """
 
@@ -99,6 +98,13 @@ def translate_file(input_file):
             translated_chunks.append(response.text)
         except Exception as e:
             translated_chunks.append(f"<!-- Error: {e} -->\n\n{chunk}")
+    
+
+    if translated_chunks and "```markdown" in translated_chunks[0]:
+        lines_first_chunk = translated_chunks[0].splitlines()
+        translated_chunks[0] = "\n".join(lines_first_chunk[1:])
+        lines_last_chunks = translated_chunks[-1].splitlines()
+        translated_chunks[-1] = "\n".join(lines_last_chunks[:-1])
 
     with open(output_file, "w", encoding="utf-8") as f:
         f.write("\n\n".join(translated_chunks))
