@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PORTFOLIO_DIR: "./portfolio"
-      PORTFOLIO_ASSETS_DIR: "./portfolio/public"
+      PORTFOLIO_ASSETS_DIR: "/portfolio/public"
       PORTFOLIO_PROJECTS_DIR: "./portfolio/src/content/projects"
       PORTFOLIO_BLOG_DIR: "./portfolio/src/content/blog"
       CONTENT_DIR: "./content"
@@ -58,12 +58,12 @@ jobs:
               else
                   echo "Image found: $image in ASSETS_DIR/$image"
 
-                  if [[ ! -d "$destination_dir" ]]; then
-                    mkdir -p "$destination_dir"
-                    echo "Created directory: $destination_dir"
+                  if [[ ! -d ".$destination_dir" ]]; then
+                    mkdir -p ".$destination_dir"
+                    echo "Created directory: .$destination_dir"
                   fi
                   sed -i -E "s|!\[\[(.*?)\]\]|![]($destination_dir/\1)|g" "$file"
-                  cp "$ASSETS_DIR/$image" "$destination_dir/$image"
+                  cp "$ASSETS_DIR/$image" ".$destination_dir/$image"
               fi
             done
           done
