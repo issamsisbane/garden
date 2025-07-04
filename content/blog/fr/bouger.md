@@ -7,7 +7,7 @@ pubDate: "Apr 24 2024"
 
 # CEST UN TEST
 
-bonjour ceci est un test depuis un ficher 
+bonjour ceci est un test depuis un ficheri ! 
 
 un teste
 ![[AMI_image_id_copy.png]]
