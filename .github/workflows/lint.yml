@@ -1,0 +1,56 @@
+name: Lint
+run-name: Lint Publications
+
+on:
+  push:
+    paths:
+      - 'content/**'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    env:
+      CONTENT_DIR: "./content"
+    steps:
+      - name: Checkout Garden Repository
+        uses: actions/checkout@v3
+
+      - name: Lint Publications to make sure it can be published with correct front matter properties
+        run: |
+          files=$(find $CONTENT_DIR -name "*.md")
+
+          ## Get the section starting with --- and ending with ---
+          for file in $files; do
+              echo "Linting $file"
+              if ! grep -q "^---$" "$file"; then
+                  echo "Error: $file does not start with '---'"
+                  echo "You may have forgotten to add the front matter section. It's mandatory for publication."
+                  exit 1
+              fi
+
+              section=$(awk '/^---/ {if (++c == 1) next; if (c == 2) exit} c == 1' "$file")
+
+              echo "Section: $section"
+
+              missing_keys=()
+
+              [[ "$section" == *title:* ]]       || missing_keys+=("title")
+              [[ "$section" == *description:* ]] || missing_keys+=("description")
+              [[ "$section" == *lang:* ]]        || missing_keys+=("lang")
+              [[ "$section" == *pubDate:* ]]     || missing_keys+=("pubDate")
+              [[ "$section" == *heroImage:* ]]   || missing_keys+=("heroImage")
+              [[ "$section" == *badge:* ]]       || missing_keys+=("badge")
+              [[ "$section" == *tags:* ]]        || missing_keys+=("tags")
+
+              if [[ "$section" == *lang:* ]]; then
+                  if ! grep -qE '^lang:\s*(en|fr)*' <<< "$section"; then
+                      echo "Error: $file has an invalid 'lang' key. It must be set to 'en' or 'fr'."
+                      exit 1
+                  fi
+              fi
+
+              if [[ ${#missing_keys[@]} -gt 0 ]]; then
+                  echo "Error: $file is missing the following front matter keys: ${missing_keys[*]}"
+                  exit 1
+              fi 
+          done 
