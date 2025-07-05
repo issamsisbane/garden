@@ -1,1 +1,5 @@
 ![[Pasted image 20250705191419.png]]
+
+
+![[yt.gif]]
+
