@@ -99,8 +99,8 @@ jobs:
 
       - name: Copy blog posts and projects notes
         run: |
-          rsync -av $BLOG_DIR $PORTFOLIO_BLOG_DIR
-          rsync -av $PROJECTS_DIR $PORTFOLIO_PROJECTS_DIR 
+          rsync -av --delete $BLOG_DIR $PORTFOLIO_BLOG_DIR
+          rsync -av --delete $PROJECTS_DIR $PORTFOLIO_PROJECTS_DIR 
           cd $PORTFOLIO_DIR
       
       - name: Commit and Push changes to portfolio repository
