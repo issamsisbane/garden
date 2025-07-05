@@ -316,15 +316,6 @@ Les **politiques IAM** sont des documents JSON qui définissent quelles actions 
 3. **Politiques gérées par le client**
     
     - Les **politiques gérées par le client** sont des politiques que vous **créez et gérez** vous-même. Ces politiques peuvent être attachées à plusieurs utilisateurs, rôles ou groupes, ce qui les rend beaucoup plus polyvalentes et réutilisables.
-```
-
-```markdown
----
-title: "Rôles IAM"
-description: "Traduction des rôles IAM en français"
-lang: "fr"
-pubDate: "2024-09-25T12:00:00Z"
----
 
 ## Rôles IAM
 
