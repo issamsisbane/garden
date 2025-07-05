@@ -241,15 +241,6 @@ En combinant des sous-réseaux privés, des passerelles NAT et des groupes de s�
 Cette architecture tire parti des meilleures pratiques AWS pour garantir un environnement évolutif, hautement disponible et sécurisé pour l'application web. La conception répond non seulement aux exigences actuelles, mais offre également une flexibilité pour la croissance future.
 
 # 5 - Configuration de l'hôte Bastion
-```
-
-```markdown
----
-title: Qu'est-ce qu'un Hôte Bastion ?
-description: Découvrez comment un hôte bastion sécurise l'accès aux ressources dans un réseau privé.
-lang: fr
-pubDate: 2024-01-27T10:00:00.000Z
----
 
 ### Qu'est-ce qu'un Hôte Bastion ?
 

@@ -299,15 +299,6 @@ Le choix dépend de :
 * les besoins spécifiques du projet
 
 Voici quelques-uns des outils CI les plus populaires, chacun ayant ses propres forces :
-```
-
-```markdown
----
-title: Jenkins, GitLab CI, GitHub Actions et Architectures de Pipelines CI/CD
-description: Comparaison des outils CI/CD, architecture des pipelines, stratégies de déploiement et exemple de workflow GitHub Actions.
-lang: fr
-pubDate: 2024-05-15
----
 
 ### Jenkins
 
@@ -621,16 +612,6 @@ jobs:
 Il s'agit d'un flux de travail très simple, exécutant une commande echo dans le cli de l'exécuteur.
 
 # 10 - Projet | Pipeline CI/CD pour une fonction Lambda
-```
-
-
-```markdown
----
-title: Mise à jour d'une fonction Lambda avec GitHub Actions
-description: Mise à jour d'une fonction Lambda avec GitHub Actions
-lang: fr
-pubDate: 2024-10-06T12:56:15.000Z
----
 
 ## 1 - Aperçu
 
