@@ -1,0 +1,34 @@
+#!/bin/bash
+
+set -e
+
+MARKDOWN_DIR="."
+ASSETS_SOURCE="../ASSETS"
+ASSETS_DEST="$MARKDOWN_DIR/assets"
+
+# Trouver tous les fichiers .md dans 3 - GARDEN (sous-dossiers inclus)
+find "$MARKDOWN_DIR" -type f -name "*.md" | while read -r mdfile; do
+  # Extraire toutes les références du type ![[image.jpg]]
+  grep -oP '!\[\[\K[^\]]+' "$mdfile" | while read -r image; do
+    # echo "🔍 Vérification de l'image '$image' dans '$mdfile'"
+    src="$ASSETS_SOURCE/$image"
+    dest="$ASSETS_DEST/$image"
+
+    # Si le fichier image existe dans ASSETS
+    if [[ -f "$dest" ]]; then
+      # S'il n'est pas déjà copié
+      if [[ ! -f "$src" ]]; then
+        # echo "📥 Copie de '$image' vers '$ASSETS_DEST'"
+        cp "$dest" "$src"
+      fi
+    else
+      echo "❌ Image manquante : '$image' référencée dans '$mdfile' mais absente de '$ASSETS_SOURCE'"
+      echo "⛔ Commit annulé."
+      exit 1
+    fi
+  done
+done
+
+echo "✅ Toutes les images référencées ont été vérifiées et copiées si nécessaire."
+
+exit 0
