@@ -1,4 +1,4 @@
-name: Linter Publications
+name: Lint Publications
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - 'content/**'
 
 jobs:
-  sync:
+  lint:
     runs-on: ubuntu-latest
     env:
       CONTENT_DIR: "./content"
