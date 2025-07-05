@@ -1,0 +1,29 @@
+name: Push Translations to Dev
+run-name: Pull Request to Dev Branch to get latest translations
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  pullRequestToDev:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        ref: dev 
+
+    - name: Commit & push translated files
+      run: |
+        current_datetime=$(date '+%Y-%m-%d-%H-%M-%S')
+        gh pr create \
+          --repo issamsisbane/garden \
+          --title "Translation update - $current_datetime" \
+          --body "This PR contains the latest translations for the content files." \
+          --base dev \
+          --head main
