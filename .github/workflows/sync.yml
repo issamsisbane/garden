@@ -55,6 +55,7 @@ jobs:
             fi
 
             destination_dir="$PORTFOLIO_ASSETS_DIR/$section/$filename_no_ext"
+            destination_dir_no_public="${destination_dir/public\//}"
 
             ## Image in frontmatter treatment
             hero_image=$(awk '/^---$/ {count++} count==1 && !/^---$/ && $0 ~ /^heroImage:/ {gsub(/^heroImage:[[:space:]]*/, "", $0); print $0}' "$file")
@@ -73,7 +74,7 @@ jobs:
                 cp "$ASSETS_DIR/$hero_image" ".$destination_dir/$hero_image"
 
                 # Remplacer le chemin de l'image dans le frontmatter
-                sed -i -E "0,/^(heroImage:[[:space:]]*)$hero_image/s#^(heroImage:[[:space:]]*)$hero_image#\1$destination_dir/$hero_image#" "$file"
+                sed -i -E "0,/^(heroImage:[[:space:]]*)$hero_image/s#^(heroImage:[[:space:]]*)$hero_image#\1$destination_dir_no_public/$hero_image#" "$file"
               fi
             fi
             
@@ -90,7 +91,7 @@ jobs:
                     mkdir -p ".$destination_dir"
                     echo "Created directory: .$destination_dir"
                   fi
-                  sed -i -E "s|!\[\[(.*?)\]\]|![]($destination_dir/\1)|g" "$file"
+                  sed -i -E "s|!\[\[(.*?)\]\]|![]($destination_dir_no_public/\1)|g" "$file"
                   cp "$ASSETS_DIR/$image" ".$destination_dir/$image"
               fi
             done
