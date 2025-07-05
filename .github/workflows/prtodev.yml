@@ -7,7 +7,7 @@ on:
       - main
 
 jobs:
-  prtodev:
+  pullRequestToDev:
     runs-on: ubuntu-latest
     env:
       GH_TOKEN: ${{ github.token }}
@@ -19,9 +19,8 @@ jobs:
         ref: dev 
 
     - name: Commit & push translated files
-      run: 
+      run: |
         current_datetime=$(date '+%Y-%m-%d-%H-%M-%S')
-        
         gh pr create \
           --repo issamsisbane/garden \
           --title "Translation update - $current_datetime" \
