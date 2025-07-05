@@ -73,7 +73,7 @@ jobs:
                 cp "$ASSETS_DIR/$hero_image" ".$destination_dir/$hero_image"
 
                 # Remplacer le chemin de l'image dans le frontmatter
-                sed -i -E "0,/^(heroImage:[[:space:]]*)$hero_image/s//\1$destination_dir\/$hero_image/" "$file"
+                sed -i -E "0,/^(heroImage:[[:space:]]*)$hero_image/s#^(heroImage:[[:space:]]*)$hero_image#\1$destination_dir/$hero_image#" "$file"
               fi
             fi
             
