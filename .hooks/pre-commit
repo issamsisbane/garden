@@ -33,4 +33,7 @@ find "$MARKDOWN_DIR" -type f -name "*.md" | while read -r mdfile; do
   done
 done
 
+
+echo "✅ Toutes les images référencées ont été vérifiées et copiées si nécessaire."
+
 exit 0

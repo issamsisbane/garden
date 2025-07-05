@@ -6,9 +6,6 @@ MARKDOWN_DIR="."
 ASSETS_SOURCE="../ASSETS"
 ASSETS_DEST="$MARKDOWN_DIR/assets"
 
-# Crée le dossier destination s'il n'existe pas
-mkdir -p "$ASSETS_DEST"
-
 # Trouver tous les fichiers .md dans 3 - GARDEN (sous-dossiers inclus)
 find "$MARKDOWN_DIR" -type f -name "*.md" | while read -r mdfile; do
   # Extraire toutes les références du type ![[image.jpg]]
@@ -21,7 +18,7 @@ find "$MARKDOWN_DIR" -type f -name "*.md" | while read -r mdfile; do
     if [[ -f "$dest" ]]; then
       # S'il n'est pas déjà copié
       if [[ ! -f "$src" ]]; then
-        echo "📥 Copie de '$image' vers '$ASSETS_DEST'"
+        # echo "📥 Copie de '$image' vers '$ASSETS_DEST'"
         cp "$dest" "$src"
       fi
     else
