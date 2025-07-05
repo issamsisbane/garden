@@ -1,9 +1,13 @@
 name: Sync
 run-name: Sync notes from garden to portfolio repository
+
 on:
-  push:
+  workflow_run:
+    workflows: ["Lint"]
     branches:
       - main
+    types:
+      - completed
 
 jobs:
   sync:
