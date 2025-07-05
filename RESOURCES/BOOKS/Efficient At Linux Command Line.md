@@ -62,3 +62,45 @@ popd
 dirs
 pushd 
 ```
+
+# Read files
+
+On peut utiliser la commande less pour afficher un fichier paginer. Cela peut etre utilie pour des logs par exemple plutot de d'utiliser un ls degeulasse...
+
+```
+less [file]
+```
+
+- `space` : va a la prochaine page
+- `b` : va la page precedente
+- `G` : Aller à la fin du fichier.
+- `g` : Aller au début du fichier.
+- `/motif` : Rechercher vers l'avant pour un motif.
+- `?motif` : Rechercher vers l'arrière pour un motif.
+- `n` : Aller à l'occurrence suivante du motif recherché.
+- `N` : Aller à l'occurrence précédente du motif recherché.
+- `q` : Quitter `less`.
+- `-N` : Affiche les numéros de ligne.
+- `-S` : Désactive le retour à la ligne, utile pour les fichiers avec de longues lignes.
+# AWK
+
+La commande awk permet de process du texte.
+
+On peut afficher les mots d'une certaine colonne meme si le separateur n'est pas le meme entre toutes les lignes. 
+
+```
+awk '{print $2}' /etc/hosts
+```
+
+Supprimer la premiere ligne : 
+
+```
+awk 'FNR>1{print $4}'
+```
+
+De plus on peut utiliser une regex comme separateur
+
+
+```
+awk -F':*' '{print $2}'
+```
