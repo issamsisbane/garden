@@ -435,15 +435,6 @@ terraform {
 - **Sécurité** : Le fichier d'état peut contenir des informations sensibles (comme les ID de ressources et les métadonnées), donc l'utilisation de **politiques IAM** pour un accès sécurisé à l'état distant garantit la confidentialité.
 - **Verrouillage d'état** : L'utilisation de DynamoDB pour verrouiller le fichier d'état empêche les conditions de concurrence ou les modifications simultanées de l'infrastructure.
 - **Reprise après sinistre** : Le stockage de l'état à distance garantit que l'état peut être restauré en cas de défaillances locales ou de catastrophes.
-```
-
-```markdown
----
-title: Considérations importantes pour l'état distant
-description: Traduction en français du document Markdown original.
-lang: fr
-pubDate: 2024-06-07T14:30:00.000Z
----
 
 #### Considérations importantes pour l'état distant
 
