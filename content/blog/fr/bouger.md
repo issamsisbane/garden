@@ -10,7 +10,7 @@ tags: ["test"]
 
 # CEST UN TEST
 
-bonjour ceci est un test depuis un ficheri ! oui with lint ! oui
+bonjour ceci est un test depuis un ficheri ! oui with lint 
 
 un test non
 ![[AMI_image_id_copy.png]]
