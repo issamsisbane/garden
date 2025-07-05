@@ -1,5 +1,5 @@
-name: Sync Notes to Portfolio
-
+name: Sync
+run-name: Sync notes from garden to portfolio repository
 on:
   push:
     branches:
@@ -39,19 +39,43 @@ jobs:
       - name: Copy assets from garden to portfolio
         run: |
           find $CONTENT_DIR -type f \( -name "*.md" -o -name "*.markdown" \) | while read -r file; do
-            grep -oP '!\[\[[^\]]+\]\]' "$file" | while read -r match; do
-              filename=$(basename "$file")
-              filename_no_ext="${filename%.*}"
-              image=$(echo "$match" | sed -E 's/!\[\[|\]\]//g')
+            
+            filename=$(basename "$file")
+            filename_no_ext="${filename%.*}"
 
-              # Détection du sous-chemin (blog ou projects)
-              if [[ "$file" == *"/blog/"* ]]; then
-                section="blog"
+            # Détection du sous-chemin (blog ou projects)
+            if [[ "$file" == *"/blog/"* ]]; then
+              section="blog"
+            else
+              section="projects"
+            fi
+
+            destination_dir="$PORTFOLIO_ASSETS_DIR/$section/$filename_no_ext"
+
+            ## Image in frontmatter treatment
+            hero_image=$(awk '/^---$/ {count++} count==1 && !/^---$/ && $0 ~ /^heroImage:/ {gsub(/^heroImage:[[:space:]]*/, "", $0); print $0}' "$file")
+
+            if [[ -n "$hero_image" ]]; then
+              if [[ ! -f "$ASSETS_DIR/$hero_image" ]]; then
+                echo "Hero image not found: $hero_image in $ASSETS_DIR/$hero_image"
               else
-                section="projects"
-              fi
+                echo "Hero image found: $hero_image in $ASSETS_DIR/$hero_image"
 
-              destination_dir="$PORTFOLIO_ASSETS_DIR/$section/$filename_no_ext"
+                if [[ ! -d ".$destination_dir" ]]; then
+                  mkdir -p ".$destination_dir"
+                  echo "Created directory: .$destination_dir"
+                fi
+
+                cp "$ASSETS_DIR/$hero_image" ".$destination_dir/$hero_image"
+
+                # Remplacer le chemin de l'image dans le frontmatter
+                sed -i -E "0,/^(heroImage:[[:space:]]*)$hero_image/s//\1$destination_dir\/$hero_image/" "$file"
+              fi
+            fi
+            
+            ## Image in text treatment
+            grep -oP '!\[\[[^\]]+\]\]' "$file" | while read -r match; do
+              image=$(echo "$match" | sed -E 's/!\[\[|\]\]//g')
 
               if [[ ! -f "$ASSETS_DIR/$image" ]]; then
                   echo "Image not found: $image in $ASSETS_DIR/$image"
