@@ -1,8 +1,9 @@
-name: Automatic Translation
+name: Translate 
+run-name: Automatic Translation
 
 on:
   workflow_run:
-    workflows: ["Linter Publications"]
+    workflows: ["Lint"]
     branches:
       - dev
     types:

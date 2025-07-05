@@ -1,5 +1,5 @@
-name: Sync Notes to Portfolio
-
+name: Sync
+run-name: Sync notes from garden to portfolio repository
 on:
   push:
     branches:

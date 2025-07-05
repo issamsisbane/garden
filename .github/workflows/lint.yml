@@ -1,4 +1,5 @@
-name: Lint Publications
+name: Lint
+run-name: Lint Publications
 
 on:
   push:
