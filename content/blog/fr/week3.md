@@ -204,15 +204,6 @@ Le **stockage par blocs** stocke les données dans des blocs de taille fixe, cha
 -   **Frais généraux de gestion** : Le stockage par blocs nécessite souvent une **gestion manuelle** pour la mise à l'échelle, ce qui peut introduire une complexité et des frais généraux opérationnels supplémentaires.
 
 **Exemple** : **Amazon EBS (Elastic Block Store)** — Une solution de stockage par blocs hautes performances à utiliser avec les instances Amazon EC2.
-```
-
-```markdown
----
-title: Stockage d'objets
-description: Comprendre le stockage d'objets, ses avantages, ses inconvénients et ses cas d'utilisation.
-lang: fr
-pubDate: 2024-01-24
----
 
 ## Stockage d'objets
 
@@ -441,15 +432,6 @@ La **mise à l'échelle sans serveur** est fondamentalement différente de la mi
 -   Chaque **requête entrante** déclenche une nouvelle instance d'une fonction sans serveur (telle que **AWS Lambda**, **Google Cloud Functions** ou **Azure Functions**).
 -   Le fournisseur de cloud gère la mise à l'échelle de manière transparente, en veillant à ce que l'application puisse gérer n'importe quelle quantité de trafic en **lançant automatiquement de nouvelles instances** si nécessaire.
 -   Chaque instance fonctionne **indépendamment** et est de courte durée, traitant une seule tâche avant de se terminer.
-```
-
-```markdown
----
-title: Avantages et inconvénients de la mise à l'échelle sans serveur
-description: Découvrez les avantages et les inconvénients de la mise à l'échelle sans serveur.
-lang: fr
-pubDate: 2024-01-24T10:00:00.000Z
----
 
 ## Principaux avantages
 
