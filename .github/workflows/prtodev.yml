@@ -21,10 +21,10 @@ jobs:
     - name: Commit & push translated files
       run: 
         current_datetime=$(date '+%Y-%m-%d-%H-%M-%S')
-
+        
         gh pr create \
           --repo issamsisbane/garden \
-          --title "Translation update  - $current_datetime" \
+          --title "Translation update - $current_datetime" \
           --body "This PR contains the latest translations for the content files." \
           --base dev \
           --head main
