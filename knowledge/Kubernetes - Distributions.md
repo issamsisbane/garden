@@ -63,3 +63,8 @@ Several options exist for setting up a Kubernetes cluster.
 - Future courses will cover more advanced options like Talos Linux
 
 - GitOps approach will make it easy to transfer setups between distributions
+
+# Tools
+
+[[Minikube]]
+[[Rancher Desktop]]

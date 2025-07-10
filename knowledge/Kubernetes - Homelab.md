@@ -1,4 +1,4 @@
-1 - [[Kubernetes Distributions]]
+1 - [[Kubernetes - Distributions]]
 2 - [[Install K3S]]
 3 - [[Install Flux]]
 4 - [[Flux Deployment]]

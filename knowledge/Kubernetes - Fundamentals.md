@@ -1,5 +1,5 @@
-1 - [[LAB SETUP]]
-2 - [[Why Kubernetes]]
+1 - [[Kubernetes - Lab Setup]]
+2 - [[Kubernetes - The Need]]
 3 - [[Pods]]
 4 - [[Control Plane]]
 5 - [[Deployment]]

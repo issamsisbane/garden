@@ -592,7 +592,7 @@ Finally, We could conclude that terraform has a less verbose syntax making it za
 ---
 # 8 - Project | Deploy a Next-Js Application
 
-[[AWS Bucket Access Control]]
+[[AWS - Bucket Policies]]
 ## 1. Requirements
 
 #### Scenario Overview

@@ -1,0 +1,3 @@
+[[PARA]]
+[[Obsidian]]
+[[Zettlekasten]]
