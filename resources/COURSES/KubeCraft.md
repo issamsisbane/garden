@@ -1,3 +1,3 @@
-[[Kubernetes Fundamentals]]
-[[Kubernetes Homelab]]
+[[Kubernetes - Fundamentals]]
+[[Kubernetes - Homelab]]
 [[Learning Arch Linux]]

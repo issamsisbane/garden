@@ -1,0 +1,1 @@
+https://korben.info/gemini-cli-google-terminal-ia.html

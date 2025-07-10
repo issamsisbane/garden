@@ -11,3 +11,6 @@ CKS: [https://medium.com/@mauricioqdevops/the-ultimate-cks-guide-2025-28918e524
 KillerCoda
 Killer.sh
 Mumshad Courses
+
+
+![[Pasted image 20250119162702.png]]

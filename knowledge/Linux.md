@@ -1,0 +1,2 @@
+[[Install Linux]]
+[[Bash]]
