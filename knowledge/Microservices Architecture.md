@@ -4,9 +4,6 @@
 
 ## How Microservices architecture works ?
 
-
-![[Microservices_architecturenn.drawio.png]]
-
 Microservices architecture is built upon three primary layers :
 ### 1. User Interface (UI)
 

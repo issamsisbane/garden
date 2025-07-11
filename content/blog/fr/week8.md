@@ -616,7 +616,7 @@ Il s'agit d'un flux de travail très simple, exécutant une commande echo dans l
 ## 1 - Aperçu
 
 L'objectif de ce projet est de mettre à jour une fonction Lambda existante lorsque du code est poussé dans un référentiel. Des secrets seront utilisés pour authentifier les actions GitHub auprès d'AWS afin de déployer notre fonction lambda.
-![](/portfolio/blog/week8/Pasted image 20241006125615.png)
+
 Runner :
 1. Extrait le code du référentiel
 2. Configure l'environnement python et installe les dépendances

@@ -39,7 +39,7 @@ In order to be efficient and adapt to users needs we must ensure an architecture
 
 ## Part 1: Monolithic Architecture Design
 
-![[monolithic_architecture_ecommerce.png|center]]
+![[monolithic_architecture_ecommerce.png]]
 
 ### Components 
 
@@ -76,7 +76,7 @@ The monolithic architecture follows a layered pattern where all functionalities 
 
 ## Part 2: Refactoring into Microservices
 
-![[microservices_architecture_ecommerce.gif|center]]
+![[microservices_architecture_ecommerce.gif]]
 
 ### Design Microservices
 
