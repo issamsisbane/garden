@@ -5,7 +5,7 @@ tags: ["Cloud Academy"]
 ## 1 - Overview
 
 The goal of this project is to update an existing lambda Function when code is push in a repository. Secrets will be used to authenticate github actions to AWS to deploy our lambda function.
-![[Pasted image 20241006125615.png]]
+
 Runner : 
 1. Checks out the code from the repository
 2. Setup python envrionement and install dependencies

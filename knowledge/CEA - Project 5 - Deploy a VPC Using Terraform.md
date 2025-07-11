@@ -138,7 +138,7 @@ We can then validate to let terraform create the resources :
 terraform apply
 ```
 
-![[terraform_apply_screenshot_2.png | center]]
+![[terraform_apply_screenshot_2.png]]
 We can go to the AWS Portal to verify everything was created.
 
 ## 5. Clean
@@ -149,6 +149,6 @@ Finally we can delete the resources :
 terraform destroy
 ```
 
-![[terraform_destroy.png | center]]
+![[terraform_destroy.png]]
 
 Finally, We could conclude that terraform has a less verbose syntax making it zasier than CLoudFormation. Moreover we have lot more informations in the CLI and we could directly see if everything is ok that is a lot better and more visual.

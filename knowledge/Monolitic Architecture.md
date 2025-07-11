@@ -16,8 +16,6 @@ The **data interface** is responsible for managing all **data storage** and retr
 
 # How Monolithic Architecture Works
 
-![[mon,olitic_architecturenn.drawio.png]]
-
 In a monolithic system:
 
 1. **User Interaction**: The user interacts with the **user interface** (UI), sending actions or requests to the application.

@@ -4,8 +4,6 @@
 
 ## The Three Tiers of Architecture
 
-![[Three_Tier_Architecture.drawio.png]]
-
 ### 1. **Presentation Tier** (Web/UI Layer)
 
 The **presentation tier**, also known as the **user interface (UI) layer**, is the part of the application that users interact with directly. This layer is responsible for displaying data to users and capturing user input.
