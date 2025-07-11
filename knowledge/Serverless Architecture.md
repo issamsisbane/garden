@@ -6,8 +6,6 @@ Despite its name, **"serverless"** doesn't mean that servers are no longer invol
 
 ## How Serverless Architecture Works ?
 
-![[Serverless_architecturenn.drawio.png]]
-
 In a **serverless architecture**, the application runs in **stateless compute containers** that are **event-triggered** and fully managed by the cloud provider. Here’s a breakdown of how the architecture functions:
 
 1. **User Interaction**
