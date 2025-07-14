@@ -1,0 +1,1 @@
+Dans les projets Typescript Angular notamment, on va préférer utiliser des fichiers de configuration .js plutôt que Typescript même si ça nuit à la cohérence du projet.

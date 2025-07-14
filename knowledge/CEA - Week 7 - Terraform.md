@@ -7,7 +7,7 @@ tags: ["Cloud Academy"]
 [[IaC]]
 
 ---
-1 - [[Terraform Fundamentals]]
+1 - [[Terraform - Fundamentals]]
 2 - [[Terraform vs CloudFormation]]
 3 - [[Terraform Simple Example]]
 4 - [[Terraform - Commands]]

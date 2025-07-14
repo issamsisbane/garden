@@ -7,8 +7,8 @@ https://www.educative.io/cloudlabs
 # CLI
 
 [[Atuin]]
-[[3 - GARDEN/knowledge/k9s|k9s]]
-[[Tools - AI CLI]]
+[[K9S|K9S]]
+[[Tools - AI]]
 
 # Presentation
 
@@ -23,3 +23,9 @@ https://www.educative.io/cloudlabs
 
 [[Virtual Space]]
 
+
+# My Tools
+[[Custom Tools]]
+
+# Dev
+[[Dev Containers]]

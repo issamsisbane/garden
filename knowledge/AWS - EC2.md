@@ -91,4 +91,4 @@ We can use a combination of On-Demand and reserved instances to optimize costs.
 It's important to watch the resources utilzation over the time in order to scale out or in. 
 We can use monitoring tools such as Amazon CloudWatch to watch CPU, Memory and Network Usage. It will helps to identify Bottlenecks and select the most approprtiate ec2 instance.
 
-[[EC2 Storage]]
+[[AWS - EC2 Storage]]

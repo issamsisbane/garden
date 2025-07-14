@@ -1,3 +1,6 @@
+[[Teleport - Errors]]
+[[Teleport - Connection from Ansible]]
+
 ![[Pasted image 20241027152717.png]]
 
 # Setup Teleport
@@ -155,3 +158,5 @@ ANSIBLE_CONFIG=./ansible.cfg ansible-playbook test-playbook.yml
 ```
 
 I add to specifify the config file because it wasn't recognize by ansible without.
+# Update label
+Pour update les labels des machines, il faut aller dans le fichier de conf `/etc/teleport.yaml` et ajouter le label dans ssh...

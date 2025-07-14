@@ -2,3 +2,4 @@
 [[Bash - Clipboard]]
 [[Bash - Configuration]]
 [[Bash - Commands]]
+[[Bash - Scripts]]
