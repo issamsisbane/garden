@@ -19,7 +19,7 @@ homarr-labs is the repo.
 homarr is the thing we want to install.
 We want to install in namespace and create one if necessary
 
-Helm use [[Helm Charts]]
+Helm use [[Helm - Charts]]
 
 
 If we just want to update we can : 

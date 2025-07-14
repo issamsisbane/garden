@@ -4,6 +4,9 @@ state: toWatch
 
 [[Kubernetes - The Need]]
 [[Kubernetes - Operators]]
+[[Kubernetes - Ingress]]
+[[Kubernetes - Debug]]
+[[Kubernetes - Secrets Replication]]
 [[Kubernetes - Distributions]]
 [[Kubernetes - Fundamentals]]
 [[Kubernetes - Homelab]]

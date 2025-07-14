@@ -1,9 +1,9 @@
 We first need to install [[Rancher Desktop]] in windows.
-We have to add wsl in the settings. I ran into an error [[Rancher Desktop Error Installation]]
+We have to add wsl in the settings. I ran into an error [[Rancher Desktop - Error Installation]]
 
 Mischa installed [[brew]] as a package manager to have the same config between the mac and his ubuntu machine.
 
-We need to install kubectl & [[k9s]] : 
+We need to install kubectl & [[K9S]] : 
 ```
 brew install kubectl & k9s
 ```
@@ -21,7 +21,7 @@ source <(kubectl completion bash)
 complete -o default -F __start_kubectl k
 ```
 
-It allows to add completion for [[Kubectl]] and the use of the alias k instead of always typing kubectl.
+It allows to add completion for [[Kubectl - Documentation]] and the use of the alias k instead of always typing kubectl.
 
 We also created a config for vim by creating the file .vimrc : 
 ``` bash

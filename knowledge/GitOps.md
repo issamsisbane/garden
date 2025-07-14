@@ -4,10 +4,12 @@ state: toWatch
 
 https://www.youtube.com/watch?v=r8KANQwLotk
 
-[[Gitops - Princples]]
-[[Gitops - How it works]]
-[[Gitops -ArgoCD VS Flux]]
-[[Gitops - Benefits]]
+[[GitOps - Principles]]
+[[GitOps - How it works]]
+[[GitOps - ArgoCD VS Flux]]
+[[GitOps - Benefits]]
 # What is it ?
 
-GitOps is a set of best practices were the entire code delivery process is controlled via Git, including infrastructure and application definition as code an automation to complete updates and rollbacks.
+**GitOps** est un ensemble de pratiques qui utilise les workflows Git pour gérer l’infrastructure et les configurations des applications.
+
+GitOps automatise et simplifie la gestion des infrastructures et des applications en utilisant Git comme référentiel central pour la configuration. Cela garantit la **traçabilité**, la **cohérence** et la **récupération rapide** des environnements.

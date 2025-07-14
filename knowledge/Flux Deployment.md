@@ -8,7 +8,7 @@ Everything start with the kustomization.yaml file which then imports others file
 
 
 
-We can create [[Custom Resource Definition]] enabled by the flux operator.
+We can create [[Kubernetes - Custom Resource Definition]] enabled by the flux operator.
 
 # Synchronization & Deployment
 

@@ -1,0 +1,1 @@
+Telnet works over TCP and not UDP.
