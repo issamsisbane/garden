@@ -1,4 +1,4 @@
-An Image Stream allow to facilitate the update of images inside [[Openshift]] Containers. 
+An Image Stream allow to facilitate the update of images inside [[3 - GARDEN/knowledge/Openshift]] Containers. 
 
 Indeed, inside our container, we will reference an image stream. The image stream contains the following : 
 ``` yaml

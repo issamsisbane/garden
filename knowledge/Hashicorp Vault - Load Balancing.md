@@ -16,3 +16,6 @@ Puis on rediriger le trafic selon le type de requête :
 - Rediriger les requêtes d’écriture (`POST`, `PUT`, `DELETE`, etc.) vers le **leader**.
 - Répartir les requêtes en lecture (`GET`) entre les **standby**.
 - 
+
+[[Hashicorp Vault - Load Balancing - HAProxy]]
+
