@@ -13,6 +13,8 @@ k apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/m
 
 Argo CD store the default admin password in the secret `argocd-initial-admin-secret`. We need to get it.
 
+The admin password can also be in the secret named : `argocd-cluster`
+
 # Expose ArgoCD Server
 
 We can use the different option : 

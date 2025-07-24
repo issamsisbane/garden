@@ -104,7 +104,7 @@ Kubernetes est un projet open source, mais son installation et sa configuration 
 3. **GKE (Google Kubernetes Engine)** :
     - Distribution gérée par Google Cloud, hautement intégrée avec les services GCP.
 4. **OpenShift** :
-    - Distribution développée par Red Hat, orientée vers les entreprises avec des fonctionnalités avancées comme CI/CD intégré. [[Openshift]]
+    - Distribution développée par Red Hat, orientée vers les entreprises avec des fonctionnalités avancées comme CI/CD intégré. [[3 - GARDEN/knowledge/Openshift]]
 5. **K3s** :
     - Version allégée de Kubernetes pour les environnements edge ou les petits clusters.
 
