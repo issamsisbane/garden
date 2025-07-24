@@ -2,6 +2,8 @@
 tags: TECHNOS
 state: to_complete
 ---
+
+[[K3S vs RKE2]]
 # Definition
 **RKE2** (Rancher Kubernetes Engine 2) est une [[Distribution Kubernetes]] développée par Rancher Labs. Il est conçu pour être sécurisé par défaut, léger et facile à déployer. Voici une brève description de ses principales caractéristiques :
 

@@ -1,6 +1,7 @@
 [[VIM - Comment]]
 [[VIM - VIMRC]]
 [[VIM - Compare files]]
+[[VIM - Insert command result]]
 # Concepts
 ## word
 
@@ -227,21 +228,3 @@ to switch left : `ctrl`+`w`+`h`
 
 # Commands
 
-Copy env variables inside vim : 
-```
-:r! echo $ENV
-```
-
-# Comments
-
-Pour commenter un ensemble de lignes séléctionné en visual mode :
-
-```
-norm I#
-```
-
-Pour décommenter un ensemble de lignes séléctionné en visual mode :
-
-```
-norm ^x
-```
