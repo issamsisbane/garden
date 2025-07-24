@@ -1,3 +1,6 @@
+[[VIM - Comment]]
+[[VIM - VIMRC]]
+[[VIM - Compare files]]
 # Concepts
 ## word
 

@@ -3,7 +3,7 @@ tags: TECHNOS
 state: to_complete
 ---
 
-
+[[Hashicorp Vault - Installation VM]]
 [[Hashicorp Vault - Load Balancing]]
 [[Hashicorp Vault - Data and Replication]]
 [[Hashicorp Vault - Components]]
