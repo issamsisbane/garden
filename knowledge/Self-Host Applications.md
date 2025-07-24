@@ -1,3 +1,4 @@
+https://awesome-selfhosted.net/
 # Bookmark Manager
 [[Linkding]]
 

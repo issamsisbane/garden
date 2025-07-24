@@ -1,0 +1,1 @@
+https://github.com/pamelafox/python-openai-demos/discussions/21
