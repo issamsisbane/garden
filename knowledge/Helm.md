@@ -7,7 +7,7 @@ Helm is a packet manager for kubrenetes. We can use it to Install, Update or Rol
 [[Helm - Using Charts]]
 [[Helm - Charts]]
 [[Helmfile]]
-[[Helm - Creating Charts]]
+[[Helm - Templating]]
 [[Helm - Commands]]
 # Helm Versions
 

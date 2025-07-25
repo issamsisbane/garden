@@ -23,3 +23,4 @@ shared:
 ```
 
 On pourrait simplement rajouter les schemas comme cela. Mais le chart de l'operateur CNPG n'embarque pas la dernière version des CRDs de CNPG et donc pas la dernière version du CRD database donc impossible d'utiliser schemas comme ça...
+
