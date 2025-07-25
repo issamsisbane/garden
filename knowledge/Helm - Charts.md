@@ -2,7 +2,7 @@ Helm charts are a collection of kubernetes manifests template with variables in 
 
 Helm Charts allow us to use templating to customize application to our needs.
 
-[[Helm - Creating Charts]]
+[[Helm - Templating]]
 # Repos
 
 It exists public and private repositories to get artifact for known applications we want to use (Prometheus, Graphana...).
