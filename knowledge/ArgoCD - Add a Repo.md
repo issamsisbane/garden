@@ -19,3 +19,5 @@ stringData:
   project: ${GIT_REPO_PROJECT}
 EOF
 ```
+
+Un repo est binder a un projet. On ne peut pas utiliser un meme repo pour 2 projets. Il faut donc creer autant de ressource repo de projet qui l'utilise en spécifiant bien le bon projet à chaque fois.
