@@ -9,7 +9,7 @@ state: toWatch
 [[Kubernetes - Secrets Replication]]
 [[Kubernetes - Distributions]]
 [[Kubernetes - Fundamentals]]
-[[Kubernetes - Homelab]]
+[[Kubernetes - Mischa Homelab]]
 [[Kubernetes - Certs]]
 
 https://www.youtube.com/watch?v=tGJyMRxAK3k
