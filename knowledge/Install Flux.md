@@ -1,10 +1,18 @@
 https://fluxcd.io/flux/get-started/
 
-We are going to install [[Flux]] in our [[K3S]] Cluster.
+We are going to install [[FluxCd]] in our [[K3S]] Cluster.
 
-# Create a classic GitHub Token
+# Create a GitHub PAT
 
 We need to create a GitHub personal access token with repo permissions. 
+
+We can use a classic tokens but to be more complient and secure it's better to use a fine grained PAT only for our repo.
+
+We need the following permissions : 
+- `Administration` : Read and write
+- `Contents` : Read and write
+- `Metadata` : Read-only
+
 We need to export these variables : 
 
 ```sh

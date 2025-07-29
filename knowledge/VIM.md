@@ -1,7 +1,8 @@
 [[VIM - Comment]]
 [[VIM - VIMRC]]
 [[VIM - Compare files]]
-[[VIM - Insert command result]]
+[[VIM - Split Files]]
+[VIM - Insert command result]]
 # Concepts
 ## word
 
@@ -215,16 +216,3 @@ dfp => supprime jusqu'au caractère p
 - **`:e filename`** : Ouvrir un fichier.
 - **`:set nu`** : Afficher les numéros de ligne.
 - **`:set nonu`** : Masquer les numéros de ligne.
-
-# Command lines
-
-### Open 2 file in vertical splitted mode
-```
-vim -O file otherfile
-```
-to switch right : `ctrl`+`w`+`l` 
-
-to switch left : `ctrl`+`w`+`h`
-
-# Commands
-
