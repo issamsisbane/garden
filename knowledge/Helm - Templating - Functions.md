@@ -1,0 +1,1 @@
+[Helm | Template Function List](https://helm.sh/docs/chart_template_guide/function_list/#dictionaries-and-dict-functions)
