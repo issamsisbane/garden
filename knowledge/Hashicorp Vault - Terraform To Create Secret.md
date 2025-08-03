@@ -1,0 +1,1 @@
+https://blog.gitguardian.com/terraform-project-for-managing-vault-secrets-in-a-kubernetes-cluster/

@@ -5,6 +5,7 @@
 docker compose up -d
 ```
 
+si on fait une modif on peut relancer et ça ne va recréer que les conteneurs modifié.
 ### Lancer seulement une partie
 
 ```
