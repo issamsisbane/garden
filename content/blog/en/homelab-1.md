@@ -179,7 +179,7 @@ export GITHUB_TOKEN=<your-token>
 export GITHUB_USER=<your-username>
 ```
 
-I created a script to load env variables for a specific project. You can find it here. 
+I created a script to load env variables for a specific project. You can find it [here](https://github.com/issamsisbane/tools/blob/main/bash/func/load_env.sh). 
 This is useful because if we just export it. We would lose the variables when closing the shell. I don't know if I will need it earlier. For sure I don't commit it to git.
 
 We install the flux cli tool : 

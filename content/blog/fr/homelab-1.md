@@ -1,5 +1,5 @@
 ---
-title: "Homelab - 1 - Configuration"
+title: "Homelab - 1 - Setup"
 description: "Guide étape par étape pour construire un home-lab K3s personnel, couvrant le matériel, HA etcd, Flux GitOps et plus encore."
 lang: "fr"
 pubDate: "Sept 07 2025"
@@ -19,24 +19,23 @@ tags: ["Kubernetes", "Self-Host", "GitOps"]
 
 ## Introduction
 
-J'ai passé les **trois dernières années** à travailler avec des clusters Kubernetes de qualité production au travail. Bien que cette expérience m'ait exposé à des problèmes réels, elle laissait peu de place à l'expérimentation ou aux plongées en profondeur dans des sujets qui me passionnent. Pour combler ce vide, je lance un homelab personnel où je peux casser des choses sans conséquence et explorer de nouvelles technologies à ma guise.
+J'ai passé les **trois dernières années** à travailler avec des clusters Kubernetes en production au travail. Bien que cette expérience m'ait exposé à des problèmes réels, elle laissait peu de place à l'expérimentation. Pour combler ela, j'ai décidé de lancer un homelab personnel où je peux tester des choses sans conséquence et explorer de nouvelles technologies à ma guise.
 
 Depuis janvier, j'ai pris l'habitude de déployer des clusters localement avec Minikube ou Rancher pour configurer rapidement des environnements, tester des idées et apprendre de nouveaux concepts.
 
-Cela m'aide beaucoup d'avoir un environnement jetable où je peux tout casser sans conséquences. Mais au fur et à mesure que j'acquiers de l'expérience, je travaille avec des configurations plus complexes avec de nombreux outils différents sur plusieurs nœuds, ce qui entraîne des défis spécifiques qu'un cluster jetable à nœud unique ne peut pas relever.
+Cela m'aide beaucoup d'avoir un environnement jetable où je peux tout casser sans conséquences. Mais au fur et à mesure que j'acquiers de l'expérience, je travaille avec des configurations plus complexes avec de nombreux outils différents sur plusieurs nœuds, ce qui entraîne des défis spécifiques qu'un cluster jetable à un seul nœud ne peut pas relever.
 
-J'ai donc construit mon propre laboratoire à la maison, j'ai décidé de l'appeler mon HomeLab :)
-(Attendez, c'est déjà une chose ? Je ne l'ai pas inventé ?)
+J'ai donc construit mon propre laboratoire à la maison, j'ai décidé de l'appeler mon HomeLab :) (Attendez, ça existe déjà ? Je ne l'ai pas inventé ?)
 
 Ceci est le premier article d'une longue série, je l'espère !
 
 ## 1 - Architecture
 
-Mon homelab sera un cluster kubernetes (évidemment). J'ai choisi K3S comme distribution car je l'ai déjà utilisé par le passé, l'installation est assez simple et il est pris en charge par le CNCF.
+Mon homelab sera un cluster kubernetes (évidemment). J'ai choisi K3S comme distribution car je l'ai déjà utilisé dans le passé, l'installation est assez simple et il est pris en charge par le CNCF.
 
-J'ai préféré le **bare metal** aux VM ou aux instances cloud pour acquérir une expérience pratique dans la gestion de la pile complète.
+J'ai préféré le **bare metal** aux VM ou aux instances cloud pour avoir une expérience pratique dans la gestion de la stack complète.
 
-De plus, je veux héberger des applications que j'utiliserai dans ma vie quotidienne, ce qui m'obligera à gérer cette configuration comme un véritable environnement de production avec des utilisateurs (oui, juste moi pour l'instant...)
+De plus, je veux héberger des applications que j'utiliserai dans ma vie quotidienne, ce qui me forcera à gérer cette configuration comme un véritable environnement de production avec des utilisateurs (oui, juste moi pour l'instant...)
 
 ![[homelab-1.png]]
 
@@ -45,17 +44,17 @@ Le cluster sera composé de :
 - **Archy** : Ancien ordinateur portable 1 exécutant arch linux - 8 Go de RAM, processeur 4 cœurs
 - **Ubuntuserv** : Ancien ordinateur portable 2 exécutant ubuntu serveur - 4 Go de RAM, processeur 4 cœurs
 
-*Ne faites pas attention aux noms des nœuds, je ne sais pas comment nommer les choses...*
+*Ne faites pas attention aux noms des nœuds, j'ai du mal avec les noms...*
 
-Un total de **trois nœuds** et tous seront un nœud maître et un nœud worker.
+Un total de **trois nœuds** et tous seront à la fois un nœud maître et un nœud worker.
 
-La meilleure pratique en production est de séparer le plan de contrôle des charges de travail, mais je conserve tous les nœuds polyvalents pour maintenir le quorum sans ajouter de matériel supplémentaire.
+La meilleure pratique en production est de séparer le controlplane des workloads, mais j'ai décidé de garder les noeuds polyvalents pour maintenir le quorum et pouvoir beneficier de noeuds workers sans ajouter de matériel supplémentaire.
 
 ## 2 - Principes
 
 Je veux suivre les meilleures pratiques et intégrer les dernières innovations et façons de faire dans mon homelab.
 
-Ceci est sujet à des changements, mais pour l'instant, j'ai décidé de :
+Ceci est sujet à changement, mais pour l'instant, j'ai décidé de :
 - Tout gérer via GitOps et automatiser tous les déploiements
 - Suivre les principes du moindre privilège et sécuriser mes conteneurs
 - Ne pas exposer les services directement à Internet
@@ -79,13 +78,13 @@ La pile classique : Grafana, Loki et Prometheus. Je ne l'ai pas vraiment utilis�
 
 ## 4 - Configuration des machines
 
-Les machines de mon homelab sont toutes des appareils réaffectés - je partagerai plus de détails sur chacun ci-dessous.
+Les machines de mon homelab sont toutes des appareils réutilisés - je partagerai plus de détails sur chacun ci-dessous.
 
 ### RaspberryPi
 
-J'ai celui-ci de l'école. Je l'ai initialement utilisé pour suivre les cours GitOps Kubernetes de [Mischa VAN DEN BURG](https://mischavandenburg.com/), mais il est resté inactif depuis. Maintenant, je lui donne une seconde vie dans mon homelab.
+J'ai celui-ci de l'école. Je l'ai initialement utilisé pour suivre les cours GitOps Kubernetes de [Mischa VAN DEN BURG](https://mischavandenburg.com/), mais il dormait depuis. Je lui donne une seconde vie dans mon homelab.
 
-Fait amusant : Lorsque j'ai essayé de redémarrer le Pi des mois plus tard, j'ai rencontré d'étranges erreurs de stockage. Il s'avère que les cartes SD ne sont pas idéales pour Kubernetes car le plan de contrôle est très axé sur l'écriture.
+Fun Fact: Lorsque j'ai essayé de redémarrer le Pi des mois plus tard, j'ai rencontré d'étranges erreurs de stockage. Il s'avère que les cartes SD ne sont pas idéales pour Kubernetes car le controlplane est très gourmand en écriture.
 
 J'ai acheté une nouvelle carte SD (oui, la même erreur) et reconstruit le système d'exploitation à partir de zéro en utilisant **Rufus** pour flasher la carte. À l'avenir, j'investirai dans un SSD.
 
@@ -97,7 +96,7 @@ Finalement, j'ai installé Arch Linux car je voulais approfondir le fonctionneme
 
 ### UbuntuServ
 
-C'est un autre ancien ordinateur portable que j'ai réaffecté. J'ai simplement installé Ubuntu Server dessus. Pas d'histoire dramatique, juste un autre nœud pour mon cluster.
+C'est un autre vieil ordinateur portable que j'ai réutilisé. J'ai simplement installé Ubuntu Server dessus. Rien de fou, juste un autre nœud pour mon cluster.
 
 ## 5 - Configuration étape par étape
 
@@ -146,7 +145,7 @@ Après avoir lancé la commande :
 
 ### Alignement des versions
 
-Nous remarquons une incompatibilité de version entre les nœuds.
+On remarque une incompatibilité de version entre les nœuds.
 
 C'est une bonne pratique d'avoir la même version entre nos nœuds.
 
@@ -160,7 +159,7 @@ curl -sfL https://get.k3s.io | K3S_TOKEN=SECRET sh -s - server  --cluster-init
 
 ### Finalement
 
-Nous faisons la même chose pour les deux nœuds.
+On fait la même chose pour les deux nœuds.
 
 ![[Pasted image 20250724235043.png]]
 
@@ -186,8 +185,9 @@ export GITHUB_TOKEN=<your-token>
 export GITHUB_USER=<your-username>
 ```
 
-J'ai créé un script pour charger les variables d'environnement pour un projet spécifique. Vous pouvez le trouver ici.
-C'est utile car si nous l'exportons simplement, nous perdrions les variables en fermant le shell. Je ne sais pas si j'en aurai besoin plus tôt. Bien sûr, je ne le commets pas dans git.
+J'ai créé un script pour charger les variables d'environnement pour un projet spécifique. Vous pouvez le trouver [ici](https://github.com/issamsisbane/tools/blob/main/bash/func/load_env.sh).
+
+C'est utile car si on l'exporte simplement. On perdrait les variables en fermant le shell. Je ne sais pas si j'en aurai besoin plus tard. Bien sûr, je ne le commit pas dans git.
 
 Nous installons l'outil cli flux :
 ``` bash
@@ -205,13 +205,13 @@ flux bootstrap github \
   --personal
 ```
 
-Cette commande permet de configurer dans quel référentiel et branche nous voulons que flux surveille. Ensuite, Flux créera le fichier manifeste dans le référentiel pour se gérer lui-même.
+Cette commande permet de configurer dans quel dépôt et branche nous voulons que flux surveille. Ensuite, Flux créera le fichier manifeste dans le dépôt pour se gérer lui-même.
 
-Nous pouvons gérer plusieurs clusters avec le même référentiel GitOps (production, staging..)
+Nous pouvons gérer plusieurs clusters avec le même dépôt GitOps (production, staging..)
 
 ### Résultats
 
-- Flux crée les manifestes nécessaires dans le référentiel GitHub
+- Flux crée les manifestes nécessaires dans le dépôt GitHub
 - Un nouvel espace de noms 'flux-system' est créé sur le cluster avec les composants Flux
 - Le contrôleur GitOps est maintenant actif sur le cluster
 
@@ -219,8 +219,8 @@ Nous pouvons gérer plusieurs clusters avec le même référentiel GitOps (produ
 
 ## Conclusion
 
-Je peux enfin me qualifier de véritable ingénieur car j'ai un home lab où je peux expérimenter librement !
+Je peux enfin me sentir comme un véritable ingénieur car j'ai un homelab où je peux expérimenter librement !
 
-Il y a des années, j'ai regardé de nombreux créateurs YouTube construire des homelabs. Je les enviais et je me suis promis que je ferais de même un jour.
+Il y a des années, je regardais de nombreux YouTubers construire des homelabs. Je les enviais et je me suis promis que je ferais de même un jour.
 
-J'ai maintenant un objectif qui est d'avoir une pièce entière dédiée à mon homelab, un véritable datacenter !
+J'ai un objectif maintenant qui est d'avoir une pièce entière dédiée à mon homelab, un véritable datacenter !
