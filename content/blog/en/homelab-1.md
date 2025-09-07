@@ -24,7 +24,8 @@ Since January, I took the habit to deploy clusters locally with Minikube or Ranc
 
 It helps me a lot to have a disposable environment where I can break everything with no consequences. But as I'm gaining experience, I'm working with more complex setups with many different tools across multiple nodes, leading to specific challenges that a single‑node disposable cluster can’t address.
 
-So I built my own laboratory at home, I decided to call it my HomeLab :) (Wait this is already a thing ? I didn't invent it ?)
+So I built my own laboratory at home, I decided to call it my HomeLab :) 
+(Wait this is already a thing ? I didn't invent it ?)
 
 This is the first article of a long series I hope !
 
