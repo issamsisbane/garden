@@ -8,14 +8,14 @@ badge: "Homelab"
 tags: ["Kubernetes", "Self-Host", "GitOps"]
 ---
 
-[Introduction](#introduction)
-	[1 - Architecture](#1---architecture)
-	[2 - Principes](#2---principes)
-	[3 - Choix technologiques](#3---choix-technologiques)
-	[4 - Configuration des machines](#4---configuration-des-machines)
-	[5 - Configuration étape par étape](#5---configuration-étape-par-étape)
-	[6 - Installer Flux](#6---installer-flux)
-[Conclusion](#conclusion)
+- [Introduction](#introduction)
+	- [1 - Architecture](#1---architecture)
+	- [2 - Principes](#2---principes)
+	- [3 - Choix technologiques](#3---choix-technologiques)
+	- [4 - Configuration des machines](#4---configuration-des-machines)
+	- [5 - Configuration étape par étape](#5---configuration-étape-par-étape)
+	- [6 - Installer Flux](#6---installer-flux)
+- [Conclusion](#conclusion)
 
 ## Introduction
 
@@ -125,7 +125,7 @@ Nous pouvons vérifier le changement de base de données en tapant :
 kubectl get nodes
 ```
 
-![[Pasted image 20250724000936.png]]
+![[Pasted_image_20250724000936.png]]
 
 ### Rejoindre des nœuds supplémentaires
 
@@ -141,7 +141,7 @@ Nous pouvons trouver le jeton dans le raspberryPi à `/var/lib/rancher/k3s/serve
 
 Après avoir lancé la commande :
 
-![[Pasted image 20250724001141.png]]
+![[Pasted_image_20250724001141.png]]
 
 ### Alignement des versions
 
@@ -161,7 +161,7 @@ curl -sfL https://get.k3s.io | K3S_TOKEN=SECRET sh -s - server  --cluster-init
 
 On fait la même chose pour les deux nœuds.
 
-![[Pasted image 20250724235043.png]]
+![[Pasted_image_20250724235043.png]]
 
 ## 6 - Installer Flux
 
