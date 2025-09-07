@@ -1,5 +1,5 @@
 ---
-title: "Enhancing my Cloud Skills - Week 1 - Cloud Fundamentals"
+title: "Homelab - 1 - Setup"
 description: "Step‑by‑step guide to building a personal K3s home‑lab, covering hardware, HA etcd, Flux GitOps and more."
 lang: "en"
 pubDate: "Sept 07 2025"
@@ -11,7 +11,7 @@ tags: ["Kubernetes", "Self-Host", "GitOps"]
 [Introduction](#Introduction)
 	[1 - Architecture](#1---architecture)
 	[2 - Principles](#2---principles)
-	[3 - Technologies Choices](#3---technologies-choices
+	[3 - Technologies Choices](#3---technologies-choices)
 	[4 - Machines setup](#4---machines-setup)
 	[5 - Step-by-step Setup](#5---step-by-step-setup)
 	[6 - Install Flux](#6---install-flux)
