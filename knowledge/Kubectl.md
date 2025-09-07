@@ -1,7 +1,9 @@
-Take the habits to use the kubernetes documentation and the kubectl documentation. It will help a lot during exams. 
+[[Kubectl - Documentation]]
+[[Kubectl - Add a Cluster]]
+# Apply
 
-```
-k --help
-```
+Pour montrer ce que la commande va faire sans l'éxecuter (eq tofu plan) :
 
-[[Terminal VIM Bindings]]
+``` sh
+kubectl apply --dry-run
+```

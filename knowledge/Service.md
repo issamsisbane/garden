@@ -14,7 +14,7 @@ kubectl expose
 
 The service use the selector app to know which pods it need to serve.
 
-[[Port Forwarding]]
+[[Kubernetes - Port Forwarding]]
 
 # Services Types
 

@@ -1,0 +1,1 @@
+A pull request, is a demand to merge changes from a branch to another.

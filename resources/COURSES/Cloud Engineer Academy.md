@@ -1,5 +1,80 @@
 Soleyman
 
+file:///C:/Users/Issam/Downloads/Cloud_Engineer_Handbook_V1.1.pdf
+
+https://cloudengineeracademy.mykajabi.com/products/cloud-academy-tech-with-soleyman/categories
+# Content
+[[API]]
+[[AWS]]
+[[AWS - Account]]
+[[AWS - Account  - Best Practices]]
+[[AWS - CloudFormation]]
+[[AWS - Console]]
+[[AWS - Global Architecture]]
+[[AWS  - ECS]]
+[[AWS - Beanstalk]]
+[[AWS - CloudFormation]]
+[[AWS - Console]]
+[[AWS - EC2]]
+[[AWS - EKS]]
+[[AWS - Global Architecture]]
+[[AWS - IAM]]
+[[AWS - Key pair]]
+[[AWS - Lambda]]
+[[Bastion Host]]
+[[Bastion Host - Setup]]
+[[Caching]]
+[[Cloud Architecture]]
+[[Cloud Deployments Models]]
+[[Cloud Models]]
+[[Cloud OS]]
+[[Cloud Storage Options]]
+[[Curl]]
+[[Databases]]
+[[DHCP]]
+[[DNS]]
+[[IP Adresses]]
+[[Load Balancer vs API gateway]]
+[[Microservices Architecture]]
+[[Monolitic Architecture]]
+[[NAT]]
+[[Networking]]
+[[Networking - Components]]
+[[OS]]
+[[SDLC (Software Development Life-cycle)]]
+[[Server vs Serverless Scaling]]
+[[Serverless Architecture]]
+[[System Design]]
+[[Three Tier Architecture]]
+[[Trace Routes]]
+[[Transition to IPv6]]
+[[Version Control]]
+[[Virtualisation]]
+[[VPC]]
+[[Why Choose Cloud Computing]]
+
+# Projects
+
+[[CEA - Project 1 - Design a Basic Architecture for a Web Application Project]]
+[[CEA - Project 2 - Design an Architecture for an E-commerce application]]
+[[CEA - Project 3 - Design an Architecture for Youtube]]
+[[CEA - Project 4 - Design a VPC]]
+[[CEA - Project 5 - Deploy a VPC Using Terraform]]
+[[CEA - Project 6 - Deploy a Next-Js Application using Terraform]]
+[[CEA - Project 7 - Testing IaC CloudFormation Template using GitHub Actions]]
+[[CEA - Project 8 - CICD Pipeline For a Lambda Function]]
+
+# Weeks
+
+[[CEA - Week 1 - Cloud Fondamentals]]
+[[CEA - Week 2 - Git & Cloud Architecture]]
+[[CEA - Week 3 - System Design Applications]]
+[[CEA - Week 4 - Linux and Bash]]
+[[CEA - Week 5 - AWS Networking]]
+[[CEA - Week 6 - AWS Fundamentals]]
+[[CEA - Week 7 - Terraform]]
+[[CEA - Week 8 - DevOps]]
+
 # Workshops
 
 [[CKA - AWS ML AI SERVICES]]

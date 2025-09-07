@@ -1,45 +1,32 @@
-Helm is install on out machine and not on the cluster directly. It will connect to the [[Kubernetes]] cluster to make commands.  
+Helm is install on our machine and not on the cluster directly. It will connect to the [[Kubernetes]] cluster to make commands.  
 
-The steps to install something using helm are : 
-### 1 - Add the repo
-```
-helm repo add
-```
-### 2 - Update helm repo
-```
-	helm repo update
-```
-### 3 - Install
-```
-helm install homarr homarr-labs/homarr --namespace homarr --create-namespace -f values.yaml
-```
-Do the same thing : 
-```
-helm install homarr homarr-labs/homarr --namespace homarr --create-namespace --values values.yaml
-```
-homarr-labs is the repo.
-homarr is the thing we want to install.
-We want to install in namespace and create one if necessary
+Helm is a packet manager for kubrenetes. We can use it to Install, Update or Rollback Kubernetes Application. 
 
-Helm use [[Helm Charts]]
+[Helm and Helm Charts Explained](https://www.youtube.com/watch?v=w51lDVuRWuk)
+[[Helm - Repo vs OCI Repo]]
+[[Helm - Using Charts]]
+[[Helm - Charts]]
+[[Helm - Releases]]
+[[Helmfile]]
+[[Helm - Templating]]
+[[Helm - Commands]]
+# Helm Versions
+
+Helm provides 2 versions that are currently used by organizations. Most use the v3 but some use the v2. 
 
 
-If we just want to update we can : 
-```
-helm upgrade
-```
+| Helm v2                             | Helm v3                           |
+| ----------------------------------- | --------------------------------- |
+| Client/Server model                 | Client only                       |
+| Depends on the 'Tiller' Service     | Uses 'Secrets' as storage driver  |
+| Uses 'ConfigMaps' as storage driver | Uses User Namespace               |
+| Uses Tiller Namespace               | Improved Chart Upgrade Strategies |
+| More Dependencies / More Complex    | Less Dependencies / Less Complex  |
 
-Display installed repo : 
-```
-helm repo ls
-```
 
-Display installed charts : 
-```
-helm ls
-```
+The key difference between those 2 versions are the removal of Tiller in version v3. Tiller was an additional server used to manages changes to Kubernetes. In v3, Helm cli directly use the Kubernetes API to manages changes and resources providing more granularity for access control and removing additional unnecessary complexity.
 
-Display values of the chart that can be overloaded in `values.yaml` : 
-``` 
-helm show values
-```
+# Helm Commands
+# Plugins
+
+[[Helm - Datree]]

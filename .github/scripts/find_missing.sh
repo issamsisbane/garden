@@ -1,13 +1,10 @@
 #!/bin/bash
-
 DIRECTORIES=("content/blog" "content/projects")
-
 for DIR in "${DIRECTORIES[@]}"; do
   if [ ! -d "$DIR" ]; then
     echo "Directory not found : $DIR"
     continue
   fi
-
   find "$DIR" -type f -print0 | while IFS= read -r -d '' FILE; do
     if [[ "$FILE" == *"/fr/"* ]]; then
       OTHER_FILE="${FILE//\/fr\//\/en\/}"
