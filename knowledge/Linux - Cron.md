@@ -13,6 +13,7 @@ Pour editer les crons d'un user :
 ```
 crontab -e
 ```
+Il suffit de les ajouter dedans et de sauvegrder le fichier.
 
 Ces crons sont dans le dossier `/var/spool/cron`
 
