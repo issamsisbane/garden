@@ -58,7 +58,8 @@ jobs:
             destination_dir_no_public="${destination_dir/public\//}"
 
             ## Image in frontmatter treatment
-            hero_image=$(awk '/^---$/ {count++} count==1 && !/^---$/ && $0 ~ /^heroImage:/ {gsub(/^heroImage:[[:space:]]*"?|"?$/, "", $0); print $0}' "$file")           if [[ -n "$hero_image" ]]; then
+            hero_image=$(awk '/^---$/ {count++} count==1 && !/^---$/ && $0 ~ /^heroImage:/ {gsub(/^heroImage:[[:space:]]*"?|"?$/, "", $0); print $0}' "$file")
+            if [[ -n "$hero_image" ]]; then
               if [[ ! -f "$ASSETS_DIR/$hero_image" ]]; then
                 echo "Hero image not found: $hero_image in $ASSETS_DIR/$hero_image"
               else
