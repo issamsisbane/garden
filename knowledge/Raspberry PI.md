@@ -1,4 +1,4 @@
-[[Raspberry Installation]]
+[[Raspberry PI -  Installation]]
 [[BeginnersGuide-5thEd-Eng_v3.pdf]]
 
 Pour se connecter au raspberry pi après avoir ajouter sa clé publique au known_host. Il suffit de faire : 

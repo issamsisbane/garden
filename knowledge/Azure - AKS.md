@@ -1,0 +1,1 @@
+Error from Azure when creating an AKS need to add more vCPU.

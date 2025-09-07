@@ -1,0 +1,1 @@
+C'est un framework d'application Java spécialement conçu pour fonctionner nativement avec Kubernetes avec une faible empreinte mémoire et un temps de démarrages réduit.

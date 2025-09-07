@@ -1,0 +1,11 @@
+
+[GitLab Runner Helm chart | GitLab](https://docs.gitlab.com/runner/install/kubernetes.html)
+[values.yaml · main · GitLab.org / charts / GitLab Runner · GitLab](https://gitlab.com/gitlab-org/charts/gitlab-runner/blob/main/values.yaml)
+[Understanding Helm - Working with Helm charts | Building applications | OpenShift Container Platform 4.10](https://docs.openshift.com/container-platform/4.10/applications/working_with_helm_charts/understanding-helm.html)
+[Aide et apprentissage sur Microsoft Edge](https://support.microsoft.com/fr-fr/microsoft-edge)
+[Commande sleep : mettre en pause des processus - IONOS](https://www.ionos.fr/digitalguide/serveur/configuration/commande-sleep/)
+[Advanced configuration | GitLab](https://docs.gitlab.com/runner/configuration/advanced-configuration.html)
+[GitLab Runner in Kubernetes with MinIO cache (Helm 3) | by Christof Aenderl | Medium](https://caenderl.medium.com/gitlab-runner-in-kubernetes-with-minio-cache-helm-3-621067529efb)
+[Self-host your own Git platform! // GitLab - YouTube](https://www.youtube.com/watch?v=qoqtSihN1kU)
+[Gitlab-CI : Créer un runner docker privé en 5 minutes](https://www.youtube.com/watch?v=upocyCJMp0g)
+[How to configure your own Gitlab CI Runner](https://www.youtube.com/watch?v=G8ZONHOTAQk)
