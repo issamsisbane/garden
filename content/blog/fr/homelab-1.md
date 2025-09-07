@@ -204,7 +204,6 @@ flux bootstrap github \
   --path=./clusters/staging \
   --personal
 ```
-
 Cette commande permet de configurer dans quel dépôt et branche nous voulons que flux surveille. Ensuite, Flux créera le fichier manifeste dans le dépôt pour se gérer lui-même.
 
 Nous pouvons gérer plusieurs clusters avec le même dépôt GitOps (production, staging..)
