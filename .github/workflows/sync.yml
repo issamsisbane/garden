@@ -60,17 +60,17 @@ jobs:
             ## Image in frontmatter treatment
             hero_image=$(awk '/^---$/ {count++} count==1 && !/^---$/ && $0 ~ /^heroImage:/ {gsub(/^heroImage:[[:space:]]*"?|"?$/, "", $0); print $0}' "$file")
             if [[ -n "$hero_image" ]]; then
-              if [[ ! -f "$ASSETS_DIR/$hero_image" ]]; then
-                echo "Hero image not found: $hero_image in $ASSETS_DIR/$hero_image"
+              if [[ ! -f "$ASSETS_DIR$hero_image" ]]; then
+                echo "Hero image not found: $hero_image in $ASSETS_DIR$hero_image"
               else
-                echo "Hero image found: $hero_image in $ASSETS_DIR/$hero_image"
+                echo "Hero image found: $hero_image in $ASSETS_DIR$hero_image"
 
                 if [[ ! -d ".$destination_dir" ]]; then
                   mkdir -p ".$destination_dir"
                   echo "Created directory: .$destination_dir"
                 fi
 
-                cp "$ASSETS_DIR/$hero_image" ".$destination_dir/$hero_image"
+                cp "$ASSETS_DIR$hero_image" ".$destination_dir/$hero_image"
 
                 # Remplacer le chemin de l'image dans le frontmatter
                 sed -i -E "0,/^(heroImage:[[:space:]]*)$hero_image/s#^(heroImage:[[:space:]]*)$hero_image#\1$destination_dir_no_public/$hero_image#" "$file"

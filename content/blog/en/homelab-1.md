@@ -44,7 +44,7 @@ The cluster will be composed of :
 - **Archy** : Old Laptop 1 running arch linux - 8GB RAM, 4 cores processor
 - **Ubuntuserv** : Old Laptop 2 running ubuntu serveur - 4GB RAM, 4 cores processor
 
-*Don't pay attention to the names of the nodes, I don't know how to name things...*
+*Don't pay attention to the names of the nodes, I don't know how to name things..*
 
 A total of **three nodes** and all of them will be a master and a worker node. 
 
