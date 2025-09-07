@@ -8,14 +8,15 @@ badge: "Homelab"
 tags: ["Kubernetes", "Self-Host", "GitOps"]
 ---
 
-[Introduction](#Introduction)
-	[1 - Architecture](#1---architecture)
-	[2 - Principles](#2---principles)
-	[3 - Technologies Choices](#3---technologies-choices)
-	[4 - Machines setup](#4---machines-setup)
-	[5 - Step-by-step Setup](#5---step-by-step-setup)
-	[6 - Install Flux](#6---install-flux)
-[Conclusion](#conclusion)
+- [Introduction](#Introduction)
+	- [1 - Architecture](#1---architecture)
+	- [2 - Principles](#2---principles)
+	- [3 - Technologies Choices](#3---technologies-choices)
+	- [4 - Machines setup](#4---machines-setup)
+	- [5 - Step-by-step Setup](#5---step-by-step-setup)
+	- [6 - Install Flux](#6---install-flux)
+- [Conclusion](#conclusion)
+
 ## Introduction
 
 I've spent the last **three years** working with production‑grade Kubernetes clusters at work. While that experience exposed me to real‑world problems, it left little room for experimentation or deep dives into topics I’m curious about. To fill that gap, I’m launching a personal homelab where I can break things without consequence and explore new technologies on my own terms.
@@ -120,7 +121,7 @@ We can verify the database switch by typing :
 kubectl get nodes
 ```
 
-![[Pasted image 20250724000936.png]]
+![[Pasted_image_20250724000936.png]]
 
 ### Join additional nodes
 
@@ -136,7 +137,7 @@ We can find the token in the raspberryPi at `/var/lib/rancher/k3s/server/token` 
 
 After launching the command : 
 
-![[Pasted image 20250724001141.png]]
+![[Pasted_image_20250724001141.png]]
 
 ### Version alignment
 
@@ -155,7 +156,7 @@ curl -sfL https://get.k3s.io | K3S_TOKEN=SECRET sh -s - server  --cluster-init
 
 We do the same thing for the two nodes.
 
-![[Pasted image 20250724235043.png]]
+![[Pasted_image_20250724235043.png]]
 
 ## 6 - Install Flux
 
