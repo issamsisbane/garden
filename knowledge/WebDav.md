@@ -1,0 +1,1 @@
+C'est une extension du protocole http pour échanger des fichiers.

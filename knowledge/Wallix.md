@@ -1,0 +1,1 @@
+This a bastion allowing to access vms in a secure network from one interface.

@@ -1,0 +1,1 @@
+IAM also supports **Multi-Factor Authentication (MFA)**, providing an additional layer of security for accessing AWS resources. By requiring users to provide a second form of authentication (e.g., a one-time code sent to a mobile device), MFA significantly reduces the risk of unauthorized access even if credentials are compromised.
