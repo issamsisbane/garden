@@ -2,9 +2,9 @@
 state: toWatch
 ---
 
-[[Terraform -Architecture]]
+[[Terraform - Architecture]]
 [[Terraform - Commands]]
 [[Terraform - Variables]]
-[[Terraform vs CloudFormation]]
+[[IAC - Terraform vs CloudFormation]]
 
 https://www.youtube.com/watch?v=ShgkOnnSPjc

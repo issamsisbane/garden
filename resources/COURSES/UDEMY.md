@@ -1,1 +1,1 @@
-[[Learn Argo Cd]]
+[[Learn ArgoCD]]

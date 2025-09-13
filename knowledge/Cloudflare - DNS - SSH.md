@@ -1,0 +1,1 @@
+Si on choisi proxied à la création d'une entrée DNS cela ne marche que pour HTTP/HTTPS et pas pour SSH par exemple. Il faut ainsi le désactiver si on veut l'utiliser pour ssh aussi.
