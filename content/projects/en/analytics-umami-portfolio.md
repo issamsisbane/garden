@@ -3,7 +3,7 @@ title: "Setting Up an Analytics Solution for My Portfolio"
 description: "Ultra-concise guide to install Umami (self-hosted, GDPR-compliant analytics) on a Hetzner VPS with Terraform, Ansible, Docker-Compose, and Certbot."
 lang: "en"
 pubDate: "Sept 14 2025"
-heroImage: "/portfolio/blog/analytics-umami-portfolio/analytics-umami-portfolio.png"
+heroImage: "/portfolio/projects/analytics-umami-portfolio/analytics-umami-portfolio.png"
 badge: "Portfolio"
 tags: ["Docker", "Self-Host", "Analytics", "Umami"]
 ---
