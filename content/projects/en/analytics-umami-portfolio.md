@@ -29,7 +29,7 @@ When I apply for a job, I share the link with many people and on different chann
 
 My first idea: create a *short-link* with a serverless function and a small database to count clicks. The problem? No overview of traffic from Google or other sources where the short-link isn't used.
 
-My second attempt: install Google Analytics (described in my [previous article](https://issamsisbane.github.io/portfolio/fr/blog/a-la-recherche-dun-outil-danalyse-du-traffic-web/)). The service is powerful, but it's **too heavy** and I don't want to depend on a third-party platform.
+My second attempt: install Google Analytics (described in my [previous article](https://issamsisbane.github.io/portfolio/en/blog/exploring-web-traffic-analysis-tools/)). The service is powerful, but it's **too heavy** and I don't want to depend on a third-party platform.
 
 So I looked for a **self-hosted** solution, simple to deploy and adapted to my needs.
 
@@ -63,7 +63,7 @@ So I looked for a **self-hosted** solution, simple to deploy and adapted to my n
 
 ## Terraform
 
-Overall, the [code]() allows you to create a Hetzner instance, open ports 80 and 443, and automatically generate the public IP.
+Overall, the [code](https://github.com/issamsisbane/analytics) allows you to create a Hetzner instance, open ports 80 and 443, and automatically generate the public IP.
 
 ## Managing Hetzner Limits
 
