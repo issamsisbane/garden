@@ -4,9 +4,9 @@ state: toWatch
 
 https://www.youtube.com/watch?v=r8KANQwLotk
 
-[[GitOps - Principles]]
+[[3 - GARDEN/knowledge/GitOps - Principles]]
 [[GitOps - How it works]]
-[[GitOps - ArgoCD VS Flux]]
+[[3 - GARDEN/knowledge/GitOps - ArgoCD VS Flux]]
 [[GitOps - Benefits]]
 # What is it ?
 
