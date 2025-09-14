@@ -62,7 +62,7 @@ J’ai donc cherché une solution **auto‑hébergée**, simple à déployer et 
 
 ## Terraform
 
-Globalement le [code]() permet de crée une instance Hetzner, ouvre les ports 80 et 443, et génère automatiquement l’IP publique.
+Globalement le [code](https://github.com/issamsisbane/analytics) permet de crée une instance Hetzner, ouvre les ports 80 et 443, et génère automatiquement l’IP publique.
 
 ## Gestion des limites Hetzner
 
