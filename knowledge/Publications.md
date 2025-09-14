@@ -2,7 +2,7 @@
 
 ## Homelab
 
-- [x] [[Blog - Homelab - 1 - Starting blocks]]
+- [x] [[3 - GARDEN/content/blog/en/homelab-1|homelab-1]]
 - [ ] Finding a way to monitor electrical consumptions of nodes
 ## Tech
 
