@@ -94,7 +94,7 @@ With **S3 Glacier** and **S3 Glacier Deep Archive**, you can easily move data to
 
 ### Big Data Analytics
 
-**Store** and **analyze** Massive Data Sets using [[AWS Athena]] or[[ AWS Redshift]].
+**Store** and **analyze** Massive Data Sets using [[AWS Athena]] or[[AWS Redshift]].
 
 ### Media Files
 
