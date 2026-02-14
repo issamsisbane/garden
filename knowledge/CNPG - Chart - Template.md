@@ -14,7 +14,7 @@ metadata:
   name: {{ $database.clusterName }}
   namespace: {{ $namespace.name | default $top.Release.Namespace }}-cnpg
 spec:
-  imageName: {{ $database.image | default "ghcr.nexus.ulmj.intranet.justice.gouv.fr/cloudnative-pg/postgresql:17.4" }}
+  imageName: {{ $database.image | default "ghcr/cloudnative-pg/postgresql:17.4" }}
   instances: {{ $database.instances | default 2 }}
 
   inheritedMetadata:
