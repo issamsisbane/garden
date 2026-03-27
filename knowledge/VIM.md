@@ -1,10 +1,14 @@
+# VIM
+
 [[VIM - Comment]]
 [[VIM - VIMRC]]
 [[VIM - Compare files]]
 [[VIM - Split Files]]
-[VIM - Insert command result]]
-# Concepts
-## word
+[[VIM - Insert command result]]
+[[VIM - Macros]]
+
+## Concepts
+### Word
 
 A word consists of a sequence of letters, digits and underscores, or a sequence of other non-blank characters, separated with white space (spaces, tabs, EOL). An empty line is also considered to be a word.
 
@@ -12,7 +16,7 @@ Use 'w', 'e', and 'b' to navigate WORDs.
 
 ![[Pasted image 20241220162516.png]]
 
-## WORD
+### WORD
 
 A WORD consists of a sequence of non-blank characters, separated with white space. An empty line is also considered to be a WORD.
 
@@ -20,9 +24,9 @@ Use 'W', 'E', and 'B' to navigate WORDs.
 
 ![[Pasted image 20241220162652.png]]
 
-# Movements 
+## Movements 
 
-## Simple Movements
+### Simple Movements
 
 `h`: move left
 `j`: move down
@@ -37,7 +41,7 @@ Use 'W', 'E', and 'B' to navigate WORDs.
 `E`: move forward by beginning of the WORDS
 `B`: move backward by beginning of the WORDS ("aren't" is a single word)
 
-## Precise Movements
+### Precise Movements
 
 `f[character]` : move to the next occurences of the character (same line as soon as the line continue)
 `F[character]` : move to the previous occurences of the character (same line as soon as the line continue)
@@ -48,21 +52,21 @@ Use 'W', 'E', and 'B' to navigate WORDs.
 `;`: continue in the same direction
 `,`: continue in the opposite direction
 
-## Horizontal Movements
+### Horizontal Movements
 
 `0` : move to the start of the line
 `$` : move to end of the line
 `^`: Moves to the **first non-blank character of a line**
 `g_`: Moves to the **non-blank character at the end of a line**
 
-## Vertical Movements
+### Vertical Movements
 
  `}` : jumps entire paragraphs **downwards**
 `{` : similarly but **upwards**
 `CTRL-D` : lets you **move down half a page** by scrolling the page
 `CTRL-U` : lets you **move up half a page** also by scrolling
 
-## Search
+### Search
 
 `/{pattern}` : to search **forward**
 `?{pattern}` : to search **backward**
@@ -76,23 +80,23 @@ Use 'W', 'E', and 'B' to navigate WORDs.
 `*` : **search** for the word **under** the cursor **forward**
 `#` : **search** for the word **under** the cursor **backward**
 
-## Counts
+### Counts
 
 **`{count}{motion}`** to multiply a motion **`{count}`** times.
 
-## Semantical Movements
+### Semantical Movements
 
 **`gd`** to jump to definition of whatever is under your cursor.
 **`gf`** to jump to a file in an import.
 
-## Big Movements
+### Big Movements
 
 **`gg`** to go to the top of the file.
 **`{line}gg`** to go to a specific line.
 **`G`** to go to the end of the file.
 **`%`** jump to matching **`({[]})`**%%  %%.
 
-## Operations
+### Operations
 
 `x`: Delete [count] characters under and after the cursor in the current line [into a register if specified]. Does the same as 'dl'.
 `r`: Replace a character
@@ -101,7 +105,7 @@ Use 'W', 'E', and 'B' to navigate WORDs.
 	`db`: delete previous word
 	`d7l`: delete 7 letters in the current word to the right
 
-# Edit
+## Edit
 
 To edit texts in VIM we will combine the motions we already learned to operators.
 
@@ -112,7 +116,7 @@ Perform an action with a number of times to a bit of text
 `u` : undo
 `ctrl` + `r` : redo
 
-## Operators
+### Operators
 
 - **`c`** (**c**hange): Change deletes a piece of text and then sends you into _Insert mode_ so that you can continue typing, changing the original text into something else. The change operator is like the **`d`** and **`i`** commands combined into one[two](https://www.barbarianmeetscoding.com/boost-your-coding-fu-with-vscode-and-vim/editing-like-magic-with-vim-operators/#fn-two). This duality makes it the most useful operator
 - **`y`** (**y**ank): Copy in Vim jargon
@@ -123,7 +127,7 @@ Perform an action with a number of times to a bit of text
 - **`=`** (format code): Formats code
 - **`~`** (switch case): Switch case of selection
 
-## Examples
+### Examples
 
 - Use **`d5j`** to delete 5 lines downwards
 - Type **`df'`** to delete everything in the current line from the cursor until the first occurrence of the **`'`** character (including the character itself)
@@ -131,14 +135,14 @@ Perform an action with a number of times to a bit of text
 - Use **`d/hello`** to delete everything until the first occurrence of **`hello`**
 - Type **`ggdG`** to delete a complete document
 
-### Modes de Vim
+#### Modes de Vim
 
 1. **Mode Normal** : Le mode par défaut, pour naviguer et manipuler le texte.
 2. **Mode Insertion** : Pour insérer du texte (`i` pour entrer en mode insertion).
 3. **Mode Commande** : Pour exécuter des commandes (`:` pour entrer en mode commande).
 4. **Mode Visuel** : Pour sélectionner du texte (`v` pour entrer en mode visuel).
 
-### Commandes de base en mode Normal
+#### Commandes de base en mode Normal
 
 - **`i`** : Passer en mode insertion avant le curseur.
 - **`I`** : Passer en mode insertion au début de la ligne.
@@ -148,7 +152,7 @@ Perform an action with a number of times to a bit of text
 - **`O`** : Insérer une nouvelle ligne au-dessus de la ligne actuelle et entrer en mode insertion.
 - **`Esc`** : Revenir en mode Normal depuis le mode Insertion ou Visuel.
 
-### Déplacements de base
+#### Déplacements de base
 
 - **`h`** : Aller à gauche.
 - **`j`** : Aller en bas.
@@ -173,7 +177,7 @@ Perform an action with a number of times to a bit of text
 
 ![[Pasted image 20250325181912.png]]
 
-### Édition de texte
+#### Édition de texte
 
 - **`x`** : Supprimer le caractère sous le curseur.
 - **`dd`** : Supprimer (couper) la ligne courante.
@@ -193,20 +197,20 @@ Perform an action with a number of times to a bit of text
 
 dfp => supprime jusqu'au caractère p
 
-### Déplacement de la fenetre
+#### Déplacement de la fenetre
 
 - ==**`zt`**: Déplace la fenètre pour avoir le cursor en haut==
 - ==**`zz`**: Déplace la fenètre pour avoir le cursor au milieu==
 - ==**`zb`**: Déplace la fenètre pour avoir le cursor en bas==
 
-### Mode Visuel (pour sélectionner du texte)
+#### Mode Visuel (pour sélectionner du texte)
 
 - **`v`** : Entrer en mode visuel pour une sélection de texte.
 - **`V`** : Sélectionner la ligne entière.
 - **`y`** : Copier (yanker) la sélection.
 - **`d`** : Supprimer (couper) la sélection.
 
-### Commandes en mode Commande (après `:`)
+#### Commandes en mode Commande (après `:`)
 
 - **`:w`** : Sauvegarder le fichier.
 - **`:q`** : Quitter Vim.
