@@ -28,6 +28,6 @@ This is the first of a long series I hope of my homelab adventure.
 
 You can read the whole article in my blog : [https://lnkd.in/enEBA9xM](https://lnkd.in/enEBA9xM)  
   
-Homelab - 1 / 1
+Homelab - 1 / 3
 
 ![[1757400916348.jpg]]
