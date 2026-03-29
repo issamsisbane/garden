@@ -1,8 +1,5 @@
 Cloud Native PostrgreSQL
 
-
-[[CNPG - init Locale Extension]]
-
 Permet d'utiliser postgresSQL sur un cluster Kubernetes
 on peut tout gérer as code.
 
