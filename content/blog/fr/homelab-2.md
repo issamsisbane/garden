@@ -1,9 +1,8 @@
-<!-- Error: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash-lite\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-lite\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-lite\nPlease retry in 265.436358ms.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_input_token_count', 'quotaId': 'GenerateContentInputTokensPerModelPerMinute-FreeTier', 'quotaDimensions': {'model': 'gemini-2.0-flash-lite', 'location': 'global'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'model': 'gemini-2.0-flash-lite', 'location': 'global'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash-lite'}}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '0s'}]}} -->
-
 ---
-title: Homelab - 2 - From Bare Metal to a Bootable Cluster Node
-description: How I automated the provisioning of three bare-metal Ubuntu nodes using cloud-init, Ventoy, and a single user-data file.
-lang: en
+title: Homelab - 2 - De la machine nue à un nœud de cluster bootable
+description: Comment j'ai automatisé le provisionnement de trois nœuds Ubuntu bare-metal en utilisant cloud-init, Ventoy et un seul fichier user-data.
+lang: fr
+
 pubDate: Feb 26 2026
 heroImage: /portfolio/blog/homelab-2/homelab-2.png
 badge: Homelab
@@ -11,118 +10,119 @@ tags:
   - Kubernetes
   - Self-Host
   - Linux
+  - Homelab
 ---
-- [Introduction](#Introduction)
-- [1 - Why Rebuild from K3s](#1---why-rebuild-from-k3s)
-- [2 - The Hardware](#2---the-hardware)
-- [3 - Why Automated Provisioning](#3---why-automated-provisioning)
-- [4 - Ventoy: One USB to Rule Them All](#4---ventoy-one-usb-to-rule-them-all)
-- [5 - Ubuntu Autoinstall and cloud-init](#5---ubuntu-autoinstall-and-cloud-init)
-- [6 - The user-data File](#6---the-user-data-file)
-- [7 - WiFi: The Annoying Part](#7---wifi-the-annoying-part)
-- [8 - Hostname Troubles with the ISP Router](#8---hostname-troubles-with-the-isp-router)
-- [9 - The kuadm User](#9---the-kuadm-user)
-- [10 - Keep Laptop alive when closed](#10---keep-laptop-alive-when-closed)
-- [11 - Lessons Learned](#11---lessons-learned)
-- [Conclusion](#Conclusion)
+- [Introduction](#introduction)
+- [1 - Pourquoi reconstruire à partir de K3s](#1---pourquoi-reconstruire-à-partir-de-k3s)
+- [2 - Le matériel](#2---le-matériel)
+- [3 - Pourquoi un provisionnement automatisé](#3---pourquoi-un-provisionnement-automatisé)
+- [4 - Ventoy : Une seule clé USB pour les gouverner toutes](#4---ventoy--une-seule-clé-usb-pour-les-gouverner-toutes)
+- [5 - Ubuntu Autoinstall et cloud-init](#5---ubuntu-autoinstall-et-cloud-init)
+- [6 - Le fichier user-data](#6---le-fichier-user-data)
+- [7 - Le WiFi : La partie énervante](#7---le-wifi--la-partie-énervante)
+- [8 - Problèmes de nom d'hôte avec le routeur FAI](#8---problèmes-de-nom-dhôte-avec-le-routeur-fai)
+- [9 - L'utilisateur kuadm](#9---lutilisateur-kuadm)
+- [10 - Garder l'ordinateur portable allumé lorsqu'il est fermé](#10---garder-lordinateur-portable-allumé-lorsquil-est-fermé)
+- [11 - Leçons apprises](#11---leçons-apprises)
+- [Conclusion](#conclusion)
 
 ## Introduction
 
-*After writing the first article about my initial homelab with K3s and Flux, I kept running it for a while. It worked. But the more I used it, the more I felt I was lacking control. K3s is great — opinionated, batteries-included, easy to install — but it hides a lot of what actually makes Kubernetes tick. I wanted to rebuild everything from scratch using kubeadm and Kubespray for a more production-like setup. This series documents that rebuild journey.*
+*Après avoir écrit le premier article sur mon homelab initial avec K3s et Flux, je l'ai continué à l'utiliser pendant un certain temps. Ça fonctionnait. Mais plus je l'utilisais, plus j'avais l'impression de manquer de contrôle. K3s est génial — opinionné, complet, facile à installer — mais il cache beaucoup de ce qui fait réellement fonctionner Kubernetes. Je voulais tout reconstruire à partir de zéro en utilisant kubeadm et Kubespray pour une configuration plus proche de la production. Cette série documente ce parcours de reconstruction.*
 
-*Before getting to the Kubernetes part, though, there's a step that most tutorials skip over: actually installing the operating system on each machine. It sounds trivial until you have three different laptops with different hardware, no monitor to plug in, and a strong desire to never touch a keyboard during installation.*
+*Avant d'en arriver à la partie Kubernetes, cependant, il y a une étape que la plupart des tutoriels sautent : l'installation du système d'exploitation sur chaque machine. Cela semble trivial jusqu'à ce que vous ayez trois ordinateurs portables différents avec du matériel différent, aucun moniteur à brancher, et un fort désir de ne jamais toucher un clavier pendant l'installation.*
 
-*This article covers exactly that — the OS layer. How I went from three blank machines to three identical, network-reachable Ubuntu nodes, provisioned automatically from a single USB drive and a single configuration file.*
+*Cet article couvre exactement cela — la couche système d'exploitation. Comment je suis passé de trois machines vierges à trois nœuds Ubuntu identiques et joignables sur le réseau, provisionnés automatiquement à partir d'une seule clé USB et d'un seul fichier de configuration.*
 
-*It's less glamorous than deploying workloads, but getting this right is what makes everything else reproducible. If you ever have to rebuild a node at 11pm because something went wrong, you'll be glad you automated this part.*
+*C'est moins glamour que de déployer des charges de travail, mais bien faire cette étape est ce qui rend tout le reste reproductible. Si vous devez un jour reconstruire un nœud à 23h parce que quelque chose s'est mal passé, vous serez content d'avoir automatisé cette partie.*
 
-## 1 - Why Rebuild from K3s
+## 1 - Pourquoi reconstruire à partir de K3s
 
-The first homelab was built with K3s. It worked, Flux was running, applications were deployed. I was happy.
+Le premier homelab a été construit avec K3s. Ça fonctionnait, Flux tournait, les applications étaient déployées. J'étais content.
 
-But as I dug deeper into Kubernetes at work and kept reading about how things actually work under the hood, I started noticing how much K3s abstracts away. Everything is in a single binary. The embedded database, the built-in service load balancer, the way it bundles containerd and the CNI plugin — all of that is genuinely convenient, but it means you're not really learning the raw Kubernetes primitives.
+Mais en creusant plus profondément dans Kubernetes au travail et en continuant à lire sur le fonctionnement réel des choses en coulisses, j'ai commencé à remarquer à quel point K3s abstrait. Tout est dans un seul binaire. La base de données intégrée, l'équilibreur de charge de service intégré, la façon dont il regroupe containerd et le plugin CNI — tout cela est vraiment pratique, mais cela signifie que vous n'apprenez pas vraiment les primitives brutes de Kubernetes.
 
-I passed my CKA in September 2025, so I learned how to work with kubeadm, etcd... And I loved working directly with these tools and learn all the components of a kubernetes cluster.
+J'ai passé mon CKA en septembre 2025, j'ai donc appris à travailler avec kubeadm, etcd... Et j'ai adoré travailler directement avec ces outils et apprendre tous les composants d'un cluster Kubernetes.
 
-So I wanted to migrate from K3S to control everything in my cluster.
+J'ai donc voulu migrer de K3S pour tout contrôler dans mon cluster.
 
-I wiped everything and started fresh. kubeadm for cluster initialization, Kubespray to automate the deployment across all three nodes with Ansible.
+J'ai tout effacé et j'ai recommencé. kubeadm pour l'initialisation du cluster, Kubespray pour automatiser le déploiement sur les trois nœuds avec Ansible.
 
-The first thing that needed solving before any of that: a clean, consistent, reproducible OS on each machine.
+La première chose à résoudre avant tout le reste : un système d'exploitation propre, cohérent et reproductible sur chaque machine.
 
-## 2 - The Hardware
+## 2 - Le matériel
 
-The cluster is still the same three machines from the first setup.
+Le cluster est toujours constitué des trois mêmes machines que lors de la première configuration.
 
-- **RaspberryPi**: A Raspberry Pi 5, 16 GB RAM, 4 cores. The workhorse of the cluster and the control plane node.
-- **Archy**: An old laptop rescued from my parents' house, 8 GB RAM, 4 cores. Was running Arch Linux before. Now running Ubuntu Server like the others.
-- **Ubuntuserv**: Another old laptop, 4 GB RAM, 4 cores. Was already running Ubuntu Server.
+- **RaspberryPi** : Un Raspberry Pi 5, 16 Go de RAM, 4 cœurs. Le cheval de bataille du cluster et le nœud du plan de contrôle.
+- **Archy** : Un vieil ordinateur portable récupéré chez mes parents, 8 Go de RAM, 4 cœurs. Il tournait sous Arch Linux avant. Il tourne maintenant sous Ubuntu Server comme les autres.
+- **Ubuntuserv** : Un autre vieil ordinateur portable, 4 Go de RAM, 4 cœurs. Il tournait déjà sous Ubuntu Server.
 
-*Don't pay attention to the names. I'm aware they are not consistent with each other. I named them before I cared about naming conventions.*
+*Ne faites pas attention aux noms. Je suis conscient qu'ils ne sont pas cohérents entre eux. Je les ai nommés avant de me soucier des conventions de nommage.*
 
-The important thing here is that all three machines are different hardware. Different WiFi chipsets, different BIOS versions, different interface naming conventions. That heterogeneity is what makes automation both more useful and more painful to set up correctly.
+Ce qui est important ici, c'est que les trois machines sont du matériel différent. Différentes puces WiFi, différentes versions de BIOS, différentes conventions de nommage d'interface. Cette hétérogénéité est ce qui rend l'automatisation à la fois plus utile et plus douloureuse à configurer correctement.
 
-## 3 - Why Automated Provisioning
+## 3 - Pourquoi un provisionnement automatisé
 
-The obvious answer is: because doing things manually three times is three times more error-prone than doing them automatically once.
+La réponse évidente est : parce que faire les choses manuellement trois fois est trois fois plus sujet aux erreurs que de les faire automatiquement une fois.
 
-But there's a deeper reason. When you provision nodes manually — clicking through an installer, setting a hostname, creating a user — you end up with machines that are *probably* similar but not *definitely* identical. Did you create the same user on all three? Did you enable SSH on all of them? Did you set the same locale? You think so, but you're not sure.
+Mais il y a une raison plus profonde. Lorsque vous provisionnez des nœuds manuellement — en cliquant à travers un installateur, en définissant un nom d'hôte, en créant un utilisateur — vous vous retrouvez avec des machines qui sont *probablement* similaires mais pas *certainement* identiques. Avez-vous créé le même utilisateur sur les trois ? Les avez-vous toutes activées pour SSH ? Avez-vous défini la même locale ? Vous le pensez, mais vous n'êtes pas sûr.
 
-With automated provisioning, the configuration is a file. The file is the truth. If the three nodes were all installed from the same file, they are identical by construction.
+Avec un provisionnement automatisé, la configuration est un fichier. Le fichier est la vérité. Si les trois nœuds ont été installés à partir du même fichier, ils sont identiques par construction.
 
-This also means that when something breaks — and something always breaks — you can rebuild a node in the time it takes the installer to run. No manual steps to remember, no documentation to consult. Boot, wait, done.
+Cela signifie également que lorsque quelque chose tombe en panne — et quelque chose tombe toujours en panne — vous pouvez reconstruire un nœud dans le temps nécessaire à l'exécution de l'installateur. Pas d'étapes manuelles à retenir, pas de documentation à consulter. Boot, attendez, terminé.
 
-For a homelab this is a quality-of-life improvement. In a real environment this is a requirement. I'd rather practice the good habits now.
+Pour un homelab, c'est une amélioration de la qualité de vie. Dans un environnement réel, c'est une exigence. Je préfère prendre de bonnes habitudes maintenant.
 
-## 4 - Ventoy: One USB to Rule Them All
+## 4 - Ventoy : Une seule clé USB pour les gouverner toutes
 
-In the first homelab setup I used Rufus to flash the Raspberry Pi's SD card. Rufus writes a single ISO to a drive and that's it. If you want to try a different ISO you reformat and reflash.
+Lors de la première configuration de l'homelab, j'ai utilisé Rufus pour flasher la carte SD du Raspberry Pi. Rufus écrit une seule ISO sur un lecteur et c'est tout. Si vous voulez essayer une autre ISO, vous reformatez et re-flashez.
 
-This time I switched to [Ventoy](https://www.ventoy.net/). Ventoy formats the USB drive once, and then you just copy ISO files onto it like a regular filesystem. When you boot from the drive, Ventoy shows a menu and lets you pick which ISO to boot. No reflashing, no reformatting.
+Cette fois, je suis passé à [Ventoy](https://www.ventoy.net/). Ventoy formate la clé USB une fois, puis vous copiez simplement des fichiers ISO dessus comme un système de fichiers ordinaire. Lorsque vous démarrez à partir du lecteur, Ventoy affiche un menu et vous permet de choisir quelle ISO démarrer. Pas de reflash, pas de reformatage.
 
-For provisioning three machines with the same ISO it doesn't make an enormous difference. But when you're also carrying around a rescue ISO, a diagnostic tool, and your installer, having them all on one stick is genuinely useful.
+Pour provisionner trois machines avec la même ISO, la différence n'est pas énorme. Mais lorsque vous transportez également une ISO de secours, un outil de diagnostic et votre installateur, les avoir tous sur une seule clé est vraiment utile.
 
-The setup is simple: download Ventoy, run the installer targeting your USB drive, then copy the Ubuntu Server 24.04 ISO to the drive's data partition. That's it.
+La configuration est simple : téléchargez Ventoy, exécutez l'installateur en ciblant votre clé USB, puis copiez l'ISO d'Ubuntu Server 24.04 sur la partition de données du lecteur. C'est tout.
 
-### Secure Boot Issue
+### Problème de démarrage sécurisé (Secure Boot)
 
-The first time I booted from the Ventoy drive on one of the laptops I got this error:
+La première fois que j'ai démarré à partir de la clé Ventoy sur l'un des ordinateurs portables, j'ai obtenu cette erreur :
 
 ```
 Verification failed: (0x1A) Security Violation
 ```
 
-This is a Secure Boot issue. Ventoy's bootloader isn't signed by Microsoft's key by default, so UEFI refuses to run it. The fix is to enroll Ventoy's own certificate into the UEFI Secure Boot database, which Ventoy can do for you through its `VentoyEnroll` utility. There's a clear guide on the [Ventoy website](https://www.technewstoday.com/ventoy-secure-boot/) for this.
+C'est un problème de démarrage sécurisé. Le chargeur de démarrage de Ventoy n'est pas signé par la clé de Microsoft par défaut, donc UEFI refuse de l'exécuter. La solution consiste à enregistrer le propre certificat de Ventoy dans la base de données de démarrage sécurisé UEFI, ce que Ventoy peut faire pour vous via son utilitaire `VentoyEnroll`. Il existe un guide clair sur le [site Web de Ventoy](https://www.technewstoday.com/ventoy-secure-boot/) pour cela.
 
-Alternatively you can just disable Secure Boot in the BIOS. Less elegant but faster for a homelab that you control entirely.
+Alternativement, vous pouvez simplement désactiver le démarrage sécurisé dans le BIOS. Moins élégant mais plus rapide pour un homelab que vous contrôlez entièrement.
 
-### The Raspberry Pi Exception
+### L'exception Raspberry Pi
 
-The Raspberry Pi doesn't have a standard UEFI boot system, so Ventoy doesn't work on it. This is not a problem in practice: the Raspberry Pi Imager does the same job. It lets you configure the hostname, inject an SSH key, and set up WiFi before writing the image to the SD card. 
+Le Raspberry Pi n'a pas de système de démarrage UEFI standard, donc Ventoy ne fonctionne pas dessus. Ce n'est pas un problème en pratique : le Raspberry Pi Imager fait le même travail. Il vous permet de configurer le nom d'hôte, d'injecter une clé SSH et de configurer le WiFi avant d'écrire l'image sur la carte SD.
 
-The only difference is that I use a SSD directly instead of an SD Card more suited for a Kubernetes cluster. The result is equivalent — a headless, network-reachable node without manual setup.
+La seule différence est que j'utilise un SSD directement au lieu d'une carte SD, ce qui est plus adapté à un cluster Kubernetes. Le résultat est équivalent — un nœud sans tête et joignable sur le réseau sans configuration manuelle.
 
-## 5 - Ubuntu Autoinstall and cloud-init
+## 5 - Ubuntu Autoinstall et cloud-init
 
-Ubuntu Server 24.04 ships with a built-in installer called **autoinstall**. It reads a configuration file called `user-data` and runs the installation completely hands-off. No clicking, no prompts, no keyboard interaction.
+Ubuntu Server 24.04 est livré avec un installateur intégré appelé **autoinstall**. Il lit un fichier de configuration appelé `user-data` et exécute l'installation entièrement sans intervention. Pas de clics, pas d'invites, pas d'interaction au clavier.
 
-The `user-data` file uses the cloud-init format. It covers everything: disk layout, locale, keyboard, user accounts, SSH keys, packages to install, and arbitrary files to write to disk before first boot.
+Le fichier `user-data` utilise le format cloud-init. Il couvre tout : disposition du disque, locale, clavier, comptes utilisateurs, clés SSH, paquets à installer et fichiers arbitraires à écrire sur le disque avant le premier démarrage.
 
-The way it works with Ventoy is straightforward: you place the `user-data` file at the root of the USB drive alongside the ISO. When the Ubuntu installer boots, it looks for this file and uses it automatically. The installer runs, the node reboots, and you have a configured machine.
+La façon dont cela fonctionne avec Ventoy est simple : vous placez le fichier `user-data` à la racine de la clé USB à côté de l'ISO. Lorsque l'installateur Ubuntu démarre, il recherche ce fichier et l'utilise automatiquement. L'installateur s'exécute, le nœud redémarre, et vous avez une machine configurée.
 
-There's an alternative approach where you serve `user-data` over HTTP and pass a kernel parameter at boot:
+Il existe une approche alternative où vous servez `user-data` via HTTP et passez un paramètre de noyau au démarrage :
 
 ```
-autoinstall ds=nocloud-net;s=http://<your-server>/
+autoinstall ds=nocloud-net;s=http://<votre-serveur>/
 ```
 
-This is cleaner for large-scale deployments but requires a running HTTP server. For three nodes, putting the file on the USB stick is simpler.
+C'est plus propre pour les déploiements à grande échelle mais nécessite un serveur HTTP en cours d'exécution. Pour trois nœuds, placer le fichier sur la clé USB est plus simple.
 
-The whole design goal was to have a single `user-data` file that works on all three machines, with only the hostname changed between installs. Everything else — the user, the SSH key, the WiFi config, the packages — stays the same.
+L'objectif de la conception était d'avoir un seul fichier `user-data` qui fonctionne sur les trois machines, avec seulement le nom d'hôte modifié entre les installations. Tout le reste — l'utilisateur, la clé SSH, la configuration WiFi, les paquets — reste le même.
 
-## 6 - The user-data File
+## 6 - Le fichier user-data
 
-Here is the structure of the `user-data` file I ended up with. I'll walk through each section.
+Voici la structure du fichier `user-data` que j'ai fini par utiliser. Je vais passer en revue chaque section.
 
 ```yaml
 #cloud-config
@@ -137,12 +137,12 @@ autoinstall:
   identity:
     hostname: ih-node-1
     username: kuadm
-    password: "<hashed-password>"
+    password: "<mot-de-passe-haché>"
 
   ssh:
     install-server: true
     authorized-keys:
-      - "ssh-ed25519 AAAA... your-key-here"
+      - "ssh-ed25519 AAAA... votre-clé-ici"
     allow-pw: false
 
   storage:
@@ -161,8 +161,8 @@ autoinstall:
             wlan0:
               dhcp4: true
               access-points:
-                "YourSSID":
-                  password: "YourWiFiPassword"
+                "VotreSSID":
+                  password: "VotreMotDePasseWiFi"
 
   kernel:
     cmdline: "net.ifnames=0 biosdevname=0"
@@ -171,13 +171,13 @@ autoinstall:
     - "echo 'kuadm ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/kuadm"
 ```
 
-Let me go through the key decisions here.
+Permettez-moi de passer en revue les décisions clés ici.
 
-### Storage Layout
+### Disposition du stockage
 
-I used `direct` layout, which writes directly to the whole disk without LVM. LVM adds flexibility for resizing volumes later, but for a homelab node with a single disk and only Kubernetes on it I don't need that complexity. Simpler is better.
+J'ai utilisé la disposition `direct`, qui écrit directement sur tout le disque sans LVM. LVM ajoute de la flexibilité pour redimensionner les volumes plus tard, mais pour un nœud homelab avec un seul disque et uniquement Kubernetes dessus, je n'ai pas besoin de cette complexité. Plus simple, c'est mieux.
 
-### Locale and Keyboard
+### Locale et clavier
 
 ```yaml
 locale: fr_FR.UTF-8
@@ -186,71 +186,71 @@ keyboard:
   variant: intl
 ```
 
-I'm French, so `fr_FR.UTF-8` is my locale. But my keyboard is a US International layout, which is what I've been using for years. This is a subtle distinction that matters: locale controls date formats, number separators, and language defaults, while keyboard layout controls what characters the keys produce. Having them aligned correctly avoids annoying surprises.
+Je suis français, donc `fr_FR.UTF-8` est ma locale. Mais mon clavier est un agencement international US, ce que j'utilise depuis des années. C'est une distinction subtile qui compte : la locale contrôle les formats de date, les séparateurs de nombres et les valeurs par défaut de la langue, tandis que la disposition du clavier contrôle les caractères que les touches produisent. Les avoir correctement alignés évite les surprises désagréables.
 
-### Packages
+### Paquets
 
 ```yaml
 packages:
   - wpasupplicant
 ```
 
-Only one extra package is needed at install time. More on why in the next section.
+Un seul paquet supplémentaire est nécessaire au moment de l'installation. Plus d'informations à ce sujet dans la section suivante.
 
-### Kernel Command Line
+### Ligne de commande du noyau
 
 ```yaml
 kernel:
   cmdline: "net.ifnames=0 biosdevname=0"
 ```
 
-This is important. More on this in the WiFi section too.
+C'est important. Plus d'informations à ce sujet dans la section WiFi également.
 
-### Passwordless Sudo
+### Sudo sans mot de passe
 
 ```yaml
 late-commands:
   - "echo 'kuadm ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/kuadm"
 ```
 
-The `late-commands` block runs after the installer has finished but before the first reboot. I use it to drop a sudoers file granting `kuadm` passwordless sudo. This is what Kubespray's Ansible playbooks expect — they connect via SSH and run privileged commands without password prompts.
+Le bloc `late-commands` s'exécute après la fin de l'installation mais avant le premier redémarrage. Je l'utilise pour déposer un fichier sudoers accordant à `kuadm` le droit de sudo sans mot de passe. C'est ce à quoi s'attendent les playbooks Ansible de Kubespray — ils se connectent via SSH et exécutent des commandes privilégiées sans invite de mot de passe.
 
-## 7 - WiFi: The Annoying Part
+## 7 - Le WiFi : La partie énervante
 
-The nodes have no wired connection to the router. There's no network switch in my setup. Everything runs over WiFi. This is fine for a homelab, but it created two separate problems during provisioning.
+Les nœuds n'ont pas de connexion filaire au routeur. Il n'y a pas de switch réseau dans ma configuration. Tout fonctionne via WiFi. C'est bien pour un homelab, mais cela a créé deux problèmes distincts pendant le provisionnement.
 
-### Problem 1: wpasupplicant Is Not Installed by Default
+### Problème 1 : wpasupplicant n'est pas installé par défaut
 
-Ubuntu Server's minimal install doesn't include `wpasupplicant`, the package responsible for WPA2 WiFi authentication. Without it, the system can't connect to a WiFi network at all.
+L'installation minimale d'Ubuntu Server n'inclut pas `wpasupplicant`, le paquet responsable de l'authentification WiFi WPA2. Sans lui, le système ne peut pas du tout se connecter à un réseau WiFi.
 
-This creates a chicken-and-egg problem: the installer needs a network connection to download packages, but WiFi doesn't work until `wpasupplicant` is installed.
+Cela crée un problème d'œuf et de poule : l'installateur a besoin d'une connexion réseau pour télécharger des paquets, mais le WiFi ne fonctionne pas tant que `wpasupplicant` n'est pas installé.
 
-The workaround: during installation, plug the machine in via Ethernet so the installer has a network connection. This lets it download and install `wpasupplicant`. Once the installation is done and the machine reboots, WiFi works — because the package is now installed and the Netplan config is in place.
+La solution : pendant l'installation, branchez la machine via Ethernet pour que l'installateur ait une connexion réseau. Cela lui permet de télécharger et d'installer `wpasupplicant`. Une fois l'installation terminée et la machine redémarrée, le WiFi fonctionne — car le paquet est maintenant installé et la configuration Netplan est en place.
 
-It's not elegant. But it only needs to happen once per node, and a single Ethernet cable moved between machines is acceptable.
+Ce n'est pas élégant. Mais cela ne doit se produire qu'une seule fois par nœud, et un seul câble Ethernet déplacé entre les machines est acceptable.
 
-### Problem 2: Interface Names Change Between Machines
+### Problème 2 : Les noms d'interface changent entre les machines
 
-Ubuntu by default uses "predictable" network interface names like `enp3s0` for Ethernet or `wlp13s0` for WiFi. The "predictable" part means the name encodes the PCI bus topology of the device.
+Ubuntu utilise par défaut des noms d'interface réseau "prévisibles" comme `enp3s0` pour Ethernet ou `wlp13s0` pour le WiFi. La partie "prévisible" signifie que le nom encode la topologie du bus PCI du périphérique.
 
-The problem with three different laptops is that each one has a different bus topology, so each one gets a different WiFi interface name. `wlp13s0` on one machine, `wlp0s20f3` on another. This makes it impossible to write a single Netplan config that works on all of them.
+Le problème avec trois ordinateurs portables différents est que chacun a une topologie de bus différente, donc chacun obtient un nom d'interface WiFi différent. `wlp13s0` sur une machine, `wlp0s20f3` sur une autre. Il est donc impossible d'écrire une seule configuration Netplan qui fonctionne sur toutes.
 
-The fix is to disable predictable naming entirely by passing kernel parameters at boot:
+La solution consiste à désactiver complètement la dénomination prévisible en passant des paramètres de noyau au démarrage :
 
 ```
 net.ifnames=0 biosdevname=0
 ```
 
-With these flags, the kernel falls back to the old-style names: `eth0` for the first Ethernet interface, `wlan0` for the first WiFi interface. These are consistent across all three machines regardless of hardware differences.
+Avec ces indicateurs, le noyau revient aux anciens noms : `eth0` pour la première interface Ethernet, `wlan0` pour la première interface WiFi. Ceux-ci sont cohérents sur les trois machines, quelles que soient les différences matérielles.
 
-In the `user-data` file, this is set via the `kernel.cmdline` field:
+Dans le fichier `user-data`, cela est défini via le champ `kernel.cmdline` :
 
 ```yaml
 kernel:
   cmdline: "net.ifnames=0 biosdevname=0"
 ```
 
-And the Netplan config in `write_files` uses `wlan0` directly:
+Et la configuration Netplan dans `write_files` utilise directement `wlan0` :
 
 ```yaml
 write_files:
@@ -262,49 +262,53 @@ write_files:
           wlan0:
             dhcp4: true
             access-points:
-              "MyNetwork":
-                password: "MyPassword"
+              "MonRéseau":
+                password: "MonMotDePasse"
 ```
 
-One config, three machines. This is why the README lists this as a deliberate design decision: consistent interface names are what make the single-file approach viable.
+Une configuration, trois machines. C'est pourquoi le README liste cela comme une décision de conception délibérée : des noms d'interface cohérents sont ce qui rend l'approche à fichier unique viable.
 
-## 8 - Hostname Troubles with the ISP Router
+## 8 - Problèmes de nom d'hôte avec le routeur FAI
 
-### Hostnames
+### Noms d'hôte
 
-I decided to name the nodes as follows:
+J'ai décidé de nommer les nœuds comme suit :
 
 - `ih-node-01`
 - `ih-node-02`
 - `ih-node-03`
 
-`ih` for Issam Homelab. Simple, consistent, clear.
+`ih` pour Issam Homelab. Simple, cohérent, clair.
 
-The problem is my ISP-provided router. It has a quirk: it strips leading zeros from hostnames. So `ih-node-01` gets registered in the router's DNS as `ih-node-1`. The hostname *on the machine* is `ih-node-01`, but to reach it from another machine on the network you have to use `ih-node-1`.
+Le problème est le routeur fourni par mon FAI. Il a une particularité : il supprime les zéros de tête des noms d'hôte. Ainsi, `ih-node-01` est enregistré dans le DNS du routeur sous le nom `ih-node-1`. Le nom d'hôte *sur la machine* est `ih-node-01`, mais pour l'atteindre depuis une autre machine sur le réseau, vous devez utiliser `ih-node-1`.
 
-*I don't get to control this on my router directly because it's a grand public router... Big Up to my ISP provder*
+*Je ne peux pas contrôler cela sur mon routeur directement car c'est un routeur grand public... Big Up à mon fournisseur FAI*
 
-This inconsistency annoyed me more than it probably should have. Using `ih-node-01` in Ansible inventory, SSH configs, and kubeconfig but having to use `ih-node-1` for actual DNS resolution is the kind of thing that causes mysterious failures at 1am.
+Cette incohérence m'a agacé plus que ce qu'elle aurait probablement dû. Utiliser `ih-node-01` dans l'inventaire Ansible, les configurations SSH et kubeconfig mais devoir utiliser `ih-node-1` pour la résolution DNS réelle est le genre de chose qui provoque des échecs mystérieux à 1h du matin.
 
-I could have worked around it by editing `/etc/hosts` on every machine to add the correct mappings. But that's a manual step that needs to be repeated every time a new machine joins the network, and it defeats part of the purpose of automation.
+J'aurais pu contourner le problème en modifiant `/etc/hosts` sur chaque machine pour ajouter les mappages corrects. Mais c'est une étape manuelle qui doit être répétée chaque fois qu'une nouvelle machine rejoint le réseau, et cela va à l'encontre d'une partie de l'objectif de l'automatisation.
 
-The simpler fix: just rename the nodes to `ih-node-1`, `ih-node-2`, `ih-node-3`. No leading zeros. Now the hostname on the machine matches what the router resolves. Consistency restored.
+La solution la plus simple : renommer simplement les nœuds en `ih-node-1`, `ih-node-2`, `ih-node-3`. Pas de zéros de tête. Maintenant, le nom d'hôte sur la machine correspond à ce que le routeur résout. Cohérence restaurée.
 
-### Fixed IPs
+### Adresses IP fixes
 
-The ISP router also doesn't offer much in the way of automation. To assign static IPs to the nodes, I had to do it through the router's web interface, reserving a DHCP lease for each node's MAC address. This is a manual step that I couldn't automate from the `user-data` side.
+Le routeur FAI n'offre pas non plus beaucoup d'options d'automatisation. Pour attribuer des adresses IP statiques aux nœuds, j'ai dû le faire via l'interface Web du routeur, en réservant un bail DHCP pour l'adresse MAC de chaque nœud. C'est une étape manuelle que je n'ai pas pu automatiser du côté `user-data`.
 
-It's a one-time operation per node, and the result is stable: each node always gets the same IP, which is what Kubernetes requires for a reliable cluster.
+C'est une opération unique par nœud, et le résultat est stable : chaque nœud obtient toujours la même adresse IP, ce qui est ce que Kubernetes exige pour un cluster fiable.
 
-<!-- Error: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-lite\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-lite\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash-lite\nPlease retry in 143.755488ms.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash-lite'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash-lite'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_input_token_count', 'quotaId': 'GenerateContentInputTokensPerModelPerMinute-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash-lite'}}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '0s'}]}} -->
+```markdown
+---
+title: "9 - L'utilisateur kuadm"
+description: "Découvrez comment l'utilisateur kuadm est créé et configuré pour permettre une connexion SSH sans mot de passe et des privilèges sudo."
+lang: fr
+---
+## 9 - L'utilisateur kuadm
 
-## 9 - The kuadm User
+Chaque nœud reçoit un utilisateur unique : `kuadm`.
 
-Every node gets a single user: `kuadm`.
+Ce nom est un quasi-homophone délibéré de `kubeadm`, l'outil d'amorçage de Kubernetes. C'est également l'utilisateur que les playbooks Ansible de Kubespray s'attendent à trouver lorsqu'ils se connectent aux nœuds via SSH.
 
-The name is a deliberate near-homophone of `kubeadm`, the Kubernetes bootstrapping tool. It's also the user that Kubespray's Ansible playbooks expect to find when connecting to the nodes via SSH.
-
-The user is created by the autoinstall `identity` block:
+L'utilisateur est créé par le bloc `identity` d'autoinstall :
 
 ```yaml
 identity:
@@ -313,13 +317,13 @@ identity:
   password: "<hashed-password>"
 ```
 
-The password hash is generated with:
+Le hachage du mot de passe est généré avec :
 
 ```bash
 openssl passwd -6
 ```
 
-This produces a SHA-512 salted hash that cloud-init accepts. The actual password doesn't matter much because password login over SSH is disabled anyway:
+Ceci produit un hachage salé SHA-512 que cloud-init accepte. Le mot de passe réel n'a pas beaucoup d'importance car la connexion par mot de passe via SSH est désactivée de toute façon :
 
 ```yaml
 ssh:
@@ -329,19 +333,19 @@ ssh:
   allow-pw: false
 ```
 
-Only key-based authentication is allowed. The authorized key is my workstation's SSH public key, baked into the `user-data` file. After installation, I can `ssh kuadm@ih-node-1` from my workstation without a password prompt and without needing to copy any keys manually.
+Seule l'authentification par clé est autorisée. La clé autorisée est la clé publique SSH de mon poste de travail, intégrée dans le fichier `user-data`. Après l'installation, je peux me connecter avec `ssh kuadm@ih-node-1` depuis mon poste de travail sans invite de mot de passe et sans avoir à copier manuellement des clés.
 
-The passwordless sudo grant in `late-commands` completes the picture:
+L'octroi de sudo sans mot de passe dans `late-commands` complète le tableau :
 
 ```bash
 echo 'kuadm ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/kuadm
 ```
 
-Kubespray runs many Ansible tasks as root via sudo. Without passwordless sudo, every task would require a password prompt, which doesn't work in an automated playbook.
+Kubespray exécute de nombreuses tâches Ansible en tant que root via sudo. Sans sudo sans mot de passe, chaque tâche nécessiterait une invite de mot de passe, ce qui ne fonctionne pas dans un playbook automatisé.
 
-## 10 - Keep Laptop alive when closed
+## 10 - Maintenir l'ordinateur portable actif lorsqu'il est fermé
 
-One more thing worth mentioning: all three machines are laptops (one is a raspberrypi). They run headless. I added the following configuration after the first install to make sure they don't suspend when I close the lid:
+Une autre chose qui mérite d'être mentionnée : les trois machines sont des ordinateurs portables (dont un Raspberry Pi). Ils fonctionnent sans écran. J'ai ajouté la configuration suivante après la première installation pour m'assurer qu'ils ne se suspendent pas lorsque je ferme le capot :
 
 `/etc/systemd/logind.conf`:
 ```conf
@@ -350,30 +354,31 @@ HandleLidSwitchExternalPower=ignore
 HandleLidSwitchDocked=ignore
 ```
 
-Then restart the service:
+Puis redémarrez le service :
 
 ```bash
 sudo systemctl restart systemd-logind
 ```
 
-Without this, closing the lid to tuck the machine away puts the node to sleep and the cluster falls apart. Learned that one the hard way.
+Sans cela, fermer le capot pour ranger la machine la mettrait en veille et le cluster tomberait en panne. J'ai appris cela à mes dépens.
 
-## 11 - Lessons Learned
+## 11 - Leçons apprises
 
-Running through this process across three different machines taught me a few things worth writing down.
+Parcourir ce processus sur trois machines différentes m'a appris quelques choses qui méritent d'être notées.
 
-**Heterogeneous hardware is harder than it looks.** The three laptops have different WiFi chips, different BIOS quirks, different boot behavior. Things that work on one machine don't always work on another. The interface naming problem is a good example — it only becomes visible when you try to apply the same config to two different machines.
+**Le matériel hétérogène est plus difficile qu'il n'y paraît.** Les trois ordinateurs portables ont des puces WiFi différentes, des bizarreries de BIOS différentes, des comportements de démarrage différents. Ce qui fonctionne sur une machine ne fonctionne pas toujours sur une autre. Le problème de nommage des interfaces en est un bon exemple : il n'apparaît que lorsque vous essayez d'appliquer la même configuration à deux machines différentes.
 
-**The Ethernet-first approach is a real limitation.** Having to plug in an Ethernet cable to bootstrap WiFi is clunky. A cleaner solution would be to pre-download the `wpasupplicant` package and include it in a local mirror, or to serve the `user-data` from a PXE server that also handles the network config. For three nodes, the Ethernet workaround is fine. For more nodes it would get tedious fast.
+**L'approche "Ethernet d'abord" est une véritable limitation.** Devoir brancher un câble Ethernet pour amorcer le WiFi est peu pratique. Une solution plus propre consisterait à pré-télécharger le paquet `wpasupplicant` et à l'inclure dans un miroir local, ou à servir le `user-data` à partir d'un serveur PXE qui gère également la configuration réseau. Pour trois nœuds, la solution de contournement Ethernet convient. Pour plus de nœuds, cela deviendrait vite fastidieux.
 
-**One file, one source of truth.** The decision to use a single `user-data` file for all three nodes — changing only the hostname — was the right call. Every difference between nodes is deliberate and visible. There's no risk of accidentally configuring node 2 differently from node 1 because you edited the wrong copy.
+**Un fichier, une source de vérité.** La décision d'utiliser un seul fichier `user-data` pour les trois nœuds, en ne modifiant que le nom d'hôte, était la bonne. Chaque différence entre les nœuds est délibérée et visible. Il n'y a aucun risque de configurer accidentellement le nœud 2 différemment du nœud 1 parce que vous avez modifié la mauvaise copie.
 
-**Don't skip automating the OS layer.** It's tempting to just click through the installer once and move on. But the OS layer is the foundation. If it's inconsistent, everything built on top of it will have subtle, hard-to-debug differences. Taking the time to automate it properly means every rebuild is guaranteed to be clean.
+**Ne sautez pas l'automatisation de la couche système d'exploitation.** Il est tentant de simplement cliquer une fois sur l'installateur et de passer à autre chose. Mais la couche système d'exploitation est la fondation. Si elle est incohérente, tout ce qui est construit dessus présentera des différences subtiles et difficiles à déboguer. Prendre le temps de l'automatiser correctement signifie que chaque reconstruction sera garantie d'être propre.
 
-**The ISP router is a constraint, not a tool.** Home ISP routers are not designed for infrastructure work. They have weird behaviors, limited features, and no API. The hostname stripping issue is just one example. Working around it by changing the naming convention rather than relying on the router to behave correctly was the right instinct. When in doubt, don't rely on things you can't control.
+**Le routeur FAI est une contrainte, pas un outil.** Les routeurs FAI domestiques ne sont pas conçus pour le travail d'infrastructure. Ils ont des comportements étranges, des fonctionnalités limitées et pas d'API. Le problème de suppression des noms d'hôtes n'en est qu'un exemple. Le contourner en modifiant la convention de nommage plutôt qu'en comptant sur le routeur pour se comporter correctement était la bonne intuition. En cas de doute, ne vous fiez pas à des choses que vous ne pouvez pas contrôler.
 
 ## Conclusion
 
-The next article will cover what happens after the machines are up: running Kubespray to bootstrap the Kubernetes cluster, configuring Calico for networking, and the various things that went wrong along the way.
+Le prochain article portera sur ce qui se passe après le démarrage des machines : l'exécution de Kubespray pour amorcer le cluster Kubernetes, la configuration de Calico pour le réseau, et les diverses choses qui ont mal tourné en cours de route.
 
-The OS installation is the boring foundation. The cluster setup is where things get interesting.
+L'installation du système d'exploitation est la fondation ennuyeuse. La configuration du cluster est là où les choses deviennent intéressantes.
+```
