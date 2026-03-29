@@ -9,6 +9,7 @@ tags:
   - Kubernetes
   - Self-Host
   - Linux
+  - Homelab
 ---
 - [Introduction](#Introduction)
 - [1 - Why Rebuild from K3s](#1---why-rebuild-from-k3s)
