@@ -100,6 +100,13 @@ git push [remote-name] [branch-name]
 git pull [remote-name] [branch-name]
 ```
 
+
+**Remove branch not existing on remote**
+```bash
+git remote prune origin
+```
+
+
 # Garder les fichiers lors d'un changement de branche
 
 ``` bash

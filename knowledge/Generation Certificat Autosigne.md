@@ -10,7 +10,7 @@ openssl req -new -key private_key.pem -out certificate.csr
 
 ## 3 - Génération du certificat pour 1 an
 ```
-openssl x509 -req -days 365 -in certificate.csr -signkey private_key.pem -out certificate.pem
+openssl x509 -req -days 3650 -in certificate.csr -signkey private_key.pem -out certificate.pem
 ```
 
 ## 4 - Vérification
