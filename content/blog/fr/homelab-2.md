@@ -2,6 +2,7 @@
 title: Homelab - 2 - De la machine nue à un nœud de cluster bootable
 description: Comment j'ai automatisé le provisionnement de trois nœuds Ubuntu bare-metal en utilisant cloud-init, Ventoy et un seul fichier user-data.
 lang: fr
+
 pubDate: Feb 26 2026
 heroImage: /portfolio/blog/homelab-2/homelab-2.png
 badge: Homelab
