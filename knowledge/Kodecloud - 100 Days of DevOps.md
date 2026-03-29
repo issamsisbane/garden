@@ -9,6 +9,7 @@
 [[Kodecloud - 100 Days of DevOps - 09 - Backup Script]]
 [[Kodecloud - 100 Days of DevOps - 10 - Install tomcat server]]
 [[Kodecloud - 100 Days of DevOps - 11 - Linux Network Services]]
+[[Kodecloud - 100 Days of DevOps - 12 - IPtables Installation and configuration]]
 
 This is the board with the informations to connect to each machines. It is public and are just VMs within the challenges environment so no problem sharing it.
 

@@ -1,4 +1,6 @@
-# Utiliser les raccourcis vscode
+# VS Code - VIM
+
+## Utiliser les raccourcis vscode
 
 A ajouter dans settings.json pour pouvoir utiliser les raccourcis vscode dans le texte :
 
