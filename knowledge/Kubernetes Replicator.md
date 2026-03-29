@@ -17,6 +17,9 @@ helm install kubernetes-replicator mittwalk/kubernetes-replicator
 
 # Utilisation Push
 
+On configure replicator pour push un secret dans les namespaces.
+Il va créer les secrets nécessaires dans les namespaces nécessaires.
+
 ## Creation d'un Secret
 
 ### Nommer les namespaces
@@ -92,7 +95,8 @@ kind: Secret
 metadata:   
 	name: my-secret   
 	annotations:    
-			replicator.v1.mittwald.de/replication-allowed: "true"     replicator.v1.mittwald.de/replication-allowed-namespaces: "dev,prod" 
+			replicator.v1.mittwald.de/replication-allowed: "true"     
+			replicator.v1.mittwald.de/replication-allowed-namespaces: "dev,prod" 
 data:   key1: <base64encodedData>
 ```
 

@@ -1,0 +1,1 @@
+Ce sont des groups qui permettent de lancer des services dans des environments isolé avec resources limités ?

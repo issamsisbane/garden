@@ -1,0 +1,1 @@
+This command allow to get the ip of a host using the dns confiured within the machine.

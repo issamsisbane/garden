@@ -14,3 +14,4 @@ A pod definition will also contains information about network (it has an ip addr
 [[Kubernetes - Pods Commands]]
 [[Kubernetes - Port Forwarding]]
 [[Kubernetes - Pods Networking]]
+[[Kubernetes - Pods - Resources]]
