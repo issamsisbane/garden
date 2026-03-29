@@ -9,12 +9,12 @@ tags: ["Kubernetes", "Self-Host", "GitOps"]
 ---
 
 - [Introduction](#introduction)
-	- [1 - Architecture](#1---architecture)
-	- [2 - Principes](#2---principes)
-	- [3 - Choix technologiques](#3---choix-technologiques)
-	- [4 - Configuration des machines](#4---configuration-des-machines)
-	- [5 - Configuration étape par étape](#5---configuration-étape-par-étape)
-	- [6 - Installer Flux](#6---installer-flux)
+- [1 - Architecture](#1---architecture)
+- [2 - Principes](#2---principes)
+- [3 - Choix technologiques](#3---choix-technologiques)
+- [4 - Configuration des machines](#4---configuration-des-machines)
+- [5 - Configuration étape par étape](#5---configuration-étape-par-étape)
+- [6 - Installer Flux](#6---installer-flux)
 - [Conclusion](#conclusion)
 
 ## Introduction

@@ -14,5 +14,3 @@ state: toWatch
 
 https://www.youtube.com/watch?v=tGJyMRxAK3k
 
-
-[[Kubernetes - Jobs]]
