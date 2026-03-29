@@ -1,4 +1,4 @@
-```
+```bash
 #!/bin/bash
 
 APP_PORT=6300

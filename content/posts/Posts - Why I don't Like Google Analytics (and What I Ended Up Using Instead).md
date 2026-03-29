@@ -47,5 +47,4 @@ I ended up using it for it simplicity, speed and because it's not blocked by ad-
 Read the full walkthroughs :  
 • Setting up Umami : [https://lnkd.in/eDqB9-jh](https://lnkd.in/eDqB9-jh)  
 • Comparing analytics tools : [https://lnkd.in/e2tNTMiu](https://lnkd.in/e2tNTMiu)
-
 ![[1757874675149.jpg]]
