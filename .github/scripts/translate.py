@@ -9,7 +9,7 @@ if not api_key:
     raise RuntimeError("The environment variable GOOGLE_API_KEY is not set.")
 
 
-MODEL_NAME = "gemini-2.0-flash-lite"
+MODEL_NAME = "gemini-2.5-flash-lite"
 MAX_INPUT_TOKENS = 4000
 TEMPERATURE = 0.3
 
