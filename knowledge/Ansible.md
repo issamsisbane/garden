@@ -1,4 +1,5 @@
 [[Ansible Vault]]
+
 # Installation
 
 ``` sh
@@ -14,6 +15,12 @@ export PATH=$PATH:/home/issam/.local/bin
 # Composants
 
 ## Inventory
+
+On peut utiliser la commande suivante pour voir l'inventaire d'un certain hote, utile pour debugger la précedence des variables :
+
+```bash
+ansible-inventory -i inventory.ini --host my-host
+```
 
 ## Playbook
 `ansible-playbook -i inventory.ini playbook.yml --check`
