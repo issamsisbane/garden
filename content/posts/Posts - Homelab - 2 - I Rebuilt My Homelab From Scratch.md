@@ -34,4 +34,4 @@ Read the full article here : [https://lnkd.in/dp7gAD8a](https://lnkd.in/dp7gAD8a
 
 Homelab - 2 / 3
 
-![[homelab-migration.png]]
+(homelab-migration.png)

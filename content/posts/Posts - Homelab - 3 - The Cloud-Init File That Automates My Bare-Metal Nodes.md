@@ -37,4 +37,4 @@ Read the full article here: [https://lnkd.in/dp7gAD8a](https://lnkd.in/dp7gAD8a)
   
 Homelab - 3 / 3
 
-![[cloudinit-node-provisioning.png]]
+(cloudinit-node-provisioning.png)
