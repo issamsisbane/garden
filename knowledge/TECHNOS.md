@@ -6,7 +6,7 @@
 [[EFK]]
 [[Elastic Search]]
 [[Flagger]]
-[[FluxCd]]
+[[FluxCD]]
 [[Fluentd]]
 [[Gravitee]]
 [[Harbor]]

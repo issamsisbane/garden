@@ -38,5 +38,5 @@
 
 # Projets
 
-[[Portfolio Traduction Pipeline]]
+[[Portfolio - Traduction Pipeline]]
 [[Project - Deploy Umami Analytics to the Cloud]]

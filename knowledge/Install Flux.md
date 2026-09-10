@@ -1,6 +1,6 @@
 https://fluxcd.io/flux/get-started/
 
-We are going to install [[FluxCd]] in our [[K3S]] Cluster.
+We are going to install [[FluxCD]] in our [[K3S]] Cluster.
 
 # Create a GitHub PAT
 

@@ -1,0 +1,1 @@
+Linux Unified Key Setup est une norme de chiffrement de disques.

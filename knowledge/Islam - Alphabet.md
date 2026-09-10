@@ -1,0 +1,1 @@
+Pour apprendre l'alphabet, on peut apprendre 4 lettre par jours que l'on va ajouter pour faire des mots qui ne peuvent pas forçement dire quelque-chose.

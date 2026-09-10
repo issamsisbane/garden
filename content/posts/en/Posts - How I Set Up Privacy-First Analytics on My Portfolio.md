@@ -1,3 +1,7 @@
+---
+lang: en
+---
+
 𝐇𝐨𝐰 𝐈 𝐒𝐞𝐭 𝐔𝐩 𝐏𝐫𝐢𝐯𝐚𝐜𝐲-𝐅𝐢𝐫𝐬𝐭 𝐀𝐧𝐚𝐥𝐲𝐭𝐢𝐜𝐬 𝐨𝐧 𝐌𝐲 𝐏𝐨𝐫𝐭𝐟𝐨𝐥𝐢𝐨  
   
 It’s been over a year since I developed and deployed my portfolio on the Internet.  

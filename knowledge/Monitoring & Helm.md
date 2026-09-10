@@ -1,4 +1,4 @@
-[[Flux]] allow to use [[Helm]].
+[[FluxCD]] allow to use [[Helm]].
 
 There are CRD defining :
 - HelmRepository which replace the command `helm repo add`

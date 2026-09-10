@@ -6,4 +6,4 @@ It is possible to use CRD by installing operator into a cluster.
 
 
 # Example 
-If we install the operator [[Flux]] then we can use a CRD called GitRepository.
+If we install the operator [[FluxCD]] then we can use a CRD called GitRepository.

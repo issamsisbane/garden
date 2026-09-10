@@ -1,3 +1,7 @@
+---
+lang: en
+---
+
 𝐖𝐡𝐲 𝐈 𝐝𝐨𝐧'𝐭 𝐋𝐢𝐤𝐞 𝐆𝐨𝐨𝐠𝐥𝐞 𝐀𝐧𝐚𝐥𝐲𝐭𝐢𝐜𝐬 (𝐚𝐧𝐝 𝐖𝐡𝐚𝐭 𝐈 𝐄𝐧𝐝𝐞𝐝 𝐔𝐩 𝐔𝐬𝐢𝐧𝐠 𝐈𝐧𝐬𝐭𝐞𝐚𝐝)
 
 I needed an easy solution to see who visits my portfolio and, most importantly, get a unique‑visitor count.  

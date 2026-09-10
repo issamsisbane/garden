@@ -1,0 +1,1 @@
+https://github.com/dotdc/grafana-dashboards-kubernetes/blob/master/dashboards/k8s-addons-prometheus.json

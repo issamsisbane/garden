@@ -1,0 +1,1 @@
+You need to expose a path of a server to allow let's encrypt to make a request.

@@ -8,6 +8,11 @@ openssl genpkey -algorithm RSA -out private_key.pem
 openssl req -new -key private_key.pem -out certificate.csr
 ```
 
+to view the csr :
+
+```
+openssl req -in certificate.csr -noout -text
+```
 ## 3 - Génération du certificat pour 1 an
 ```
 openssl x509 -req -days 365 -in certificate.csr -signkey private_key.pem -out certificate.pem

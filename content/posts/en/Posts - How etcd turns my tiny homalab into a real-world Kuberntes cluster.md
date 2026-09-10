@@ -1,3 +1,7 @@
+---
+lang: en
+---
+
 𝐇𝐨𝐰 𝐞𝐭𝐜𝐝 𝐭𝐮𝐫𝐧𝐬 𝐦𝐲 𝐭𝐢𝐧𝐲 𝐡𝐨𝐦𝐞𝐥𝐚𝐛 𝐢𝐧𝐭𝐨 𝐚 𝐫𝐞𝐚𝐥-𝐰𝐨𝐫𝐝 𝐊𝐮𝐛𝐞𝐫𝐧𝐞𝐭𝐞𝐬 𝐜𝐥𝐮𝐬𝐭𝐞𝐫
   
 A production-grade Kubernetes environment must run as a cluster of several nodes to ensure resilience. If one node goes down, the others take over the workload.  

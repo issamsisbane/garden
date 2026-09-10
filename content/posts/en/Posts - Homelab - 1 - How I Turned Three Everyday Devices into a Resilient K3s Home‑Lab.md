@@ -1,3 +1,7 @@
+---
+lang: en
+---
+
 𝐇𝐨𝐰 𝐈 𝐓𝐮𝐫𝐧𝐞𝐝 𝐓𝐡𝐫𝐞𝐞 𝐄𝐯𝐞𝐫𝐲𝐝𝐚𝐲 𝐃𝐞𝐯𝐢𝐜𝐞𝐬 𝐢𝐧𝐭𝐨 𝐚 𝐑𝐞𝐬𝐢𝐥𝐢𝐞𝐧𝐭 𝐊3𝐬 𝐇𝐨𝐦𝐞‑𝐋𝐚𝐛
 
 I've spent the last three years working with production‑grade Kubernetes clusters at work. While that experience exposed me to real‑world problems, it left little room for experimentation or deep dives into topics I’m curious about. 

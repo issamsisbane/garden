@@ -1,4 +1,4 @@
-  [[Flux]] is:
+  [[FluxCD]] is:
     • Simpler setup and less overwhelming interface
     • Encourages CLI usage and GitOps thinking
     • Native integration with Azure Kubernetes Service (AKS)
