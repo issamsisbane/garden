@@ -14,6 +14,7 @@ imageNameKey: Untitled
 [[New Homelab Setup - Restart Everything]]
 [[New Homelab Setup - SSO]] 
 [[New Homelab Setup - Tailscale DNS Error]]
+[[New Homelab Setup - Forgejo Notes]]
 
 # Install OS
 

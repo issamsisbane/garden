@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: garden-quartz
+  namespace: garden
+  labels:
+    app: garden-quartz
+spec:
+  selector:
+    app: garden-quartz
+  ports:
+    - port: 80
+      targetPort: 80
+  type: ClusterIP
