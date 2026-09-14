@@ -3,32 +3,22 @@ creation date: 2026-08-04-18:28:53
 modification date: 2026-08-04-18:28:53
 imageNameKey: Kubernetes_-_CKS
 ---
-https://notes.kodekloud.com/
 
 # Kodekloud course
 
-- [1 - \[\[The 4 C's of Cloud Native Security\]\]](#1---the-4-cs-of-cloud-native-security)
+- [The 4 C's of Cloud Native Security](#the-4-cs-of-cloud-native-security)
 - [Cluster Setup and Hardening](#cluster-setup-and-hardening)
 - [Security Primitives](#security-primitives)
   - [Secure Hosts](#secure-hosts)
   - [Secure Kubernetes](#secure-kubernetes)
   - [Securing the kubelet](#securing-the-kubelet)
-    - [Authentication](#authentication)
-    - [Authorization](#authorization)
   - [Kubectl Proxy \& Portforward](#kubectl-proxy--portforward)
   - [Verify Binary before deploying](#verify-binary-before-deploying)
   - [Docker](#docker)
   - [Securing Node Metadata](#securing-node-metadata)
-    - [Why securing ?](#why-securing-)
-    - [How to secure ?](#how-to-secure-)
-    - [Netpols](#netpols)
-    - [RBAC](#rbac)
-    - [Auditing](#auditing)
   - [TLS Encryption Cypher](#tls-encryption-cypher)
 - [System Hardening](#system-hardening)
   - [Reducting the Attack Surface](#reducting-the-attack-surface)
-    - [Limit Node Access](#limit-node-access)
-    - [RBAC Access](#rbac-access)
   - [SSH Hardening](#ssh-hardening)
   - [Sudo](#sudo)
   - [Installing Only the required packages](#installing-only-the-required-packages)
@@ -36,11 +26,7 @@ https://notes.kodekloud.com/
   - [Identify and disable Open Ports](#identify-and-disable-open-ports)
   - [Restricting Network Access](#restricting-network-access)
   - [Linux Sys Calls](#linux-sys-calls)
-    - [Aquasec Tracee](#aquasec-tracee)
-    - [Restrict Syscalls with seccomp](#restrict-syscalls-with-seccomp)
-    - [SECCOMP in Kubernetes](#seccomp-in-kubernetes)
   - [App Armor](#app-armor)
-    - [App Armor in Kubernetes](#app-armor-in-kubernetes)
   - [Linux Capabilities](#linux-capabilities)
 - [Minimizing Microservices Vulnerabilities](#minimizing-microservices-vulnerabilities)
   - [Security Context](#security-context)
@@ -49,16 +35,10 @@ https://notes.kodekloud.com/
   - [OPA - Open Policy Agent](#opa---open-policy-agent)
   - [Secrets](#secrets)
   - [Container Sandboxing](#container-sandboxing)
-    - [GVisor](#gvisor)
-    - [Kata Containers](#kata-containers)
-    - [Container Runtime](#container-runtime)
-    - [Runtime class in Kubernetes](#runtime-class-in-kubernetes)
   - [Multi-tenancy](#multi-tenancy)
   - [Quality Of Service](#quality-of-service)
   - [DNS isolation Multi-tenants](#dns-isolation-multi-tenants)
   - [Pod to Pod Encryption](#pod-to-pod-encryption)
-    - [Istio](#istio)
-    - [Cilium](#cilium)
 - [Supply Chain Security](#supply-chain-security)
   - [Kubelinter](#kubelinter)
   - [Secure Images](#secure-images)
@@ -68,48 +48,51 @@ https://notes.kodekloud.com/
   - [Falco](#falco)
   - [Ensure immutability of containers at runtime](#ensure-immutability-of-containers-at-runtime)
   - [Kubernetes Audit](#kubernetes-audit)
-- [Secrets](#secrets-1)
-- [Service Account](#service-account)
-- [Security Context](#security-context-1)
+- [Points Chauds](#points-chauds)
   - [User Namespaces (hostUsers)](#user-namespaces-hostusers)
-- [Netpols](#netpols-1)
+  - [Netpols](#netpols-1)
   - [Sécuriser un cluster existant](#sécuriser-un-cluster-existant)
-- [CSR](#csr)
-- [Packets](#packets)
-- [AdmissionWebhook](#admissionwebhook)
-- [PSA](#psa)
-- [YAML](#yaml)
-- [OPA](#opa)
-- [Admission Controller Kubernetes](#admission-controller-kubernetes)
-- [User Kubernetes](#user-kubernetes)
-- [Service Account](#service-account-1)
-- [Static-analysis](#static-analysis)
-- [Secrets](#secrets-2)
-- [ReplicaSets](#replicasets)
-- [Seccomp](#seccomp)
-- [Etcd](#etcd)
-- [Audit](#audit)
-- [Network Policies Cillium](#network-policies-cillium)
-- [Istio](#istio-1)
-- [Docker](#docker-1)
-- [Nginx Ingress](#nginx-ingress)
-- [Checksum verification](#checksum-verification)
-- [Apparmor](#apparmor)
-- [Kubelet](#kubelet)
-- [CIS Benchmark](#cis-benchmark)
-- [Trivy](#trivy-1)
-- [JSONPATH](#jsonpath)
-- [GatwewayAPI](#gatwewayapi)
-- [Certs](#certs)
-- [Telecharger binaire depuis Github](#telecharger-binaire-depuis-github)
-- [API SERVER](#api-server)
-- [TEST](#test)
-- [Kube bench](#kube-bench)
-- [Cilium netpols](#cilium-netpols)
-- [Env vars Secrets](#env-vars-secrets)
-- [Admission controller](#admission-controller-1)
-- [Image](#image)
-- [Scaling](#scaling)
+  - [DEBUG API SERVER](#debug-api-server)
+  - [Secrets](#secrets-1)
+  - [Service Account](#service-account)
+  - [Security Context](#security-context-1)
+  - [CSR](#csr)
+  - [Packets](#packets)
+  - [PSA](#psa)
+  - [YAML](#yaml)
+  - [Admission Controller Kubernetes](#admission-controller-kubernetes)
+  - [User Kubernetes](#user-kubernetes)
+  - [Service Account](#service-account-1)
+  - [Static-analysis](#static-analysis)
+  - [Secrets](#secrets-2)
+  - [ReplicaSets](#replicasets)
+  - [Seccomp](#seccomp)
+  - [Etcd](#etcd)
+  - [Audit](#audit)
+  - [Network Policies Cillium](#network-policies-cillium)
+  - [Istio](#istio-1)
+  - [Docker](#docker-1)
+  - [Nginx Ingress](#nginx-ingress)
+  - [Checksum verification](#checksum-verification)
+  - [Apparmor](#apparmor)
+  - [Kubelet](#kubelet)
+  - [CIS Benchmark](#cis-benchmark)
+  - [Trivy](#trivy-1)
+  - [JSONPATH](#jsonpath)
+  - [GatwewayAPI](#gatwewayapi)
+  - [Telecharger binaire depuis Github](#telecharger-binaire-depuis-github)
+  - [API SERVER](#api-server)
+  - [Seccomp vs AppArmor](#seccomp-vs-apparmor)
+  - [Linux Capabilities](#linux-capabilities-1)
+  - [Cilium netpols](#cilium-netpols)
+  - [Env vars Secrets](#env-vars-secrets)
+  - [Falco Exemple k8s audit log](#falco-exemple-k8s-audit-log)
+  - [Audit logs](#audit-logs)
+  - [Admission controller](#admission-controller-1)
+  - [Image](#image)
+  - [Scaling](#scaling)
+- [Questions Examens](#questions-examens)
+- [Resources](#resources)
 - [Docs](#docs)
   - [Doc Officielle](#doc-officielle)
   - [Doc Utile](#doc-utile)
@@ -124,7 +107,9 @@ https://notes.kodekloud.com/
   - [Cilium Policies](#cilium-policies)
 
 
-## 1 - [[The 4 C's of Cloud Native Security]]
+## The 4 C's of Cloud Native Security 
+
+[[The 4 C's of Cloud Native Security]]
 
 ## Cluster Setup and Hardening
 
@@ -1618,115 +1603,12 @@ spec:
 ```
 
 
-# VIM SETUP
-
-```vimrc
-set expandtab
-set tabstop=2
-set shiftwidth=2
-```
-
-# TMUX SETUP
-
-```tmux.conf
-set -g mouse on
-```
-
-# DEBUG API SERVER
-
-```
-tail -f /var/log/pods/kube-system_kube-apiserver-controlplane_c363a7038f4951f76fd174220564d664/kube-apiserver/*.log
-```
-
-```
-crictl logs $(crictl ps -a --name kube-apiserver -q | head -n1)
-```
-
-```
-ID=$(crictl ps -a --name kube-apiserver -q | head -n1) && crictl ps -a --id $ID && crictl logs $ID
-```
-
-Log locations to check:
-
-- `/var/log/pods`
-- `/var/log/containers`
-- `crictl ps` + `crictl logs`
-- `docker ps` + `docker logs` (in case when Docker is used)
-- kubelet logs: `/var/log/syslog` or `journalctl`
-
-```
-tail -f /var/log/pods/kube-system_kube-apiserver-*/kube-apiserver/*
-```
 
 
-https://istio.io/latest/docs/reference/config/security/peer_authentication/
 
+## Points Chauds 
 
-## Secrets
-Secrets in volume are to be privileged instead of env variable.
-
-| Aspect                             | Variable env | Volume |
-| ---------------------------------- | ------------ | ------ |
-| Visible dans `docker inspect`      | Oui          | Non    |
-| Visible dans `/proc/<pid>/environ` | Oui          | Non    |
-| Mise à jour automatique            | Non          | Oui    |
-|                                    |              |        |
-
-Un secret monté en volume est rafraichi toutes les 60 secondes sauf 
-**Les exceptions où ça NE se met PAS à jour automatiquement**
-
-- **Montage avec `subPath`**
-- **Secret marqué `immutable: true`**
-- **Secret injecté comme variable d'environnement** (`env` / `envFrom`) : **jamais**
-
-L'application doit avoir un watch dessus si on ne veut pas relancer le pod.
-
-## Service Account
-
-Par défaut, un pod utilise le serviceAccount default du namespace et ce dernier est donc monté dans le pod.
-
-Hors pour la pluspart des applications web de production, elles n'ont pas besoin d'accèder à l'api de kubernetes. Ainsi il faut désactiver l'automount de ce service account avec : 
-
-```
-automountServiceAccountToken
-```
-
-Si besoin d'un sa par le pod, il faudrait au mieux pour chaque application créer un service account dédié pour les raisons suivantes : 
-
-| Problème             | Conséquence                                                                                                                                    |     |
-| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | --- |
-| Identité partagée    | Plusieurs workloads apparaissent sous la même identité vis-à-vis de l'API                                                                      |     |
-| Traçabilité réduite  | La corrélation d'audit devient moins fine                                                                                                      |     |
-| Permissions héritées | Tout RoleBinding sur `default` s'applique à tous les [Pods](https://blog.stephane-robert.info/docs/conteneurs/orchestrateurs/kubernetes/pods/) |     |
-Le ServiceAccount **du pod** n'a besoin d'aucune permission RBAC particulière pour monter des volumes... 
-
-**Qui fait quoi ?**
-
-1. **Le kubelet** est celui qui va chercher le Secret et monte le volume/injecte la variable d'env. Il le fait via l'**autorisation Node** (Node authorizer), un mécanisme séparé du RBAC classique, indépendant de la ServiceAccount attachée au pod.
-2. **La ServiceAccount du pod** (celle montée dans `/var/run/secrets/kubernetes.io/serviceaccount`) n'entre en jeu **que si le code applicatif dans le conteneur appelle lui-même l'API Kubernetes** (via ce token). Si ton appli ne fait pas d'appels à l'API server, le RBAC de la SA est complètement hors sujet ici.
-
-
-Ça veut dire que l'on peut créer un pod en montant un secret et le lire dans le pod sans avoir la permission get sur ce secret car c'est le kubelet qui va créer le pod et monté le secret.
-
-Il faut donc faire attention avec la permission de créer des pods. Par exemple si tout est gérer via gitops et des MR, on peut eviter la création de pod là où ce n'est pas nécessaire.
-
-## Security Context
-
-Voir les capabilities actives : 
-```bash
-kubectl exec -it cap-demo -- cat /proc/1/status | grep Cap
-capsh --decode=0000000000000400
-```
-
-Un conteneur `privileged: true` peut potentiellement :
-
-- Monter n'importe quel device de l'hôte
-- Accéder à des parties sensibles du filesystem hôte
-- Charger des modules kernel
-
-Dans la pratique, cela rapproche fortement le conteneur des privilèges de l'hôte. Le risque exact dépend du runtime, des mounts et de l'isolement réel, mais considérez-le comme **extrêmement risqué**.
-
-Utilisez-le **uniquement** pour des outils système très spécifiques (monitoring réseau bas niveau, agents de nœud) et jamais pour des applications.
+Voir les manifests avec oc explain + api resources
 
 ### User Namespaces (hostUsers)
 
@@ -1754,7 +1636,7 @@ Le port de la policy est celui du conteneur, pas celui du Service
 
 C'est le piège numéro un des NetworkPolicies. Le champ `port` d'une règle désigne le port sur lequel **le conteneur écoute**, c'est-à-dire le `targetPort` du Service, jamais le `port` publié par le Service.
 
-## Netpols
+### Netpols
 
 Avec un Service qui expose `8080` vers un conteneur qui écoute sur `80`, écrire `port: 8080` dans la policy bloque tout le trafic : la traduction d'adresse a déjà eu lieu quand le paquet atteint le Pod, et le port vu par la policy est `80`. Le symptôme est trompeur, la policy semble correcte et rien ne passe. Vérifiez avec `kubectl get svc backend -o jsonpath='{.spec.ports[0].targetPort}'`.
 
@@ -1789,46 +1671,129 @@ Vous avez un cluster en production et voulez le durcir rapidement ?
 4. **Protéger les Secrets**
     Activez le chiffrement at-rest des Secrets dans etcd si ce n'est pas déjà fait.
 
+### DEBUG API SERVER
 
-# Points Chaud
+```
+tail -f /var/log/pods/kube-system_kube-apiserver-controlplane_c363a7038f4951f76fd174220564d664/kube-apiserver/*.log
+```
 
-## CSR
+```
+crictl logs $(crictl ps -a --name kube-apiserver -q | head -n1)
+```
 
-- [X] Comment mettre une CSR dans un fichier yaml en 1 ligne ? 
+```
+ID=$(crictl ps -a --name kube-apiserver -q | head -n1) && crictl ps -a --id $ID && crictl logs $ID
+```
+
+Log locations to check:
+
+- `/var/log/pods`
+- `/var/log/containers`
+- `crictl ps` + `crictl logs`
+- `docker ps` + `docker logs` (in case when Docker is used)
+- kubelet logs: `/var/log/syslog` or `journalctl`
+
+```
+tail -f /var/log/pods/kube-system_kube-apiserver-*/kube-apiserver/*
+```
+
+
+https://istio.io/latest/docs/reference/config/security/peer_authentication/
+
+
+### Secrets
+
+Secrets in volume are to be privileged instead of env variable.
+
+| Aspect                             | Variable env | Volume |
+| ---------------------------------- | ------------ | ------ |
+| Visible dans `docker inspect`      | Oui          | Non    |
+| Visible dans `/proc/<pid>/environ` | Oui          | Non    |
+| Mise à jour automatique            | Non          | Oui    |
+|                                    |              |        |
+
+Un secret monté en volume est rafraichi toutes les 60 secondes sauf 
+**Les exceptions où ça NE se met PAS à jour automatiquement**
+
+- **Montage avec `subPath`**
+- **Secret marqué `immutable: true`**
+- **Secret injecté comme variable d'environnement** (`env` / `envFrom`) : **jamais**
+
+L'application doit avoir un watch dessus si on ne veut pas relancer le pod.
+
+### Service Account
+
+Par défaut, un pod utilise le serviceAccount default du namespace et ce dernier est donc monté dans le pod.
+
+Hors pour la pluspart des applications web de production, elles n'ont pas besoin d'accèder à l'api de kubernetes. Ainsi il faut désactiver l'automount de ce service account avec : 
+
+```
+automountServiceAccountToken
+```
+
+Si besoin d'un sa par le pod, il faudrait au mieux pour chaque application créer un service account dédié pour les raisons suivantes : 
+
+| Problème             | Conséquence                                                                                                                                    |     |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | --- |
+| Identité partagée    | Plusieurs workloads apparaissent sous la même identité vis-à-vis de l'API                                                                      |     |
+| Traçabilité réduite  | La corrélation d'audit devient moins fine                                                                                                      |     |
+| Permissions héritées | Tout RoleBinding sur `default` s'applique à tous les [Pods](https://blog.stephane-robert.info/docs/conteneurs/orchestrateurs/kubernetes/pods/) |     |
+Le ServiceAccount **du pod** n'a besoin d'aucune permission RBAC particulière pour monter des volumes... 
+
+**Qui fait quoi ?**
+
+1. **Le kubelet** est celui qui va chercher le Secret et monte le volume/injecte la variable d'env. Il le fait via l'**autorisation Node** (Node authorizer), un mécanisme séparé du RBAC classique, indépendant de la ServiceAccount attachée au pod.
+2. **La ServiceAccount du pod** (celle montée dans `/var/run/secrets/kubernetes.io/serviceaccount`) n'entre en jeu **que si le code applicatif dans le conteneur appelle lui-même l'API Kubernetes** (via ce token). Si ton appli ne fait pas d'appels à l'API server, le RBAC de la SA est complètement hors sujet ici.
+
+
+Ça veut dire que l'on peut créer un pod en montant un secret et le lire dans le pod sans avoir la permission get sur ce secret car c'est le kubelet qui va créer le pod et monté le secret.
+
+Il faut donc faire attention avec la permission de créer des pods. Par exemple si tout est gérer via gitops et des MR, on peut eviter la création de pod là où ce n'est pas nécessaire.
+
+### Security Context
+
+Voir les capabilities actives : 
+```bash
+kubectl exec -it cap-demo -- cat /proc/1/status | grep Cap
+capsh --decode=0000000000000400
+```
+
+Un conteneur `privileged: true` peut potentiellement :
+
+- Monter n'importe quel device de l'hôte
+- Accéder à des parties sensibles du filesystem hôte
+- Charger des modules kernel
+
+Dans la pratique, cela rapproche fortement le conteneur des privilèges de l'hôte. Le risque exact dépend du runtime, des mounts et de l'isolement réel, mais considérez-le comme **extrêmement risqué**.
+
+Utilisez-le **uniquement** pour des outils système très spécifiques (monitoring réseau bas niveau, agents de nœud) et jamais pour des applications.
+
+### CSR
+
+- [X] Comment mettre une CSR dans un fichier yaml en 1 ligne 
 ```bash
 cat test.pem | tr -d "\n"
 ```
-- [X] Trouver CSR dans dans la doc Kubernetes ? Manifest avec oc explain + api resources
+- Savoir générer une CSR, trouvable facilement dans la doc Kubernetes.
 
-## Packets
+### Packets
 
 - [X] apt-get vs apt ? [[apt vs apt-get]]
 - [X] apt-get -y => commande sans demande interaction utilisateur
 
-## AdmissionWebhook
-
-- [X] caBundle ? dans admission webhook ? => C'est le CA du certificat du webhook pour contacter ce dernier sans erreur depuis le cluster
-
-## PSA
+### PSA
 
 - [X] PSA Exceptions ? Possible via AdmissionConfiguration https://kubernetes.io/docs/tasks/configure-pod-container/enforce-standards-admission-controller/#configure-the-admission-controller
 
-## YAML
+### YAML
 
 - [X] Voir les problèmes d'indentation yaml : `cat -A <file>`
 
-## OPA
-
-Pas au programme de l'exam !
-
-- ~~Comment écrire une policy OPA ?~~
-- ~~OPA vs Gatekeeper~~
-
-## Admission Controller Kubernetes
+### Admission Controller Kubernetes
 
 - [X] Comment utiliser ? ImagePolicyWebhook fonctionnement qu'est ce que ça fait ? => ImagePolicyWebhook tape sur une webhook interne ou externe qui renvoi un obkect particulier à l'api server pour autoriser ou nom l'utilisation de l'image. Il suffit d'un kubeconfig avec l'url du webhook et les certs pour mTLS et d'ajouter çá dans AdmissionConfiguration ainsi que d'activer l'admission controller sur l'api server
 
-## User Kubernetes
+### User Kubernetes
 
 - [X] Comment créer un utilisateur sur Kubernetes ? Les différentes manières
 	a) Certificats clients X.509 (méthode "manuelle" classique)
@@ -1841,76 +1806,75 @@ Pas au programme de l'exam !
 - [X] Comment les lister et les trouvers ? **Kubernetes n'a pas d'objet natif "User"**. Contrairement aux `ServiceAccount` (qui sont de vrais objets API), les utilisateurs humains sont gérés en dehors du cluster — Kubernetes ne fait que faire confiance à une identité authentifiée par un moyen externe.
 - [X] Permissions par défaut ? => aucune permission par défaut sans role binding (sur le user ou sur le group)
 
-## Service Account
+### Service Account
 
-- [X] Permission par défaut ? => Aucune permission par défaut mais dangereux de le laisser monter tout le temps car d'autre personne peuvent faire des rolebindings dessus et le token sera monté partout
+- [X] Permission par défaut ? => Aucune permission par défaut mais dangereux de laisser monter le token tout le temps dans les pods car d'autres personne peuvent faire des rolebindings dessus et le token sera monté partout
 
-## Static-analysis
+### Static-analysis
 
 - [X] Kubesec vs Kube-linter => Kubesec est plus orienté sécurité avec un score a atteindre alors que kube-linter est plus bonnes pratiques
 
-## Secrets
+### Secrets
 
-- [X] secret as env var => as volume => il faut que l'application gère cela path au lien d'env var  
-- [X] Modifier un secret sans erreur : `echo -n "valeur" | base64`
+- [X] remplacer un secret as env var => as volume => il faut que l'application gère cela path au lien d'env var  
+- [X] Modifier un secret sans erreur : `echo -n "valeur" | base64` => important pour ne pas avoir d'erreur de ligne en trop
 
-## ReplicaSets
+### ReplicaSets
 
 - [X] Version history limit garde les anciennes version du replicasets expliquant pourquoi on les voit encore dans Argo.
 
-## Seccomp
+### Seccomp
 
-- [X] Où est la conf seccomp ? Comment on charge un profile ? souvent dans /var/lib/kubelet/seccomp/profiles/ c'est le cri qui charge le profile pas besoin de redemmarer le kubelet 
-- [ ] Comment on vérifie qu'un profile est chargé ? et sur le pod ?
+- [X] Où est la conf seccomp ? Comment on charge un profile ? souvent dans `/var/lib/kubelet/seccomp/profiles/` c'est le CRI qui charge le profile pas besoin de redemmarer le kubelet 
+- [X] Comment on vérifie qu'un profil est chargé ? et sur le pod ?
 ```bash
 grep Seccomp /proc/<pid>/status 
 # 0 = Unconfined, 1 = Strict, 2 = Filter (profil en place)
 ```
 - [X] Différence entre pod et container ? defini soit pour tous les containers via pod soit individuellement via container
 
-## Etcd
+### Etcd
 
 - [X] Quel user doit être utilisé pour les datas ETCD si on est en static pod ? Depend de l'implem root ou etcd
 - [X] Comment rajouter l'encryption des secrets au repos ? https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/
 
-## Audit
+### Audit
 
 - [X] Ecrire une audit policy et la lire, ou sont les logs ? logs de l'apiServer defini dans la conf
-- [X] Ecrire une policy Falco, ou la lire ? dans la sortie de falco ou sur un fihcier dependamment de la conf
-- Les logs de seccomp apparmor et d'audit se retoruver dans les logs de l'api serveur et on y voit rien ?
-- [X] Si je modifie l'audit policy le fichier c'est mis à jour automatiquement dans le pod de l'api-server ? il faut redemarrer l'api server pour que les changements soient pris en compte apparement
+- [X] Ecrire une policy Falco, ou la lire ? dans la sortie de falco ou sur un fichier dependamment de la conf
+- [X] Si je modifie l'audit policy le fichier s'est mis à jour automatiquement dans le pod de l'api-server ? il faut redemarrer l'api server pour que les changements soient pris en compte apparement. Pour redemarrer l'apiServer ont deplace le manifest du static pod ailleurs, on attends que ce soit supprimé côté `crictl` et le remets à sa place pour recreer le pod.
 
-## Network Policies Cillium
+### Network Policies Cillium
 
-- [X] Comment en crée et comment elle fonctionnent ?
+- [X] Comment en créer et comment elle fonctionnent ?
 
-## Istio
+### Istio
 
-- [X] Rajouter du mTLS entre obligatoire sur un namespace ? entre 2 pods ? sur tout le cluster ? => tout gérable via PeerAuthentication https://istio.io/latest/docs/reference/config/security/peer_authentication/
+- [X] Rajouter du mTLS obligatoire sur un namespace ? entre 2 pods ? sur tout le cluster ? => tout gérable via PeerAuthentication https://istio.io/latest/docs/reference/config/security/peer_authentication/
 
-## Docker
+### Docker
 
 - [X] Comment modifier la conf du daemon ? fichier `/etc/docket/daemon.json` ou service
 - [X] Quel est le socket utilisé ? `/var/run/docker.sock` modifier les permissions
-- [ ] Sécurisé docker ? vérifier la conf ? 
-- [ ] Lancer des conteneurs ?
+- [X] Sécuriser docker ? vérifier la conf ? 
+- [X] Savoir comment lancer des conteneurs ?
 
-## Nginx Ingress
+### Nginx Ingress
 
-- [ ] Comment rajouter le ssl-redirect ? avec l'annotation ?
-- [ ] Comment faire du rewrite juste du path ?
+- [X] Comment rajouter le ssl-redirect ? avec l'annotation ? Voir la doc nginx dispo à l'exam
+- [X] Comment faire du rewrite juste du path ? => Voir la doc nginx dispo à l'exam
 
-## Checksum verification
+### Checksum verification
 
-- [X] Comment verifier des checksums d'archive ? sha256sum -b ou sha512sum -b dépendamment de la demande
-- [ ] Pourquoi sha256sum -b ? pourquoi binary ?
-- [ ] Comment vérifier et/ou récuperer le checksum d'une image ? skopeo digest ?
+- [X] Comment verifier des checksums d'archive ? `sha256sum -b` ou `sha512sum -b` dépendamment de la demande
+- [X] Savoir pourquoi sha256sum -b ? pourquoi binary ?
+- [X] Comment vérifier et/ou récuperer le checksum d'une image ? skopeo digest
 
-## Apparmor
+### Apparmor
 
-- [X] Comment vérifier si des profiles sont loader ? ou les placer ? 
-- [X] A placer sur tous les nodes ou forcer un node
-- [X] quel est ce chemin : /etc/apparmor.d/usr.shim.nginx ?
+- [X] Comment vérifier si des profiles sont loader ? ou les placer ? => commande apparmor
+- [X] A placer sur tous les nodes ou forcer un node sur le déploiement
+- [X] le chemin par défaut : /etc/apparmor.d/usr.shim.nginx ?
 
 Les profiles sont ici généralement : 
 
@@ -1950,24 +1914,27 @@ Vérifier si le profile est chargé dans le pod :
 kubectl exec hello-apparmor -- cat /proc/1/attr/current
 ```
 
-## Kubelet
+### Kubelet
 
-- [X] ça sert à quoi ça ? => délègue l'authorization à l'apiServer
-	```
-	# Activer l'autorisation webhookauthorization:  mode: Webhook
-	```
-## CIS Benchmark
-
-- [X] Comment lancé un benchmark sur un node particulier ?
-
+```yaml
+# Activer l'autorisation 
+webhookauthorization:  mode: Webhook
 ```
+
+- [X] ça sert à quoi ça ? => délègue l'authorization à l'apiServer depuis le kubelet
+
+### CIS Benchmark
+
+- [X] Comment lancer un benchmark sur un node particulier ?
+
+```bash
 # Scan du kubelet uniquement
 kube-bench run --targets node
 ```
 
 IL FAUT LE LANCER SUR LE NODE SURLEQUEL ON DEMANDE
 
-## Trivy
+### Trivy
 
 Deux options méritent une explication : `--ignore-unfixed` masque les CVE pour lesquelles aucun correctif n'est publié, utile pour ne pas bloquer un build sur un problème que personne ne peut résoudre, mais dangereux si vous l'activez sans suivre ces vulnérabilités par ailleurs. `--exit-code 1` est ce qui transforme le scan en **garde-fou** : sans lui, Trivy affiche les CVE et le job reste vert.
 
@@ -1977,21 +1944,15 @@ trivy image --ignore-unfixed nginx:1.25.3
 trivy image --exit-code 1 --severity CRITICAL nginx:1.25.3
 ```
 
-## JSONPATH
+### JSONPATH
 
-- [ ] Refaire une passe dessus, comment ça marche ?
-## GatwewayAPI
+- [X] Refaire une passe dessus, comment ça marche ? Savoir rapidement comment récupérer des infos particulière.
+
+### GatwewayAPI
 
 Pas dans le scope de l'examen
-- [ ] ~~Refaire une rapide passe dessus~~
 
-## Certs
-
-- [ ] Commande pour générer certificat et key pour Ingress
-- [ ] Commande pour générer certificat et key pour User
-- [ ] Commande pour générer certificat et key pour mTLS
-
-## Telecharger binaire depuis Github
+### Telecharger binaire depuis Github
 
 - [X] Comment faire ?
 
@@ -1999,7 +1960,7 @@ Pas dans le scope de l'examen
 curl -L -O https://github/../<my-binary>.tar.gz
 ```
 
-## API SERVER
+### API SERVER
 
 - [X] Forcer le redemarrage ? => Deplacer le manifest et le remettre 
 - [X] Acceder à l'api via curl dans un pods
@@ -2009,22 +1970,15 @@ curl https://kubernetes.default/api/v1/namespaces/restricted/secrets \
  -H "Authorization: Bearer $(cat /run/secrets/kubernetes.io/serviceaccount/token)" \
  -k
 ```
-## TEST
 
-ps -ef vs ps -aux 
-
-## Kube bench
-
-planifié audit + gardé exceptions avec date et pourquoi les fails sont acceptés
-https://blog.stephane-robert.info/docs/conteneurs/orchestrateurs/kubernetes/securiser/cis-benchmark/
-
-dmesg ????
+### Seccomp vs AppArmor
 
 - **Secure computing mode (seccomp)**: Filter which system calls a process can make
 - **AppArmor**: Restrict the access privileges of individual programs
 
 
-Linux Capabilities : 
+### Linux Capabilities
+
 - Each capability has a set of system calls (syscalls) that a process can make.
 
 You can use Linux policy-based mandatory access control (MAC) mechanisms, such as AppArmor
@@ -2033,9 +1987,10 @@ For example, a root user in a privileged container might be able to use the `CAP
 
 Additionally, you can run workloads in user namespaces by setting `hostUsers: false` in your Pod manifest. This lets you run containers as root users in the user namespace, but as non-root users in the host namespace on the node. This is still in early stages of development and might not have the level of support that you need. For instructions, refer to [Use a User Namespace With a Pod](https://kubernetes.io/docs/tasks/configure-pod-container/user-namespaces/)
 
-## Cilium netpols
+### Cilium netpols
 
 Si on met une règle deny explicite toute les règles allow sont bloqués.
+
 Si on veut mettre du deny all par défaut il faut donc mettre seulement du deny implicite. Le deny implicite s'active meme quand la seule regle est une egressDeny.   
 
 Comme ça : 
@@ -2052,24 +2007,21 @@ spec:
   egress:
     - {}
 ```
-## Env vars Secrets
+### Env vars Secrets
 
 Please note that the environment variable method might be more prone to leakage due to crash dumps in logs and the non-confidential nature of environment variable in Linux, as opposed to the permission mechanism on files.
 
+### Falco Exemple k8s audit log
 
-```
+```yaml
     - rule: Terminal shell in container
-
       condition: >
-
         spawned_process and container
-
         and shell_procs and proc.tty != 0
-
         and not k8s.ns.name in (debug-namespace, dev)
 ```
 
-audit
+### Audit logs
 
 ```
 `cat /var/log/kubernetes/audit.log | jq 'select(.verb=="create")'`
@@ -2080,7 +2032,7 @@ image digest :
 ```
 `skopeo inspect docker://nginx:1.25 | jq -r '.Digest'`
 ```
-## Admission controller
+### Admission controller
 
 Mutating et GitOps ? 
 
@@ -2091,12 +2043,13 @@ ValidattingAdmissionPolicy à l'examen, dans kube depuis 1.30 pas de mutating ca
 - ValidatingAdmissionPolicyBinding
 - Parameters => on défini le type de resource dans la polcy configmap ou CRD rule
 
-## Image
+### Image
 
 - image used in production should not contain shells or debugging utilities, as an [ephemeral debug container](https://kubernetes.io/docs/tasks/debug/debug-application/debug-running-pod/#ephemeral-container) can be used for troubleshooting.
 
 - Avoid using image tags to reference an image, especially the `latest` tag, the image behind a tag can be easily modified in a registry. Prefer using the complete `sha256` digest which is unique to the image manifest. Th
-## Scaling
+
+### Scaling
 
 **Le principe de base**
 
@@ -2127,6 +2080,34 @@ Solutions :
 - **HPA (Horizontal Pod Autoscaler)** : scale en nombre de pods, pas en resources par pod. Ça reste totalement compatible avec `request == limit` — en fait c'est même le combo classique en prod : chaque pod a une taille fixe et prévisible, et on ajuste le nombre de replicas selon la charge.
 - **VPA (Vertical Pod Autoscaler)** : lui recalcule le request/limit dans le temps selon l'usage observé. C'est l'outil qui répond à ton problème — au lieu de laisser une marge manuelle "au cas où", VPA ajuste automatiquement le request pour coller à la conso réelle.
 - **Cluster Autoscaler** : ajoute/retire des nœuds selon la pression sur les requests. Il ne résout pas le sur-provisionnement au niveau du pod, mais absorbe le fait que les requests sont fixes en ajustant la capacité du cluster.
+
+## Questions Examens
+
+1. Rajouter POD SECURITY CONSTRAINTS sur un namespace
+2. Rajouter mTLS avec Istio : PeerAuthentication CRD + label sur namespace
+3. Network Policy être très à l'aise !!!
+4. Network Policy Cilium être très à l'aise + savoir rajouter mTLS via network policy
+5. Falco : comment rajouter une règle et la monitorer
+6. Audit logs kubernetes comment rajouter des règles 
+7. Tester checksum image et binaire
+8. SBOM génération avec bom et trivy et analyse avec trivy
+9. Pod Security Context : Exemple un pod se lance pas car il ne respecte pas les security context => il faut juste adapter le pod
+10. CIS Benchmark, ajuster un élément dans le contoleplane api server ou etcd (permissions des dossier...) Bien penser à rajouter les bon volumes dans le static pods
+11. Erreur api serveur => a réparer, regarder les logs /var/logs/pods/kube-api_server*
+12. Update version de node comme CKA classique
+13. Signer et revoquer des certificate request et recupérer le certificat signé si accepté
+14. Docker hardening et savoir lancer des conteneurs docker
+15. Créer un Ingress, ajouté le https via tls certificate (API GATEWAY pas au programme)
+16. RBAC => créer des roles, les attribuer, supprimer le montage automatique de token et monter le token du service account manuellement
+17. Rajouter l'encryption etcd et savoir vérifier
+
+## Resources
+
+- https://killercoda.com/killer-shell-cks
+- https://kodekloud.com
+- https://notes.kodekloud.com
+- https://killer.sh
+
 
 ## Docs
 
